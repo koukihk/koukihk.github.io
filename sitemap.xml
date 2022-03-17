@@ -214,6 +214,13 @@
   </url>
   
   <url>
+    <loc>https://kouki.ltd/tags/python3/</loc>
+    <lastmod>2022-03-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kouki.ltd/tags/%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/</loc>
     <lastmod>2022-03-17</lastmod>
     <changefreq>daily</changefreq>
@@ -222,13 +229,6 @@
   
   <url>
     <loc>https://kouki.ltd/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-03-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://kouki.ltd/tags/python3/</loc>
     <lastmod>2022-03-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
