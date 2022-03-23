@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/article/175c8d74.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是你的Github项目对应的用户名，useremail就是对应的邮箱地址啦。</p>
+<p>（5）至此 SSH key的配置就结束啦，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果你使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，你可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。（注意在打开了DevSidecar后不要使用类似于Clash的代理软件）。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Chip testing</title>
     <url>/article/8787df53.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
@@ -55,96 +94,6 @@
       <tags>
         <tag>CLRS</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/article/175c8d74.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是你的Github项目对应的用户名，useremail就是对应的邮箱地址啦。</p>
-<p>（5）至此 SSH key的配置就结束啦，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果你使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，你可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。（注意在打开了DevSidecar后不要使用类似于Clash的代理软件）。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo与WordPress、Typecho的主观对比与评价</title>
-    <url>/article/9f933cbc.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>暑假闲来无事，就在家里试着用三种不同的博客框架部署个人博客。下面来对它们三者进行一些主观的对比与评价。</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>优点</p>
-<ul>
-<li>轻量简洁</li>
-<li><del>可以使用Git + Github Pages/Vercel + Hexo的方法实现安全性高的完全白嫖</del></li>
-<li>对MarkDown的支持性好</li>
-<li>源码级高度自定义</li>
-<li>第三方主题质量高</li>
-</ul>
-<span id="more"></span>
-
-<p>缺点</p>
-<ul>
-<li>Hexo站点难以部署到虚拟主机上</li>
-<li>需要先配置环境、掌握简单的MarkDown与Git知识，因此对零基础小白不友好</li>
-<li>静态网页维护起来困难</li>
-<li>只能用PC管理站点，用手机写文章是不可能了</li>
-</ul>
-<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><p>优点</p>
-<ul>
-<li>环境安装和对站点基础维护傻瓜式，操作简单</li>
-<li>海量的插件与主题支持</li>
-<li>官方更新速度快</li>
-<li>对移动设备的支援到位</li>
-<li>第三方主题质量高</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>相比其他的博客框架更为臃肿</li>
-</ul>
-<h3 id="Typecho"><a href="#Typecho" class="headerlink" title="Typecho"></a>Typecho</h3><p>优点</p>
-<ul>
-<li>轻巧高效，非常适合单纯地写文章</li>
-<li>简洁明了的后台管理系统</li>
-<li>完全的中文支持</li>
-<li>第三方主题质量高</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>个人感觉编辑器不太好用</li>
-<li>定制功能较少</li>
-<li>插件较少</li>
-</ul>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
   </entry>
   <entry>
     <title>Vue基础</title>
@@ -358,6 +307,57 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo与WordPress、Typecho的主观对比与评价</title>
+    <url>/article/9f933cbc.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>暑假闲来无事，就在家里试着用三种不同的博客框架部署个人博客。下面来对它们三者进行一些主观的对比与评价。</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>优点</p>
+<ul>
+<li>轻量简洁</li>
+<li><del>可以使用Git + Github Pages/Vercel + Hexo的方法实现安全性高的完全白嫖</del></li>
+<li>对MarkDown的支持性好</li>
+<li>源码级高度自定义</li>
+<li>第三方主题质量高</li>
+</ul>
+<span id="more"></span>
+
+<p>缺点</p>
+<ul>
+<li>Hexo站点难以部署到虚拟主机上</li>
+<li>需要先配置环境、掌握简单的MarkDown与Git知识，因此对零基础小白不友好</li>
+<li>静态网页维护起来困难</li>
+<li>只能用PC管理站点，用手机写文章是不可能了</li>
+</ul>
+<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><p>优点</p>
+<ul>
+<li>环境安装和对站点基础维护傻瓜式，操作简单</li>
+<li>海量的插件与主题支持</li>
+<li>官方更新速度快</li>
+<li>对移动设备的支援到位</li>
+<li>第三方主题质量高</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>相比其他的博客框架更为臃肿</li>
+</ul>
+<h3 id="Typecho"><a href="#Typecho" class="headerlink" title="Typecho"></a>Typecho</h3><p>优点</p>
+<ul>
+<li>轻巧高效，非常适合单纯地写文章</li>
+<li>简洁明了的后台管理系统</li>
+<li>完全的中文支持</li>
+<li>第三方主题质量高</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>个人感觉编辑器不太好用</li>
+<li>定制功能较少</li>
+<li>插件较少</li>
+</ul>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
     <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
     <url>/article/fc8787d6.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
@@ -539,6 +539,61 @@
       </tags>
   </entry>
   <entry>
+    <title>利用新Repository给Github Pages配置多个域名</title>
+    <url>/article/9b69c506.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，不想舍弃原有的SEO推广与域名索引，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
+<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
+<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
+<span id="more"></span>
+
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
+<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
+<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
+
+<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
+<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <span class="exturl" data-url="aHR0cDovL3d3dy5rb3VraS54eXov">www.kouki.xyz<i class="fa fa-external-link-alt"></i></span> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
+<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> current = <span class="built_in">window</span>.location.href;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> target = current.substring(current.indexOf(<span class="string">&#x27;/&#x27;</span>, current.indexOf(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.href = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="javascript">        location.href = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们新建的Repository应包含下面几个文件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
+<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <span class="exturl" data-url="aHR0cDovL3d3dy5rb3VraS54eXov">www.kouki.xyz<i class="fa fa-external-link-alt"></i></span> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。（浏览器缓存会逐渐加速这个跳转过程）</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueWFuYmluZ2h1LmNvbS8yMDE5LzAzLzI5LzI1OTUxLmh0bWw=">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原神自动钓鱼AI的安装与浅尝</title>
+    <url>/article/d369d061.html</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>python3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二叉树的遍历方法及其Java代码实现</title>
     <url>/article/34812bb0.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
@@ -614,39 +669,6 @@
       </tags>
   </entry>
   <entry>
-    <title>利用新Repository给Github Pages配置多个域名</title>
-    <url>/article/9b69c506.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，不想舍弃原有的SEO推广与域名索引，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
-<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
-<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
-<span id="more"></span>
-
-<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
-<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
-<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
-
-<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
-<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <span class="exturl" data-url="aHR0cDovL3d3dy5rb3VraS54eXov">www.kouki.xyz<i class="fa fa-external-link-alt"></i></span> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
-<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> current = <span class="built_in">window</span>.location.href;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> target = current.substring(current.indexOf(<span class="string">&#x27;/&#x27;</span>, current.indexOf(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.href = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="javascript">        location.href = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，我们新建的Repository应包含下面几个文件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
-<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <span class="exturl" data-url="aHR0cDovL3d3dy5rb3VraS54eXov">www.kouki.xyz<i class="fa fa-external-link-alt"></i></span> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。（浏览器缓存会逐渐加速这个跳转过程）</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueWFuYmluZ2h1LmNvbS8yMDE5LzAzLzI5LzI1OTUxLmh0bWw=">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>新年快乐！</title>
     <url>/article/5785bd01.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
@@ -661,25 +683,22 @@
       </tags>
   </entry>
   <entry>
-    <title>原神自动钓鱼AI的安装与浅尝</title>
-    <url>/article/d369d061.html</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    <title>齐次微分方程的「齐次」应该如何理解</title>
+    <url>/article/8ea5480e.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
+<span id="more"></span>
+
+<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
+<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
+<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
+<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
+]]></content>
       <categories>
         <category>经验</category>
       </categories>
       <tags>
-        <tag>python3</tag>
+        <tag>高等数学</tag>
       </tags>
   </entry>
   <entry>
@@ -804,25 +823,6 @@
       </categories>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>齐次微分方程的「齐次」应该如何理解</title>
-    <url>/article/8ea5480e.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
-<span id="more"></span>
-
-<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
-<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
-<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
-<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>高等数学</tag>
       </tags>
   </entry>
 </search>
