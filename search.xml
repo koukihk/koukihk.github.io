@@ -636,6 +636,20 @@
       </tags>
   </entry>
   <entry>
+    <title>新年快乐！</title>
+    <url>/article/5785bd01.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
+<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
+<p>新的一年请大家多多关照！</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>新年快乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>利用新Repository给Github Pages配置多个域名</title>
     <url>/article/9b69c506.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，不想舍弃原有的SEO推广与域名索引，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
@@ -666,39 +680,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新年快乐！</title>
-    <url>/article/5785bd01.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
-<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
-<p>新的一年请大家多多关照！</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>新年快乐</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>齐次微分方程的「齐次」应该如何理解</title>
-    <url>/article/8ea5480e.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
-<span id="more"></span>
-
-<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
-<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
-<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
-<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>高等数学</tag>
       </tags>
   </entry>
   <entry>
@@ -823,6 +804,25 @@
       </categories>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>齐次微分方程的「齐次」应该如何理解</title>
+    <url>/article/8ea5480e.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
+<span id="more"></span>
+
+<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
+<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
+<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
+<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>高等数学</tag>
       </tags>
   </entry>
 </search>
