@@ -147,6 +147,35 @@
       </categories>
   </entry>
   <entry>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/article/fc8787d6.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue基础</title>
     <url>/article/4b668c47.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="Vue的介绍"><a href="#Vue的介绍" class="headerlink" title="Vue的介绍"></a>Vue的介绍</h3><p>官网教程:<span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvdjIvZ3VpZGUvaW5zdGFsbGF0aW9uLmh0bWw=">https://cn.vuejs.org/v2/guide/installation.html<i class="fa fa-external-link-alt"></i></span></p>
@@ -358,35 +387,6 @@
       </tags>
   </entry>
   <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/article/fc8787d6.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
-
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/article/4a17b156.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
@@ -403,81 +403,6 @@
 
 <p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>二叉树的遍历方法及其Java代码实现</title>
-    <url>/article/34812bb0.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
-<ul>
-<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
-</ul>
-<span id="more"></span>
-
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
-<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
-<p>首先要声明结点TreeNode类，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TreeNode</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>再来创建一棵二叉树：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span></span>&#123;</span><br><span class="line">        TreeNode node = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="keyword">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Integer data = list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> TreeNode(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
-<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">postOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
-<p>还是一样，先看非递归前序遍历</p>
-<ol>
-<li>首先申请一个新的栈，记为stack；</li>
-<li>声明一个结点treeNode，让其指向node结点；</li>
-<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
-<li>重复步骤3，直到treenode为空；</li>
-<li>然后出栈，让treeNode指向treeNode的右孩子</li>
-<li>重复步骤3，直到stack为空.</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
-<p>具体过程：</p>
-<ol>
-<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
-<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode=treeNode.leftChild，然后重复步骤2；</li>
-<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode= treeNode.right，然后继续重复步骤2；</li>
-<li>当stack为空并且cur为空时结束。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        TreeNode lastVisit = <span class="keyword">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="keyword">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="keyword">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后再给大家介绍一下层序遍历</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>首先申请一个新的队列，记为queue；</li>
-<li>将头结点head压入queue中；</li>
-<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
-<li>重复步骤3，直到queue为空。</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">levelOrder</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="keyword">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="keyword">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
   </entry>
   <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
@@ -614,6 +539,103 @@
       </tags>
   </entry>
   <entry>
+    <title>二叉树的遍历方法及其Java代码实现</title>
+    <url>/article/34812bb0.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
+<ul>
+<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
+</ul>
+<span id="more"></span>
+
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
+<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
+<p>首先要声明结点TreeNode类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TreeNode</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来创建一棵二叉树：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span></span>&#123;</span><br><span class="line">        TreeNode node = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="keyword">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Integer data = list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> TreeNode(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
+<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">postOrderTraveral</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
+<p>还是一样，先看非递归前序遍历</p>
+<ol>
+<li>首先申请一个新的栈，记为stack；</li>
+<li>声明一个结点treeNode，让其指向node结点；</li>
+<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
+<li>重复步骤3，直到treenode为空；</li>
+<li>然后出栈，让treeNode指向treeNode的右孩子</li>
+<li>重复步骤3，直到stack为空.</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
+<p>具体过程：</p>
+<ol>
+<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
+<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode=treeNode.leftChild，然后重复步骤2；</li>
+<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode= treeNode.right，然后继续重复步骤2；</li>
+<li>当stack为空并且cur为空时结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="keyword">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode treeNode = node;</span><br><span class="line">        TreeNode lastVisit = <span class="keyword">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="keyword">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="keyword">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后再给大家介绍一下层序遍历</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>首先申请一个新的队列，记为queue；</li>
+<li>将头结点head压入queue中；</li>
+<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
+<li>重复步骤3，直到queue为空。</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">levelOrder</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="keyword">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="keyword">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原神自动钓鱼AI的安装与浅尝</title>
+    <url>/article/d369d061.html</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>python3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>利用新Repository给Github Pages配置多个域名</title>
     <url>/article/9b69c506.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，不想舍弃原有的SEO推广与域名索引，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
@@ -647,28 +669,6 @@
       </tags>
   </entry>
   <entry>
-    <title>原神自动钓鱼AI的安装与浅尝</title>
-    <url>/article/d369d061.html</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>python3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>新年快乐！</title>
     <url>/article/5785bd01.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
@@ -680,6 +680,25 @@
       </categories>
       <tags>
         <tag>新年快乐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>齐次微分方程的「齐次」应该如何理解</title>
+    <url>/article/8ea5480e.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
+<span id="more"></span>
+
+<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
+<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
+<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
+<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>高等数学</tag>
       </tags>
   </entry>
   <entry>
@@ -804,25 +823,6 @@
       </categories>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>齐次微分方程的「齐次」应该如何理解</title>
-    <url>/article/8ea5480e.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
-<span id="more"></span>
-
-<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
-<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
-<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
-<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>高等数学</tag>
       </tags>
   </entry>
 </search>
