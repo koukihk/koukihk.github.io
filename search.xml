@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo与WordPress、Typecho的主观对比与评价</title>
+    <url>/article/9f933cbc.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>暑假闲来无事，就在家里试着用三种不同的博客框架部署个人博客。下面来对它们三者进行一些主观的对比与评价。</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>优点</p>
+<ul>
+<li>轻量简洁</li>
+<li><del>可以使用Git + Github Pages/Vercel + Hexo的方法实现安全性高的完全白嫖</del></li>
+<li>对MarkDown的支持性好</li>
+<li>源码级高度自定义</li>
+<li>第三方主题质量高</li>
+</ul>
+<span id="more"></span>
+
+<p>缺点</p>
+<ul>
+<li>Hexo站点难以部署到虚拟主机上</li>
+<li>需要先配置环境、掌握简单的MarkDown与Git知识，因此对零基础小白不友好</li>
+<li>静态网页维护起来困难</li>
+<li>只能用PC管理站点，用手机写文章是不可能了</li>
+</ul>
+<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><p>优点</p>
+<ul>
+<li>环境安装和对站点基础维护傻瓜式，操作简单</li>
+<li>海量的插件与主题支持</li>
+<li>官方更新速度快</li>
+<li>对移动设备的支援到位</li>
+<li>第三方主题质量高</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>相比其他的博客框架更为臃肿</li>
+</ul>
+<h3 id="Typecho"><a href="#Typecho" class="headerlink" title="Typecho"></a>Typecho</h3><p>优点</p>
+<ul>
+<li>轻巧高效，非常适合单纯地写文章</li>
+<li>简洁明了的后台管理系统</li>
+<li>完全的中文支持</li>
+<li>第三方主题质量高</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>个人感觉编辑器不太好用</li>
+<li>定制功能较少</li>
+<li>插件较少</li>
+</ul>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Chip testing</title>
     <url>/article/8787df53.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
@@ -94,57 +145,6 @@
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hexo与WordPress、Typecho的主观对比与评价</title>
-    <url>/article/9f933cbc.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>暑假闲来无事，就在家里试着用三种不同的博客框架部署个人博客。下面来对它们三者进行一些主观的对比与评价。</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>优点</p>
-<ul>
-<li>轻量简洁</li>
-<li><del>可以使用Git + Github Pages/Vercel + Hexo的方法实现安全性高的完全白嫖</del></li>
-<li>对MarkDown的支持性好</li>
-<li>源码级高度自定义</li>
-<li>第三方主题质量高</li>
-</ul>
-<span id="more"></span>
-
-<p>缺点</p>
-<ul>
-<li>Hexo站点难以部署到虚拟主机上</li>
-<li>需要先配置环境、掌握简单的MarkDown与Git知识，因此对零基础小白不友好</li>
-<li>静态网页维护起来困难</li>
-<li>只能用PC管理站点，用手机写文章是不可能了</li>
-</ul>
-<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><p>优点</p>
-<ul>
-<li>环境安装和对站点基础维护傻瓜式，操作简单</li>
-<li>海量的插件与主题支持</li>
-<li>官方更新速度快</li>
-<li>对移动设备的支援到位</li>
-<li>第三方主题质量高</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>相比其他的博客框架更为臃肿</li>
-</ul>
-<h3 id="Typecho"><a href="#Typecho" class="headerlink" title="Typecho"></a>Typecho</h3><p>优点</p>
-<ul>
-<li>轻巧高效，非常适合单纯地写文章</li>
-<li>简洁明了的后台管理系统</li>
-<li>完全的中文支持</li>
-<li>第三方主题质量高</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>个人感觉编辑器不太好用</li>
-<li>定制功能较少</li>
-<li>插件较少</li>
-</ul>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
   </entry>
   <entry>
     <title>Vue基础</title>
