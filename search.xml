@@ -147,35 +147,6 @@
       </categories>
   </entry>
   <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/article/fc8787d6.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
-
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue基础</title>
     <url>/article/4b668c47.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="Vue的介绍"><a href="#Vue的介绍" class="headerlink" title="Vue的介绍"></a>Vue的介绍</h3><p>官网教程:<span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvdjIvZ3VpZGUvaW5zdGFsbGF0aW9uLmh0bWw=">https://cn.vuejs.org/v2/guide/installation.html<i class="fa fa-external-link-alt"></i></span></p>
@@ -403,6 +374,35 @@
 
 <p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/article/fc8787d6.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
   </entry>
   <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
@@ -683,6 +683,25 @@
       </tags>
   </entry>
   <entry>
+    <title>齐次微分方程的「齐次」应该如何理解</title>
+    <url>/article/8ea5480e.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
+<span id="more"></span>
+
+<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
+<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
+<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
+<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>高等数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>海明码的编码和校验方法</title>
     <url>/article/51bf9fa7.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>海明码（也叫汉明码）具有一位纠错能力。本文以1010110这个二进制数为例解释海明码的编码和校验方法。</p>
@@ -804,25 +823,6 @@
       </categories>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>齐次微分方程的「齐次」应该如何理解</title>
-    <url>/article/8ea5480e.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>某高数讲义的“齐次微分方程”一节提到了齐次微分方程的定义：如果一个微分方程能化为如下形式<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>则可称这个微分方程为齐次微分方程。这让我百思不得其解，通常认为的“齐次（homogeneous）”是指代数式中所有的项都是同次的，在中学里可以用这个概念把任意一个代数式归类为“齐次”或者“非齐次”。在这本书上有一道例题，它称下面这个方程为齐次微分方程，但是其每一项次数并不一致，传统的齐次概念在微分方程这里似乎并不适用。<br>$$<br>x^2y’+xy=y^2<br>$$</p>
-<span id="more"></span>
-
-<h4 id="齐次的源头"><a href="#齐次的源头" class="headerlink" title="齐次的源头"></a>齐次的源头</h4><p>维基百科“齐次函数”中提到，齐次”概念的源头是齐次函数：<br>$$<br>f(ax)=a^kf(x)<br>$$<br>符合这样特性的函数，叫做k次齐次。这是齐次的根本来源。要理解方程的齐次，就要从方程中“找到”这样的函数。</p>
-<h4 id="方程的齐次性"><a href="#方程的齐次性" class="headerlink" title="方程的齐次性"></a>方程的齐次性</h4><p>虽然维基百科上搜不到“齐次方程”的相关资料，只能搜到“齐次函数”的概念，但是在知乎上有一位网友指出了“齐次方程”的字面意思：齐表示相同，次表示次数，每一项都具有相同的次数。例如5x-y+1=0 这个方程就是非齐次的，因为5x，y这两项是一次的，而1是0次的。</p>
-<h4 id="方程的线性"><a href="#方程的线性" class="headerlink" title="方程的线性"></a>方程的线性</h4><p>百度百科指出，线性方程的本质是同乘相同的非零数，本质不受影响，即表达的数与数之间的映射关系不变。这句话想要表达的核心是，方程中的所有项地位都是平衡的，大家一起放大一起缩小。到这里可以发现，方程的线性和齐次性都在强调每一项的平等性。</p>
-<h4 id="理解齐次微分方程"><a href="#理解齐次微分方程" class="headerlink" title="理解齐次微分方程"></a>理解齐次微分方程</h4><p>微分和积分和加减乘除一样，是一种对常数、变量和函数进行的运算，求解微分方程是一个基于已知的x寻找未知y的过程，更有些形式的微分方程的求解过程中x的地位就跟常数是一样的。值得注意的是，函数和方程的关系可以通过这种模式去构建：当让函数去等于一个数（最简单的f(x)=0），就形成了一个方程（这个方程和刚才构成它的函数也就形成了前述的“关系”）。所以当讨论一个方程是不是齐次的、线性的，就自然有一个思路，去看和这个方程相关的那个函数是不是有“齐次”“线性”这样的特性。对于<br>$$<br>\frac {dy} {dx}=Φ(\frac {y} {x})<br>$$<br>这一例子，它可以化成这个样子：<br>$$<br>f(x,y)=\frac {dy} {dx}-Φ(\frac {y} {x})=a^0(\frac {dy} {dx}-Φ(\frac {y} {x}))<br>$$<br>因而它具有齐次函数的特性。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>齐次”概念的源头是齐次函数。要理解方程的齐次，就要从方程中“找到”这样的函数。教材这种 “可化成..的形式，就称为…” 的语调以及丝毫不提概念之间联系的做法，不利于学生理解，应予改进。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>高等数学</tag>
       </tags>
   </entry>
 </search>
