@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kouki.ltd/links/index.html</loc>
+    
+    <lastmod>2022-05-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://kouki.ltd/article/8ea5480e.html</loc>
+    
+    <lastmod>2022-05-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kouki.ltd/about/index.html</loc>
     
     <lastmod>2022-05-09</lastmod>
@@ -37,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://kouki.ltd/links/index.html</loc>
-    
-    <lastmod>2022-03-22</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://kouki.ltd/article/fc8787d6.html</loc>
     
     <lastmod>2022-03-18</lastmod>
@@ -61,13 +68,6 @@
     <loc>https://kouki.ltd/article/1128bacf.html</loc>
     
     <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kouki.ltd/article/8ea5480e.html</loc>
-    
-    <lastmod>2022-03-11</lastmod>
     
   </url>
   
@@ -242,14 +242,14 @@
   </url>
   
   <url>
-    <loc>https://kouki.ltd/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/</loc>
+    <loc>https://kouki.ltd/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-05-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://kouki.ltd/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://kouki.ltd/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2022-05-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
