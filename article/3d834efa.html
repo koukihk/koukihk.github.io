@@ -20,23 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kouki.ltd","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kouki-α">
-<meta property="og:url" content="https://kouki.ltd/archives/page/2/index.html">
+<meta name="description" content="本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。 一、安装Node.js与GitGit for Windows: https:&#x2F;&#x2F;git-scm.com&#x2F;Node.js: https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重装系统后快速恢复Hexo环境">
+<meta property="og:url" content="https://kouki.ltd/article/3d834efa.html">
 <meta property="og:site_name" content="Kouki-α">
+<meta property="og:description" content="本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。 一、安装Node.js与GitGit for Windows: https:&#x2F;&#x2F;git-scm.com&#x2F;Node.js: https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-29T07:40:07.000Z">
+<meta property="article:modified_time" content="2022-05-29T07:51:23.742Z">
 <meta property="article:author" content="Kouki">
+<meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://kouki.ltd/archives/page/2/">
+<link rel="canonical" href="https://kouki.ltd/article/3d834efa.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/page/2/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kouki.ltd/article/3d834efa.html","path":"article/3d834efa.html","title":"重装系统后快速恢复Hexo环境"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | Kouki-α</title>
+<title>重装系统后快速恢复Hexo环境 | Kouki-α</title>
   
 
 
@@ -135,7 +140,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -148,6 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85Node-js%E4%B8%8EGit"><span class="nav-number">1.</span> <span class="nav-text">一、安装Node.js与Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%94%9F%E6%88%90SSH%E5%AF%86%E9%92%A5"><span class="nav-number">2.</span> <span class="nav-text">二、生成SSH密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AE%BE%E7%BD%AEGithub%E7%9A%84SSH%E5%AF%86%E9%92%A5"><span class="nav-number">3.</span> <span class="nav-text">三、设置Github的SSH密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85Hexo%E4%B8%8E%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-number">4.</span> <span class="nav-text">四、安装Hexo与相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%AA%8C%E8%AF%81"><span class="nav-number">5.</span> <span class="nav-text">五、验证</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -248,236 +254,142 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 20 篇日志。 继续努力。</span>
-      </div>
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kouki.ltd/article/3d834efa.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="Kouki">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kouki-α">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重装系统后快速恢复Hexo环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
-    </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-01-09T15:59:47+08:00"
-              content="2022-01-09">
-          01-09
-        </time>
-      </div>
+      <time title="创建时间：2022-05-29 15:40:07 / 修改时间：15:51:23" itemprop="dateCreated datePublished" datetime="2022-05-29T15:40:07+08:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BB%8F%E9%AA%8C/" itemprop="url" rel="index"><span itemprop="name">经验</span></a>
+        </span>
+    </span>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/article/5785bd01.html" itemprop="url">
-            <span itemprop="name">新年快乐！</span>
-          </a>
-      </div>
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/article/3d834efa.html#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/article/3d834efa.html" data-xid="/article/3d834efa.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>650</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
 
-      
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+        </div>
+      </header>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-25T21:29:56+08:00"
-              content="2021-09-25">
-          09-25
-        </time>
-      </div>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
+<h3 id="一、安装Node-js与Git"><a href="#一、安装Node-js与Git" class="headerlink" title="一、安装Node.js与Git"></a>一、安装Node.js与Git</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/article/4b668c47.html" itemprop="url">
-            <span itemprop="name">Vue基础</span>
-          </a>
-      </div>
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
-      
-    </header>
-  </article>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-25T19:32:12+08:00"
-              content="2021-09-25">
-          09-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/8787df53.html" itemprop="url">
-            <span itemprop="name">Chip testing</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-18T21:12:38+08:00"
-              content="2021-09-18">
-          09-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/34812bb0.html" itemprop="url">
-            <span itemprop="name">二叉树的遍历方法及其Java代码实现</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-08T19:25:17+08:00"
-              content="2021-09-08">
-          09-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/51bf9fa7.html" itemprop="url">
-            <span itemprop="name">海明码的编码和校验方法</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-09-06T10:21:15+08:00"
-              content="2021-09-06">
-          09-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/9b69c506.html" itemprop="url">
-            <span itemprop="name">利用新Repository给Github Pages配置多个域名</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-27T23:49:05+08:00"
-              content="2021-08-27">
-          08-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/1128bacf.html" itemprop="url">
-            <span itemprop="name">为站点添加Aplayer全局播放器（两种布局方案）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-18T13:42:33+08:00"
-              content="2021-08-18">
-          08-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/9f933cbc.html" itemprop="url">
-            <span itemprop="name">Hexo与WordPress、Typecho的主观对比与评价</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-15T21:45:47+08:00"
-              content="2021-08-15">
-          08-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/175c8d74.html" itemprop="url">
-            <span itemprop="name">Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-15T17:56:28+08:00"
-              content="2021-08-15">
-          08-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/article/4a17b156.html" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
 
 
     </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-  </nav>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/article/e7a7ed06.html" rel="prev" title="期末预测之最佳阈值 202012-2">
+                  <i class="fa fa-chevron-left"></i> 期末预测之最佳阈值 202012-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/article/624786ac.html" rel="next" title="数据结构查找相关算法">
+                  数据结构查找相关算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
 </div>
   </main>
 
@@ -554,9 +466,9 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":false,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://kouki.ltd/archives/page/2/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://kouki.ltd/article/3d834efa.html"}</script>
   <script src="/js/third-party/quicklink.js"></script>
-<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://comment.kouki.ltd","placeholder":"Just go","avatar":"mm","pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"dark":"body.darkmode--activated","meta":["nick","mail","link"],"requiredMeta":[],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","el":"#waline-comments","path":"/archives/page/2/"}</script>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://comment.kouki.ltd","placeholder":"Just go","avatar":"mm","pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"dark":"body.darkmode--activated","meta":["nick","mail","link"],"requiredMeta":[],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","el":"#waline-comments","path":"/article/3d834efa.html"}</script>
 <script>
 document.addEventListener('page:loaded', () => {
   NexT.utils.loadComments(CONFIG.waline.el).then(() => 

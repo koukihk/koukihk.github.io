@@ -6,7 +6,7 @@
   <link href="https://kouki.ltd/atom.xml" rel="self"/>
   
   <link href="https://kouki.ltd/"/>
-  <updated>2022-05-24T03:07:32.418Z</updated>
+  <updated>2022-05-29T07:58:34.374Z</updated>
   <id>https://kouki.ltd/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据结构查找相关算法</title>
+    <link href="https://kouki.ltd/article/624786ac.html"/>
+    <id>https://kouki.ltd/article/624786ac.html</id>
+    <published>2022-05-29T07:40:52.000Z</published>
+    <updated>2022-05-29T07:58:34.374Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="二叉树结构"><a href="#二叉树结构" class="headerlink" title="二叉树结构"></a>二叉树结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> TElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    TElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span> <span class="comment">//左右孩子指针 </span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure><span id="more"></span><h3 id="判断二叉树是否为二叉排序树"><a href="#判断二叉树是否为二叉排序树" class="headerlink" title="判断二叉树是否为二叉排序树"></a>判断二叉树是否为二叉排序树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> prev = <span class="number">-32767</span>;</span><br><span class="line"><span class="keyword">int</span> flag = <span class="literal">true</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InOrderTraverse</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(T-&gt;lchild != <span class="literal">NULL</span> &amp;&amp; flag)</span><br><span class="line">    &#123;</span><br><span class="line">        InOrderTraverse(T-&gt;lchild);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(T-&gt;data&lt;prev)</span><br><span class="line">    &#123;</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    prev = T-&gt;data;</span><br><span class="line">    <span class="keyword">if</span>(T-&gt;rchild != <span class="literal">NULL</span> &amp;&amp; flag)&#123;</span><br><span class="line">        InOrderTraverse(T-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> flag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可能的情况：</p><ul><li>空树，可以认定为二叉排序树</li><li>只有根结点，可以认定为二叉排序树</li><li>有孩子，则递归进行中序遍历，每访问一个结点都要保留一下前驱，判断是不是前驱比当前的结点小，若不是，则flag置false，停止遍历，直接认定不是二叉排序树</li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;二叉树结构&quot;&gt;&lt;a href=&quot;#二叉树结构&quot; class=&quot;headerlink&quot; title=&quot;二叉树结构&quot;&gt;&lt;/a&gt;二叉树结构&lt;/h3&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; TElemType;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;BiTNode&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    TElemType data;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;BiTNode&lt;/span&gt; *&lt;span class=&quot;title&quot;&gt;lchild&lt;/span&gt;,*&lt;span class=&quot;title&quot;&gt;rchild&lt;/span&gt;;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;//左右孩子指针 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;BiTNode,*BiTree;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="笔记" scheme="https://kouki.ltd/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="数据结构" scheme="https://kouki.ltd/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <link href="https://kouki.ltd/article/3d834efa.html"/>
+    <id>https://kouki.ltd/article/3d834efa.html</id>
+    <published>2022-05-29T07:40:07.000Z</published>
+    <updated>2022-05-29T07:51:23.742Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p><h3 id="一、安装Node-js与Git"><a href="#一、安装Node-js与Git" class="headerlink" title="一、安装Node.js与Git"></a>一、安装Node.js与Git</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p><span id="more"></span><h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure><h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p><p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p><h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。&lt;/p&gt;
+&lt;h3 id=&quot;一、安装Node-js与Git&quot;&gt;&lt;a href=&quot;#一、安装Node-js与Git&quot; class=&quot;headerlink&quot; title=&quot;一、安装Node.js与Git&quot;&gt;&lt;/a&gt;一、安装Node.js与Git&lt;/h3&gt;&lt;p&gt;Git for Windows: &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==&quot;&gt;https://git-scm.com/&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;br&gt;Node.js: &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v&quot;&gt;https://nodejs.org/en/&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="经验" scheme="https://kouki.ltd/categories/%E7%BB%8F%E9%AA%8C/"/>
+    
+    
+    <category term="Hexo" scheme="https://kouki.ltd/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>期末预测之最佳阈值 202012-2</title>
