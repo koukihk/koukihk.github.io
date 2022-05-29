@@ -28,7 +28,7 @@
 <meta property="og:description" content="本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。 一、安装Node.js与GitGit for Windows: https:&#x2F;&#x2F;git-scm.com&#x2F;Node.js: https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-29T07:40:07.000Z">
-<meta property="article:modified_time" content="2022-05-29T07:59:06.454Z">
+<meta property="article:modified_time" content="2022-05-29T12:11:06.617Z">
 <meta property="article:author" content="Kouki">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -290,7 +290,7 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-29 15:40:07 / 修改时间：15:59:06" itemprop="dateCreated datePublished" datetime="2022-05-29T15:40:07+08:00">2022-05-29</time>
+      <time title="创建时间：2022-05-29 15:40:07 / 修改时间：20:11:06" itemprop="dateCreated datePublished" datetime="2022-05-29T15:40:07+08:00">2022-05-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -323,7 +323,7 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>650</span>
+      <span>680</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -347,6 +347,7 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 
 <h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
+<p>一路回车即可。</p>
 <h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
 <p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
 <h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
@@ -354,6 +355,7 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 
 <h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
 
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
 
     </div>
 
