@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/article/175c8d74.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Chip testing</title>
     <url>/article/8787df53.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
@@ -96,6 +57,45 @@
       </tags>
   </entry>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/article/175c8d74.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo与WordPress、Typecho的主观对比与评价</title>
     <url>/article/9f933cbc.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -113,28 +113,6 @@
       <categories>
         <category>随笔</category>
       </categories>
-  </entry>
-  <entry>
-    <title>ISBN号码 201312-2</title>
-    <url>/article/73bd0af.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括9位数字、1位识别码和3位分隔符，其规定格式如“x-xxx-xxxxx-x”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如0-670-82162-4就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如0代表英语；第一个分隔符“-”之后的三位数字代表出版社，例如670代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以1加上次位数字乘以2……以此类推，用所得的结果mod 11，所得的余数即为识别码，如果余数为10，则识别码为大写字母X。例如ISBN号码0-670-82162-4中的识别码4是这样得到的：对067082162这9个数字，从左至右，分别乘以1，2，…，9，再求和，即0×1+6×2+……+2×9=158，然后取158 mod 11的结果4作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“Right”；如果错误，则输出是正确的ISBN号码。</p>
-<span id="more"></span>
-
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“Right”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“-”）。</p>
-<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>0-670-82162-4</p>
-<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>Right</p>
-<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>0-670-82162-0</p>
-<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>0-670-82162-4</p>
-<h2 id="解答（Dev-CPP环境，仅70分）"><a href="#解答（Dev-CPP环境，仅70分）" class="headerlink" title="解答（Dev-CPP环境，仅70分）"></a>解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="keyword">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="keyword">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
   </entry>
   <entry>
     <title>Vue基础</title>
@@ -345,6 +323,28 @@
       </categories>
       <tags>
         <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISBN号码 201312-2</title>
+    <url>/article/73bd0af.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括9位数字、1位识别码和3位分隔符，其规定格式如“x-xxx-xxxxx-x”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如0-670-82162-4就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如0代表英语；第一个分隔符“-”之后的三位数字代表出版社，例如670代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以1加上次位数字乘以2……以此类推，用所得的结果mod 11，所得的余数即为识别码，如果余数为10，则识别码为大写字母X。例如ISBN号码0-670-82162-4中的识别码4是这样得到的：对067082162这9个数字，从左至右，分别乘以1，2，…，9，再求和，即0×1+6×2+……+2×9=158，然后取158 mod 11的结果4作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“Right”；如果错误，则输出是正确的ISBN号码。</p>
+<span id="more"></span>
+
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“Right”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“-”）。</p>
+<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>0-670-82162-4</p>
+<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>Right</p>
+<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>0-670-82162-0</p>
+<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>0-670-82162-4</p>
+<h2 id="解答（Dev-CPP环境，仅70分）"><a href="#解答（Dev-CPP环境，仅70分）" class="headerlink" title="解答（Dev-CPP环境，仅70分）"></a>解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="keyword">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="keyword">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -637,28 +637,6 @@
       </tags>
   </entry>
   <entry>
-    <title>原神自动钓鱼AI的安装与浅尝</title>
-    <url>/article/d369d061.html</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>python3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据结构查找相关算法</title>
     <url>/article/624786ac.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="二叉树结构"><a href="#二叉树结构" class="headerlink" title="二叉树结构"></a>二叉树结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> TElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    TElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span> <span class="comment">//左右孩子指针 </span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
@@ -680,6 +658,28 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原神自动钓鱼AI的安装与浅尝</title>
+    <url>/article/d369d061.html</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="9e51daf57621e722f51f086ed94dfb67d90b5dfc77cee34a98fcb95c3c73ac06">be02cba9cfdf817cd7abb04352192754b9ab8d29d81fd63a011f9afc06316eeddc4a9884a95c5fedcf4aa03a4f3513e3208bc4c4d9e5b7e4cb8dfa3870b79827dc32e9e27e43851768b685f58b74ee0ccd546c9ee387283c23b2be1f45298e90a6dd32287a4acd29e620786eaa5106725a01ec5c3ce74791d4d159b2442067e46839339858d43de96ef36715a39aad4337f147f70d5c23b6bc274e4e78a60e9f47342832850d51e223fbe9f05b63d44091f91fa30b64417d3014b494d301feae7ea8c253f53e3be74bec5ff233247a37ed05bf0bdc3984cc1a46f9745a2ebbf0</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>python3</tag>
       </tags>
   </entry>
   <entry>
