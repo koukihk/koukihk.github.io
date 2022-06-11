@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/article/175c8d74.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Chip testing</title>
     <url>/article/8787df53.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
@@ -95,45 +134,6 @@
       </categories>
       <tags>
         <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/article/175c8d74.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>首先检查<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<span class="exturl" data-url="aHR0cDovL2dpdGh1Yi5jb20vc2V0dGluZ3Mva2V5cw==">github.com/settings/keys<i class="fa fa-external-link-alt"></i></span> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZG9jbWlycm9yL2Rldi1zaWRlY2Fy">DevSidecar<i class="fa fa-external-link-alt"></i></span>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -377,6 +377,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/article/4a17b156.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+  </entry>
+  <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
     <url>/article/1128bacf.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Aplayer是一个基于JavaScript的播放器插件，而MetingJs则是基于Aplayer插件封装好的插件，开箱即用。</p>
@@ -509,24 +527,6 @@
       <tags>
         <tag>Hexo</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/article/4a17b156.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
   </entry>
   <entry>
     <title>二叉树的遍历方法及其Java代码实现</title>
@@ -683,6 +683,20 @@
       </tags>
   </entry>
   <entry>
+    <title>新年快乐！</title>
+    <url>/article/5785bd01.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
+<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
+<p>新的一年请大家多多关照！</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>新年快乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>期末预测之安全指数 202012-1</title>
     <url>/article/d9ae96d3.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
@@ -714,20 +728,6 @@
       </categories>
       <tags>
         <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新年快乐！</title>
-    <url>/article/5785bd01.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
-<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
-<p>新的一年请大家多多关照！</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>新年快乐</tag>
       </tags>
   </entry>
   <entry>
@@ -821,47 +821,6 @@
       </categories>
       <tags>
         <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>王道数据结构P191关于二叉树的算法归纳</title>
-    <url>/article/1537acf2.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount1</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
-<p>也可以用非递归方法，使用队列层次遍历。</p>
-<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount2</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount0</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Height</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="keyword">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LevelWidth</span><span class="params">(BiTree T, <span class="keyword">int</span> a[], <span class="keyword">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Width</span><span class="params">(BiTree T)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="keyword">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_0</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先叶子是指左右孩子都没有的结点。</p>
-<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
-<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="keyword">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="keyword">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Get_Max</span><span class="params">(BiTree T)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="keyword">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Exc</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreAndLevel</span><span class="params">(BiTree T, <span class="keyword">int</span> i)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2NjQ1MzIyP3R5cGU9YmxvZw=="> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -989,6 +948,47 @@
       </tags>
   </entry>
   <entry>
+    <title>王道数据结构P191关于二叉树的算法归纳</title>
+    <url>/article/1537acf2.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount1</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
+<p>也可以用非递归方法，使用队列层次遍历。</p>
+<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount2</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NodeCount0</span><span class="params">( BiTree T)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Height</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="keyword">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LevelWidth</span><span class="params">(BiTree T, <span class="keyword">int</span> a[], <span class="keyword">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Width</span><span class="params">(BiTree T)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="keyword">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_0</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先叶子是指左右孩子都没有的结点。</p>
+<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
+<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="keyword">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="keyword">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Get_Max</span><span class="params">(BiTree T)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="keyword">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Exc</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreAndLevel</span><span class="params">(BiTree T, <span class="keyword">int</span> i)</span>	</span></span><br><span class="line"><span class="function"></span>&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2NjQ1MzIyP3R5cGU9YmxvZw=="> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>称检测点查询 202009-1</title>
     <url>/article/3b542d1c.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
@@ -1007,68 +1007,6 @@
 <h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
 <h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装系统后快速恢复Hexo环境</title>
-    <url>/article/3d834efa.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
-<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
-<span id="more"></span>
-
-<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
-<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
-<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果hexo命令不可用，需要修改系统环境配置。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>风险人群筛查202009-2</title>
-    <url>/article/3a23d7f5.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>某地疫情爆发后，出于“应检尽检”的原则，我们想要通知所有近期经过该高危区域的居民参与核酸检测。</p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>想要找出经过高危区域的居民，分析位置记录是一种简单有效的方法。</p>
-<span id="more"></span>
-
-<p>具体来说，一位居民的位置记录包含$ t $个平面坐标$(x_1,y_1),(x_2,y_2),⋯,(x_t,y_t)$，其中$(x_i,y_i)$ 表示该居民 $i$ 时刻所在位置。<br>高危区域则可以抽象为一个矩形区域（含边界），左下角和右上角的坐标分别为$ (x_l,y_d) $和$ (x_r,y_u)$，满足$x_l&lt;x_r$ 且$y_d&lt;y_u$。</p>
-<p>考虑某位居民的位置记录，如果其中某个坐标位于矩形内（含边界），则说明该居民<strong>经过</strong>高危区域；进一步地，如果其中<strong>连续</strong> $k$个或更多坐标均位于矩形内（含边界），则认为该居民曾在高危区域<strong>逗留</strong>。需要注意的是，判定<strong>经过</strong>和<strong>逗留</strong>时我们只关心位置记录中的$ t $个坐标，而无需考虑该居民在$ i $到$ i+1$ 时刻之间位于何处。</p>
-<p>给定高危区域的范围和$ n $位居民过去$ t $个时刻的位置记录，试统计其中经过高危区域的人数和曾在高危区域逗留的人数。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入共$ n+1 $行。</p>
-<p>第一行包含用空格分隔的七个整数$ n、k、t、x_l、y_d、x_r 和 y_u$，含义如上文所述。</p>
-<p>接下来 n 行，每行包含用空格分隔的 2t 个整数，按顺序表示一位居民过去$ t $个时刻的位置记录$ (x_1,y_1),(x_2,y_2),⋯,(x_t,y_t)$。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出共两行，每行一个整数，分别表示经过高危区域的人数和曾在高危区域逗留的人数。</p>
-<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 2 6 20 40 100 80 </span><br><span class="line">100 80 100 80 100 80 100 80 100 80 100 80 </span><br><span class="line">60 50 60 46 60 42 60 38 60 34 60 30 </span><br><span class="line">10 60 14 62 18 66 22 74 26 86 30 100 </span><br><span class="line">90 31 94 35 98 39 102 43 106 47 110 51 </span><br><span class="line">0 20 4 20 8 20 12 20 16 20 20 20</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 </span><br><span class="line">2</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例1说明"><a href="#样例1说明" class="headerlink" title="样例1说明"></a>样例1说明</h2><p>如下图红色标记所示，前三条位置记录经过了高危区域；<br>但第三条位置记录（图中左上曲线）只有一个时刻位于高危区域内，不满足逗留条件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/2020092.png"></p>
-<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 3 8 0 0 10 10 </span><br><span class="line">-1 -1 0 0 0 0 -1 -1 0 0 -1 -1 0 0 0 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 </span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2说明"><a href="#样例2说明" class="headerlink" title="样例2说明"></a>样例2说明</h2><p>该位置记录经过了高危区域，但最多只有连续两个时刻位于其中，不满足逗留条件。</p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> pass;</span><br><span class="line">	<span class="keyword">int</span> stay;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> pass,<span class="keyword">int</span> stay)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;pass=pass;</span><br><span class="line">		<span class="keyword">this</span>-&gt;stay=stay;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,t,xl,yd,xr,yu,cnt;</span><br><span class="line">	<span class="keyword">int</span> xt,yt,flag1,flag2;</span><br><span class="line">	<span class="keyword">int</span> sump=<span class="number">0</span>,sums=<span class="number">0</span>;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;k&gt;&gt;t&gt;&gt;xl&gt;&gt;yd&gt;&gt;xr&gt;&gt;yu;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cnt=<span class="number">0</span>;flag1=<span class="number">0</span>;flag2=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;t;j++)&#123;</span><br><span class="line">			cin&gt;&gt;xt&gt;&gt;yt;</span><br><span class="line">			<span class="keyword">if</span>(xt&gt;=xl&amp;&amp;xt&lt;=xr&amp;&amp;yt&gt;=yd&amp;&amp;yt&lt;=yu)&#123;</span><br><span class="line">				cnt++;</span><br><span class="line">				<span class="keyword">if</span>(flag1==<span class="number">0</span>) flag1=<span class="number">1</span>;</span><br><span class="line">				<span class="keyword">if</span>(flag2==<span class="number">0</span>&amp;&amp;cnt==k) flag2=<span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				cnt=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag2==<span class="number">1</span>)&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(flag1==<span class="number">1</span>)&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">0</span>,<span class="number">0</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(points[i].pass==<span class="number">1</span>)&#123;</span><br><span class="line">			sump++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(points[i].stay==<span class="number">1</span>)&#123;</span><br><span class="line">			sums++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;sump&lt;&lt;endl&lt;&lt;sums&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>PS:随意写的，程序里有很多不必要的地方，觉得冗余的话自己修改即可。</p>
 ]]></content>
       <categories>
         <category>试题</category>
@@ -1114,6 +1052,32 @@
       </tags>
   </entry>
   <entry>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <url>/article/3d834efa.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
+<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>齐次微分方程的「齐次」应该如何理解</title>
     <url>/article/8ea5480e.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -1133,6 +1097,42 @@
       </categories>
       <tags>
         <tag>高等数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>风险人群筛查202009-2</title>
+    <url>/article/3a23d7f5.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>某地疫情爆发后，出于“应检尽检”的原则，我们想要通知所有近期经过该高危区域的居民参与核酸检测。</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>想要找出经过高危区域的居民，分析位置记录是一种简单有效的方法。</p>
+<span id="more"></span>
+
+<p>具体来说，一位居民的位置记录包含$ t $个平面坐标$(x_1,y_1),(x_2,y_2),⋯,(x_t,y_t)$，其中$(x_i,y_i)$ 表示该居民 $i$ 时刻所在位置。<br>高危区域则可以抽象为一个矩形区域（含边界），左下角和右上角的坐标分别为$ (x_l,y_d) $和$ (x_r,y_u)$，满足$x_l&lt;x_r$ 且$y_d&lt;y_u$。</p>
+<p>考虑某位居民的位置记录，如果其中某个坐标位于矩形内（含边界），则说明该居民<strong>经过</strong>高危区域；进一步地，如果其中<strong>连续</strong> $k$个或更多坐标均位于矩形内（含边界），则认为该居民曾在高危区域<strong>逗留</strong>。需要注意的是，判定<strong>经过</strong>和<strong>逗留</strong>时我们只关心位置记录中的$ t $个坐标，而无需考虑该居民在$ i $到$ i+1$ 时刻之间位于何处。</p>
+<p>给定高危区域的范围和$ n $位居民过去$ t $个时刻的位置记录，试统计其中经过高危区域的人数和曾在高危区域逗留的人数。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入共$ n+1 $行。</p>
+<p>第一行包含用空格分隔的七个整数$ n、k、t、x_l、y_d、x_r 和 y_u$，含义如上文所述。</p>
+<p>接下来 n 行，每行包含用空格分隔的 2t 个整数，按顺序表示一位居民过去$ t $个时刻的位置记录$ (x_1,y_1),(x_2,y_2),⋯,(x_t,y_t)$。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出共两行，每行一个整数，分别表示经过高危区域的人数和曾在高危区域逗留的人数。</p>
+<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 2 6 20 40 100 80 </span><br><span class="line">100 80 100 80 100 80 100 80 100 80 100 80 </span><br><span class="line">60 50 60 46 60 42 60 38 60 34 60 30 </span><br><span class="line">10 60 14 62 18 66 22 74 26 86 30 100 </span><br><span class="line">90 31 94 35 98 39 102 43 106 47 110 51 </span><br><span class="line">0 20 4 20 8 20 12 20 16 20 20 20</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 </span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例1说明"><a href="#样例1说明" class="headerlink" title="样例1说明"></a>样例1说明</h2><p>如下图红色标记所示，前三条位置记录经过了高危区域；<br>但第三条位置记录（图中左上曲线）只有一个时刻位于高危区域内，不满足逗留条件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/2020092.png"></p>
+<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 3 8 0 0 10 10 </span><br><span class="line">-1 -1 0 0 0 0 -1 -1 0 0 -1 -1 0 0 0 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 </span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2说明"><a href="#样例2说明" class="headerlink" title="样例2说明"></a>样例2说明</h2><p>该位置记录经过了高危区域，但最多只有连续两个时刻位于其中，不满足逗留条件。</p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> pass;</span><br><span class="line">	<span class="keyword">int</span> stay;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> pass,<span class="keyword">int</span> stay)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;pass=pass;</span><br><span class="line">		<span class="keyword">this</span>-&gt;stay=stay;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,t,xl,yd,xr,yu,cnt;</span><br><span class="line">	<span class="keyword">int</span> xt,yt,flag1,flag2;</span><br><span class="line">	<span class="keyword">int</span> sump=<span class="number">0</span>,sums=<span class="number">0</span>;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;k&gt;&gt;t&gt;&gt;xl&gt;&gt;yd&gt;&gt;xr&gt;&gt;yu;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cnt=<span class="number">0</span>;flag1=<span class="number">0</span>;flag2=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;t;j++)&#123;</span><br><span class="line">			cin&gt;&gt;xt&gt;&gt;yt;</span><br><span class="line">			<span class="keyword">if</span>(xt&gt;=xl&amp;&amp;xt&lt;=xr&amp;&amp;yt&gt;=yd&amp;&amp;yt&lt;=yu)&#123;</span><br><span class="line">				cnt++;</span><br><span class="line">				<span class="keyword">if</span>(flag1==<span class="number">0</span>) flag1=<span class="number">1</span>;</span><br><span class="line">				<span class="keyword">if</span>(flag2==<span class="number">0</span>&amp;&amp;cnt==k) flag2=<span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				cnt=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag2==<span class="number">1</span>)&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(flag1==<span class="number">1</span>)&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(<span class="number">0</span>,<span class="number">0</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(points[i].pass==<span class="number">1</span>)&#123;</span><br><span class="line">			sump++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(points[i].stay==<span class="number">1</span>)&#123;</span><br><span class="line">			sums++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;sump&lt;&lt;endl&lt;&lt;sums&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PS:随意写的，程序里有很多不必要的地方，觉得冗余的话自己修改即可。</p>
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
 </search>
