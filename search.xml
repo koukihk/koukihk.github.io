@@ -683,20 +683,6 @@
       </tags>
   </entry>
   <entry>
-    <title>新年快乐！</title>
-    <url>/article/5785bd01.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
-<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
-<p>新的一年请大家多多关照！</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>新年快乐</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>期末预测之安全指数 202012-1</title>
     <url>/article/d9ae96d3.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
@@ -824,6 +810,20 @@
       </tags>
   </entry>
   <entry>
+    <title>新年快乐！</title>
+    <url>/article/5785bd01.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
+<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
+<p>新的一年请大家多多关照！</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>新年快乐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>海明码的编码和校验方法</title>
     <url>/article/51bf9fa7.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>海明码（也叫汉明码）具有一位纠错能力。本文以1010110这个二进制数为例解释海明码的编码和校验方法。</p>
@@ -948,6 +948,33 @@
       </tags>
   </entry>
   <entry>
+    <title>称检测点查询 202009-1</title>
+    <url>/article/3b542d1c.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+<span id="more"></span>
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>王道数据结构P191关于二叉树的算法归纳</title>
     <url>/article/1537acf2.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
@@ -989,39 +1016,12 @@
       </tags>
   </entry>
   <entry>
-    <title>称检测点查询 202009-1</title>
-    <url>/article/3b542d1c.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
-<span id="more"></span>
-
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>邻域均值 202104-2</title>
     <url>/article/7ca04377.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
 <span id="more"></span>
 
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)={Axy|0≤x,y&lt;n and |x−i|≤r and |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)={A_{xy}|0≤x,y&lt;n\ and\ |x−i|≤r\ and\ |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
 <p>如果元素$A_{ij}$邻域中所有元素的平均值小于或等于一个给定的阈值$t$，我们就认为该元素对应位置的像素处于较暗区域。<br>下图给出了两个例子，左侧图像的较暗区域在右侧图像中展示为黑色，其余区域展示为白色。</p>
 <p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/202104-2.jpg"></p>
 <p>现给定邻域参数r和阈值t，试统计输入灰度图像中有多少像素处于<strong>较暗区域</strong>。</p>
@@ -1049,6 +1049,32 @@
       </categories>
       <tags>
         <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <url>/article/3d834efa.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
+<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1107,32 +1133,6 @@
       </categories>
       <tags>
         <tag>高等数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装系统后快速恢复Hexo环境</title>
-    <url>/article/3d834efa.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
-<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
-<span id="more"></span>
-
-<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
-<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
-<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果hexo命令不可用，需要修改系统环境配置。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
