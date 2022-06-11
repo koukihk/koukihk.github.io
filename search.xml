@@ -137,53 +137,6 @@
       </tags>
   </entry>
   <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/article/fc8787d6.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
-
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/article/4a17b156.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Vue基础</title>
     <url>/article/4b668c47.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="Vue的介绍"><a href="#Vue的介绍" class="headerlink" title="Vue的介绍"></a>Vue的介绍</h3><p>官网教程:<span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvdjIvZ3VpZGUvaW5zdGFsbGF0aW9uLmh0bWw=">https://cn.vuejs.org/v2/guide/installation.html<i class="fa fa-external-link-alt"></i></span></p>
@@ -395,6 +348,35 @@
       </tags>
   </entry>
   <entry>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/article/fc8787d6.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
     <url>/article/1128bacf.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Aplayer是一个基于JavaScript的播放器插件，而MetingJs则是基于Aplayer插件封装好的插件，开箱即用。</p>
@@ -527,6 +509,24 @@
       <tags>
         <tag>Hexo</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/article/4a17b156.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">Hexo<i class="fa fa-external-link-alt"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv">documentation<i class="fa fa-external-link-alt"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=">troubleshooting<i class="fa fa-external-link-alt"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==">GitHub<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s">Writing<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=">Server<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s">Generating<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s">Deployment<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
   </entry>
   <entry>
     <title>二叉树的遍历方法及其Java代码实现</title>
@@ -694,6 +694,69 @@
       </categories>
       <tags>
         <tag>新年快乐</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>期末预测之最佳阈值 202012-2</title>
+    <url>/article/e7a7ed06.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
+<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
+<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
+<span id="more"></span>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
+<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
+<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
+<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
+<p>$θ^* = \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j=1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) == result_j ) }<br>$</p>
+<p>该公式亦可等价地表述为如下规则：</p>
+<ol>
+<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
+<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
+<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
+</ol>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
+<p>输入的第一行包含一个正整数$m$ 。</p>
+<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
+<p>输出一个整数，表示最佳阈值$θ^*$。</p>
+<p>样例1输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
+
+<p>样例1输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>样例1解释</p>
+<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
+<p>θ=0 时，预测正确次数为 4；</p>
+<p>θ=1 时，预测正确次数为 5；</p>
+<p>θ=3 时，预测正确次数为 5；</p>
+<p>θ=5 时，预测正确次数为 4；</p>
+<p>θ=7 时，预测正确次数为 3。</p>
+<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
+<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
+<p>依规则三，$θ^*=max1,3=3$。</p>
+<p>样例2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
+
+<p>样例2输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
+
+<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
+<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNDY0MDg4L2FydGljbGUvZGV0YWlscy8xMTIwODAwNDQ=">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和<i class="fa fa-external-link-alt"></i></span></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">1e5</span>+<span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="keyword">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="keyword">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr+<span class="number">1</span>,pr+n+<span class="number">1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="keyword">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="keyword">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="keyword">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -926,59 +989,23 @@
       </tags>
   </entry>
   <entry>
-    <title>期末预测之最佳阈值 202012-2</title>
-    <url>/article/e7a7ed06.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
-<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
-<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
+    <title>称检测点查询 202009-1</title>
+    <url>/article/3b542d1c.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
 <span id="more"></span>
 
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
-<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
-<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
-<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
-<p>$θ^* = \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j=1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) == result_j ) }<br>$</p>
-<p>该公式亦可等价地表述为如下规则：</p>
-<ol>
-<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
-<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
-<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
-</ol>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
-<p>输入的第一行包含一个正整数$m$ 。</p>
-<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
-<p>输出一个整数，表示最佳阈值$θ^*$。</p>
-<p>样例1输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
 
-<p>样例1输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
 
-<p>样例1解释</p>
-<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
-<p>θ=0 时，预测正确次数为 4；</p>
-<p>θ=1 时，预测正确次数为 5；</p>
-<p>θ=3 时，预测正确次数为 5；</p>
-<p>θ=5 时，预测正确次数为 4；</p>
-<p>θ=7 时，预测正确次数为 3。</p>
-<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
-<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
-<p>依规则三，$θ^*=max1,3=3$。</p>
-<p>样例2输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
+<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
 
-<p>样例2输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
+<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
-<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
-<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNDY0MDg4L2FydGljbGUvZGV0YWlscy8xMTIwODAwNDQ=">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和<i class="fa fa-external-link-alt"></i></span></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">1e5</span>+<span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="keyword">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="keyword">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr+<span class="number">1</span>,pr+n+<span class="number">1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="keyword">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="keyword">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="keyword">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -1025,30 +1052,29 @@
       </tags>
   </entry>
   <entry>
-    <title>称检测点查询 202009-1</title>
-    <url>/article/3b542d1c.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <url>/article/3d834efa.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
+<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
 <span id="more"></span>
 
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>一路回车即可。</p>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
-<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
 
-<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
 ]]></content>
       <categories>
-        <category>试题</category>
+        <category>经验</category>
       </categories>
       <tags>
-        <tag>csp</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1107,32 +1133,6 @@
       </categories>
       <tags>
         <tag>高等数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装系统后快速恢复Hexo环境</title>
-    <url>/article/3d834efa.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
-<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
-<span id="more"></span>
-
-<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
-<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
-<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果hexo命令不可用，需要修改系统环境配置。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
