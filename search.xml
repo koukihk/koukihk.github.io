@@ -96,28 +96,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ISBN号码 201312-2</title>
-    <url>/article/73bd0af.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括9位数字、1位识别码和3位分隔符，其规定格式如“x-xxx-xxxxx-x”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如0-670-82162-4就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如0代表英语；第一个分隔符“-”之后的三位数字代表出版社，例如670代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以1加上次位数字乘以2……以此类推，用所得的结果mod 11，所得的余数即为识别码，如果余数为10，则识别码为大写字母X。例如ISBN号码0-670-82162-4中的识别码4是这样得到的：对067082162这9个数字，从左至右，分别乘以1，2，…，9，再求和，即0×1+6×2+……+2×9=158，然后取158 mod 11的结果4作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“Right”；如果错误，则输出是正确的ISBN号码。</p>
-<span id="more"></span>
-
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“Right”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“-”）。</p>
-<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>0-670-82162-4</p>
-<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>Right</p>
-<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>0-670-82162-0</p>
-<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>0-670-82162-4</p>
-<h2 id="解答（Dev-CPP环境，仅70分）"><a href="#解答（Dev-CPP环境，仅70分）" class="headerlink" title="解答（Dev-CPP环境，仅70分）"></a>解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="keyword">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="keyword">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo与WordPress、Typecho的主观对比与评价</title>
     <url>/article/9f933cbc.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -135,35 +113,6 @@
       <categories>
         <category>随笔</category>
       </categories>
-  </entry>
-  <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/article/fc8787d6.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
-
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
   </entry>
   <entry>
     <title>Vue基础</title>
@@ -374,6 +323,57 @@
       </categories>
       <tags>
         <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISBN号码 201312-2</title>
+    <url>/article/73bd0af.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括9位数字、1位识别码和3位分隔符，其规定格式如“x-xxx-xxxxx-x”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如0-670-82162-4就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如0代表英语；第一个分隔符“-”之后的三位数字代表出版社，例如670代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以1加上次位数字乘以2……以此类推，用所得的结果mod 11，所得的余数即为识别码，如果余数为10，则识别码为大写字母X。例如ISBN号码0-670-82162-4中的识别码4是这样得到的：对067082162这9个数字，从左至右，分别乘以1，2，…，9，再求和，即0×1+6×2+……+2×9=158，然后取158 mod 11的结果4作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“Right”；如果错误，则输出是正确的ISBN号码。</p>
+<span id="more"></span>
+
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“Right”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“-”）。</p>
+<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>0-670-82162-4</p>
+<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>Right</p>
+<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>0-670-82162-0</p>
+<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>0-670-82162-4</p>
+<h2 id="解答（Dev-CPP环境，仅70分）"><a href="#解答（Dev-CPP环境，仅70分）" class="headerlink" title="解答（Dev-CPP环境，仅70分）"></a>解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="keyword">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="keyword">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="keyword">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/article/fc8787d6.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个= =</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -659,20 +659,6 @@
       </tags>
   </entry>
   <entry>
-    <title>新年快乐！</title>
-    <url>/article/5785bd01.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
-<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
-<p>新的一年请大家多多关照！</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>新年快乐</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据结构查找相关算法</title>
     <url>/article/624786ac.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="二叉树结构"><a href="#二叉树结构" class="headerlink" title="二叉树结构"></a>二叉树结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> TElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    TElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span> <span class="comment">//左右孩子指针 </span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
@@ -694,6 +680,20 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新年快乐！</title>
+    <url>/article/5785bd01.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>2022新年快乐！</p>
+<p>最近有点忙，有差不多三个月没有更新博客啦！接下来会逐渐恢复更新的~</p>
+<p>新的一年请大家多多关照！</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>新年快乐</tag>
       </tags>
   </entry>
   <entry>
@@ -948,33 +948,6 @@
       </tags>
   </entry>
   <entry>
-    <title>称检测点查询 202009-1</title>
-    <url>/article/3b542d1c.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
-<span id="more"></span>
-
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>王道数据结构P191关于二叉树的算法归纳</title>
     <url>/article/1537acf2.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
@@ -1016,6 +989,33 @@
       </tags>
   </entry>
   <entry>
+    <title>称检测点查询 202009-1</title>
+    <url>/article/3b542d1c.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+<span id="more"></span>
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="keyword">int</span> id,<span class="keyword">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> X,<span class="keyword">int</span> Y,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.dis==p2.dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p1.id&lt;p2.id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p1.dis&lt;p2.dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i+<span class="number">1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>邻域均值 202104-2</title>
     <url>/article/7ca04377.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
@@ -1052,6 +1052,32 @@
       </tags>
   </entry>
   <entry>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <url>/article/3d834efa.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
+<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>风险人群筛查202009-2</title>
     <url>/article/3a23d7f5.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>某地疫情爆发后，出于“应检尽检”的原则，我们想要通知所有近期经过该高危区域的居民参与核酸检测。</p>
@@ -1085,32 +1111,6 @@
       </categories>
       <tags>
         <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装系统后快速恢复Hexo环境</title>
-    <url>/article/3d834efa.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，请做好备份。</p>
-<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL2dpdC1zY20uY29tLw==">https://git-scm.com/<i class="fa fa-external-link-alt"></i></span><br>Node.js: <span class="exturl" data-url="aHR0cHM6Ly9saW5rcy5qaWFuc2h1LmNvbS9nbz90bz1odHRwczovL25vZGVqcy5vcmcvZW4v">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
-<span id="more"></span>
-
-<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
-<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
-<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果hexo命令不可用，需要修改系统环境配置。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
