@@ -228,14 +228,14 @@
   </url>
   
   <url>
-    <loc>https://kouki.ltd/tags/CLRS/</loc>
+    <loc>https://kouki.ltd/tags/csp/</loc>
     <lastmod>2022-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://kouki.ltd/tags/csp/</loc>
+    <loc>https://kouki.ltd/tags/CLRS/</loc>
     <lastmod>2022-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -293,13 +293,6 @@
   </url>
   
   <url>
-    <loc>https://kouki.ltd/categories/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2022-07-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://kouki.ltd/categories/%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2022-07-26</lastmod>
     <changefreq>daily</changefreq>
@@ -315,6 +308,13 @@
   
   <url>
     <loc>https://kouki.ltd/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2022-07-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://kouki.ltd/categories/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2022-07-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
