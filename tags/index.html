@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -276,10 +276,10 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
       
       <div class="post-body"><div class="tag-cloud">
   <div class="tag-cloud-title">
-    目前共计 10 个标签
+    目前共计 9 个标签
   </div>
   <div class="tag-cloud-tags">
-    <a href="/tags/CLRS/" style="font-size: 12px;" class="tag-cloud-0">CLRS</a> <a href="/tags/Git/" style="font-size: 24px;" class="tag-cloud-7">Git</a> <a href="/tags/Hexo/" style="font-size: 18px;" class="tag-cloud-3">Hexo</a> <a href="/tags/Vue/" style="font-size: 12px;" class="tag-cloud-0">Vue</a> <a href="/tags/csp/" style="font-size: 30px;" class="tag-cloud-10">csp</a> <a href="/tags/python3/" style="font-size: 12px;" class="tag-cloud-0">python3</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 24px;" class="tag-cloud-7">数据结构</a> <a href="/tags/%E6%96%B0%E5%B9%B4%E5%BF%AB%E4%B9%90/" style="font-size: 12px;" class="tag-cloud-0">新年快乐</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 12px;" class="tag-cloud-0">计算机网络</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 12px;" class="tag-cloud-0">高等数学</a>
+    <a href="/tags/CLRS/" style="font-size: 12px;" class="tag-cloud-0">CLRS</a> <a href="/tags/Git/" style="font-size: 24px;" class="tag-cloud-7">Git</a> <a href="/tags/Hexo/" style="font-size: 18px;" class="tag-cloud-3">Hexo</a> <a href="/tags/Vue/" style="font-size: 12px;" class="tag-cloud-0">Vue</a> <a href="/tags/csp/" style="font-size: 30px;" class="tag-cloud-10">csp</a> <a href="/tags/python3/" style="font-size: 12px;" class="tag-cloud-0">python3</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 24px;" class="tag-cloud-7">数据结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 12px;" class="tag-cloud-0">计算机网络</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 12px;" class="tag-cloud-0">高等数学</a>
   </div>
 </div>
 
@@ -298,39 +298,21 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 
   <footer class="footer">
     <div class="footer-inner">
-  <div class="languages">
-    <label class="lang-select-label">
-      <i class="fa fa-language"></i>
-      <span>简体中文</span>
-      <i class="fa fa-angle-up" aria-hidden="true"></i>
-    </label>
-    <select class="lang-select" data-canonical="" aria-label="选择语言">
-      
-        <option value="zh-CN" data-href="/tags/index.html" selected="">
-          简体中文
-        </option>
-      
-        <option value="zh-TW" data-href="/zh-TW/tags/index.html" selected="">
-          繁體中文
-        </option>
-      
-        <option value="en" data-href="/en/tags/index.html" selected="">
-          English
-        </option>
-      
-        <option value="ja" data-href="/ja/tags/index.html" selected="">
-          日本語
-        </option>
-      
-        <option value="ko" data-href="/ko/tags/index.html" selected="">
-          한국어
-        </option>
-      
-    </select>
-  </div>
 
 
 <div class="copyright">
+  <p id="hitokoto"><a href="#" id="hitokoto_text">:D 获取中...</a></p>
+
+  <script>
+    fetch('https://v1.hitokoto.cn')
+      .then(response => response.json())
+      .then(data => {
+        const hitokoto = document.getElementById('hitokoto_text')
+        hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        hitokoto.innerText = data.hitokoto
+      })
+      .catch(console.error)
+  </script>
   <a href="https://icp.gov.moe/?keyword=20210111" target="_blank">萌ICP备20210111号</a>
   <span>&nbsp;</span>
   <a href="https://kouki.ltd/sitemap.xml" target="_blank">Sitemap</a>

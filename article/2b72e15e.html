@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -387,39 +387,21 @@ $('#page_end_html').wrap("<div style='pointer-events:auto;'></div>")
 
   <footer class="footer">
     <div class="footer-inner">
-  <div class="languages">
-    <label class="lang-select-label">
-      <i class="fa fa-language"></i>
-      <span>简体中文</span>
-      <i class="fa fa-angle-up" aria-hidden="true"></i>
-    </label>
-    <select class="lang-select" data-canonical="" aria-label="选择语言">
-      
-        <option value="zh-CN" data-href="/article/2b72e15e.html" selected="">
-          简体中文
-        </option>
-      
-        <option value="zh-TW" data-href="/zh-TW/article/2b72e15e.html" selected="">
-          繁體中文
-        </option>
-      
-        <option value="en" data-href="/en/article/2b72e15e.html" selected="">
-          English
-        </option>
-      
-        <option value="ja" data-href="/ja/article/2b72e15e.html" selected="">
-          日本語
-        </option>
-      
-        <option value="ko" data-href="/ko/article/2b72e15e.html" selected="">
-          한국어
-        </option>
-      
-    </select>
-  </div>
 
 
 <div class="copyright">
+  <p id="hitokoto"><a href="#" id="hitokoto_text">:D 获取中...</a></p>
+
+  <script>
+    fetch('https://v1.hitokoto.cn')
+      .then(response => response.json())
+      .then(data => {
+        const hitokoto = document.getElementById('hitokoto_text')
+        hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        hitokoto.innerText = data.hitokoto
+      })
+      .catch(console.error)
+  </script>
   <a href="https://icp.gov.moe/?keyword=20210111" target="_blank">萌ICP备20210111号</a>
   <span>&nbsp;</span>
   <a href="https://kouki.ltd/sitemap.xml" target="_blank">Sitemap</a>
