@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/star2.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/star2.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/star1.ico">
+  <link rel="mask-icon" href="/images/star2.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.geekzu.org/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://lib.baomitu.com/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kouki.ltd","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.14.1","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="说在前面本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。 typedef struct BiTNode &amp;#123; 	ElemType data; 	struct BiTNode *lchild,*rchild; &amp;#125;BiTNode,*BiTree;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="王道数据结构P191关于二叉树的算法归纳">
+<meta property="og:url" content="https://kouki.ltd/article/1537acf2.html">
+<meta property="og:site_name" content="Kouki-α">
+<meta property="og:description" content="说在前面本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。 typedef struct BiTNode &amp;#123; 	ElemType data; 	struct BiTNode *lchild,*rchild; &amp;#125;BiTNode,*BiTree;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-16T13:15:27.000Z">
+<meta property="article:modified_time" content="2022-05-16T14:39:53.642Z">
+<meta property="article:author" content="Kouki">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kouki.ltd/article/1537acf2.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kouki.ltd/article/1537acf2.html","path":"article/1537acf2.html","title":"王道数据结构P191关于二叉树的算法归纳"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>王道数据结构P191关于二叉树的算法归纳 | Kouki-α</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+<link rel="dns-prefetch" href="https://waline.kouki.ltd">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+
+<link rel="alternate" href="/atom.xml" title="Kouki-α" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:orange;background:0 0}.darkmode--activated pre{opacity:.75}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Kouki-α</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-tools"><a href="/tools/" rel="section"><i class="fas fa-tools fa-fw"></i>工具</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fas fa-link fa-fw"></i>链接</a></li><li class="menu-item menu-item-travellings"><span class="exturl" data-url="aHR0cHM6Ly93d3cudHJhdmVsbGluZ3MuY24vZ28uaHRtbA=="><i class="fas fa-subway fa-fw"></i>开往</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">说在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%A6%E4%B8%BA1%E7%9A%84%E7%BB%93%E7%82%B9%E4%B8%AA%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">统计二叉树中度为1的结点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%A6%E4%B8%BA2%E7%9A%84%E7%BB%93%E7%82%B9%E4%B8%AA%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">统计二叉树中度为2的结点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%A6%E4%B8%BA0%E7%9A%84%E7%BB%93%E7%82%B9%E4%B8%AA%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">统计二叉树中度为0的结点个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%AB%98%E5%BA%A6"><span class="nav-number">5.</span> <span class="nav-text">统计二叉树的高度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%BD%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">统计二叉树的宽度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%88%A0%E5%8E%BB%E6%89%80%E6%9C%89%E7%9A%84%E5%8F%B6%E7%BB%93%E7%82%B9"><span class="nav-number">7.</span> <span class="nav-text">从二叉树中删去所有的叶结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%8C%87%E5%AE%9A%E7%BB%93%E7%82%B9-p%E6%89%80%E5%9C%A8%E7%9A%84%E5%B1%82%E6%AC%A1"><span class="nav-number">8.</span> <span class="nav-text">计算指定结点*p所在的层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%90%84%E7%BB%93%E7%82%B9%E4%B8%AD%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0%E7%9A%84%E5%80%BC"><span class="nav-number">9.</span> <span class="nav-text">计算二叉树中各结点中最大元素的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E6%AF%8F%E4%B8%AA%E7%BB%93%E7%82%B9%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AD%90%E5%A5%B3"><span class="nav-number">10.</span> <span class="nav-text">交换二叉树中每个结点的两个子女</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%85%88%E5%BA%8F%E6%AC%A1%E5%BA%8F%E8%BE%93%E5%87%BA%E4%B8%80%E9%A2%97%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">以先序次序输出一颗二叉树中所有结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kouki"
+      src="/images/Avatar.jpg">
+  <p class="site-author-name" itemprop="name">Kouki</p>
+  <div class="site-description" itemprop="description">我不知为何在市营电车上。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2tvdWtpaGs=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;koukihk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="TWFpbHRvOnNvcnVrdUBmb3htYWlsLmNvbQ==" title="E-Mail → Mailto:soruku@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kouki.ltd/atom.xml" title="RSS → https:&#x2F;&#x2F;kouki.ltd&#x2F;atom.xml" rel="noopener me"><i class="fas fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLzQuMC8="><img src="https://lib.baomitu.com/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kouki.ltd/article/1537acf2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Avatar.jpg">
+      <meta itemprop="name" content="Kouki">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kouki-α">
+      <meta itemprop="description" content="我不知为何在市营电车上。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="王道数据结构P191关于二叉树的算法归纳 | Kouki-α">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          王道数据结构P191关于二叉树的算法归纳
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-16 21:15:27 / 修改时间：22:39:53" itemprop="dateCreated datePublished" datetime="2022-05-16T21:15:27+08:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/article/1537acf2.html#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/article/1537acf2.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">BiTNode</span>
+<span class="token punctuation">&#123;</span>
+	ElemType data<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">BiTNode</span> <span class="token operator">*</span>lchild<span class="token punctuation">,</span><span class="token operator">*</span>rchild<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>BiTNode<span class="token punctuation">,</span><span class="token operator">*</span>BiTree<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<span id="more"></span>
+
+<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">NodeCount1</span><span class="token punctuation">(</span> BiTree T<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span>T<span class="token operator">-></span>rchild<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token operator">||</span>T<span class="token operator">-></span>rchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span>T<span class="token operator">-></span>lchild<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token operator">+</span><span class="token function">NodeCount1</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">NodeCount1</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> <span class="token function">NodeCount1</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">NodeCount1</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
+<p>也可以用非递归方法，使用队列层次遍历。</p>
+<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">NodeCount2</span><span class="token punctuation">(</span> BiTree T<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span>T<span class="token operator">-></span>rchild<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token operator">||</span>T<span class="token operator">-></span>rchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span>T<span class="token operator">-></span>lchild<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">NodeCount2</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">NodeCount2</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> <span class="token number">1</span><span class="token operator">+</span><span class="token function">NodeCount2</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">NodeCount2</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">NodeCount0</span><span class="token punctuation">(</span> BiTree T<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span>T<span class="token operator">-></span>rchild<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> <span class="token function">NodeCount0</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">NodeCount0</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Height</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> ldep <span class="token operator">=</span> <span class="token function">Height</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//结点左子树高度</span>
+	<span class="token keyword">int</span> rdep <span class="token operator">=</span> <span class="token function">Height</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//结点右子树高度</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>ldep <span class="token operator">></span> rdep<span class="token punctuation">)</span>	<span class="token comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span>
+		<span class="token keyword">return</span> ldep <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span>
+		<span class="token keyword">return</span> rdep <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">LevelWidth</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">,</span> <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">int</span> h<span class="token punctuation">)</span>	<span class="token comment">//求每一层的宽度</span>
+<span class="token punctuation">&#123;</span>	<span class="token comment">//第一次调用为LevelWidth(T,a,1);</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>T<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		a<span class="token punctuation">[</span>h<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token function">LevelWidth</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">,</span> a<span class="token punctuation">,</span> h <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LevelWidth</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">,</span> a<span class="token punctuation">,</span> h <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">Width</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">)</span>	
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">[</span>MaxSize <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> h <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> MaxSize<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+		a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token function">LevelWidth</span><span class="token punctuation">(</span>T<span class="token punctuation">,</span> a<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span>
+	<span class="token keyword">int</span> wid <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> MaxSize<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>	<span class="token comment">//遍历数组a[i]求最大值，即树的宽度</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> wid<span class="token punctuation">)</span> 
+			wid <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> wid<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Del_0</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	BiTNode <span class="token operator">*</span>p <span class="token operator">=</span> T<span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>p<span class="token operator">-></span>lchild <span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span> p<span class="token operator">-></span>rchild <span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token operator">||</span> p <span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>lchild<span class="token operator">-></span>lchild <span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span> p<span class="token operator">-></span>lchild<span class="token operator">-></span>rchlid <span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  		p<span class="token operator">-></span>lchild <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span><span class="token comment">//⽗节点左孩⼦指针置空</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>rchild<span class="token operator">-></span>lchild <span class="token operator">==</span><span class="token constant">NULL</span><span class="token operator">&amp;&amp;</span> p<span class="token operator">-></span>rchild<span class="token operator">-></span>rchlid <span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	p<span class="token operator">-></span>rchild <span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span><span class="token comment">//⽗节点右孩⼦指针置空</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">Del_0</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">Del_0</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先叶子是指左右孩子都没有的结点。</p>
+<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
+<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">GetLevel</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">,</span> BiTNode <span class="token operator">*</span>p<span class="token punctuation">)</span>		<span class="token comment">//计算指定结点*p所在的层次</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T <span class="token operator">==</span> p<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//找到所在层,第一层</span>
+	<span class="token keyword">int</span> depl <span class="token operator">=</span> <span class="token function">GetLevel</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> depr <span class="token operator">=</span> <span class="token function">GetLevel</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>depl <span class="token operator">||</span> depr<span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>depl <span class="token operator">></span> depr<span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">+</span> depl<span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			<span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">+</span> depr<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Get_Max</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">)</span>	
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> maxl <span class="token operator">=</span> <span class="token function">Get_Max</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> maxr <span class="token operator">=</span> <span class="token function">Get_Max</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> max <span class="token operator">=</span> maxl <span class="token operator">></span> maxr <span class="token operator">?</span> maxl <span class="token operator">:</span> maxr<span class="token punctuation">;</span>	<span class="token comment">//max为maxl和maxr中更大的一个</span>
+	<span class="token keyword">return</span> max <span class="token operator">></span> T<span class="token operator">-></span>data <span class="token operator">?</span> max <span class="token operator">:</span> T<span class="token operator">-></span>data<span class="token punctuation">;</span>	<span class="token comment">//返回值为max和T->data中更大的一个</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Exc</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T<span class="token operator">-></span>lchild <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token function">Exc</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T<span class="token operator">-></span>rchild <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token function">Exc</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	BiTNode <span class="token operator">*</span>p<span class="token punctuation">;</span>
+	p <span class="token operator">=</span> T<span class="token operator">-></span>lchild<span class="token punctuation">;</span>
+	T<span class="token operator">-></span>lchild <span class="token operator">=</span> T<span class="token operator">-></span>rchild<span class="token punctuation">;</span>
+	T<span class="token operator">-></span>rchild <span class="token operator">=</span> p<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">PreAndLevel</span><span class="token punctuation">(</span>BiTree T<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">)</span>	
+<span class="token punctuation">&#123;</span>		<span class="token comment">//第一次调用为PreAndLevel(T, 1);</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>T <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"data=%d，level=%d"</span><span class="token punctuation">,</span> T<span class="token operator">-></span>data<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">PreAndLevel</span><span class="token punctuation">(</span>T<span class="token operator">-></span>lchild<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">PreAndLevel</span><span class="token punctuation">(</span>T<span class="token operator">-></span>rchild<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2NjQ1MzIyP3R5cGU9YmxvZw=="> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/article/73bd0af.html" rel="prev" title="ISBN号码 201312-2">
+                  <i class="fa fa-chevron-left"></i> ISBN号码 201312-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/article/d9ae96d3.html" rel="next" title="期末预测之安全指数 202012-1">
+                  期末预测之安全指数 202012-1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  <a href="https://icp.gov.moe/?keyword=20210111" target="_blank">萌ICP备20210111号</a>
+  <span>&nbsp;</span>
+  <a href="https://kouki.ltd/sitemap.xml" target="_blank">SiteMap</a>
+  <span>&nbsp;</span>
+  <br>
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2023</span>
+  <!--<span class="with-love">
+    <i class="fas fa-user-astronaut"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kouki</span>
+  -->
+  <span>&nbsp;</span>
+  <span class="author" itemprop="copyrightHolder">Kouki-α</span>
+  <span>&nbsp;</span>
+  <span class="author" itemprop="copyrightHolder">All Rights Reserved.</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">83k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:15</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://lib.baomitu.com/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://lib.baomitu.com/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://lib.baomitu.com/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://lib.baomitu.com/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://kouki.ltd/article/1537acf2.html"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.kouki.ltd","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"dark":"body.darkmode--activated","libUrl":"https://unpkg.com/@waline/client@v2/dist/waline.js","emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/alus","https://unpkg.com/@waline/emojis@1.0.1/bilibili","https://unpkg.com/@waline/emojis@1.0.1/qq","https://unpkg.com/@waline/emojis@1.0.1/tieba","https://unpkg.com/@waline/emojis@1.0.1/tw-emoji"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"enable","el":"#waline","comment":true,"path":"/article/1537acf2.html"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '384px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>
