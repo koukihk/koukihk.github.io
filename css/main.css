@@ -1221,9 +1221,10 @@ pre code {
   margin-bottom: 10px;
   margin-right: 10px;
   vertical-align: middle;
+  transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #a80f0a;
+  background: #e8ff28;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -1526,9 +1527,6 @@ pre code {
 }
 .links-of-author a {
   font-size: 0.8125em;
-}
-.links-of-author i[class^='fa'] {
-  margin-right: 2px;
 }
 .cc-license .cc-opacity {
   border-bottom: 0;
