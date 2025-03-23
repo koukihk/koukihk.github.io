@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"koukihk.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是平衡二叉树？平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的 高度之差不超过1。 结点的平衡因子&#x3D;左子树高-右子树高。 什么是最小不平衡子树？往一个平衡二叉树（本文中均指“平衡二叉排序树”）插入新的叶子节点，从插入点由下往上，依次遍历插入点的各个祖先节点，记录第一个遍历到的 平衡因子|平衡因子|≥2 （即不平衡）的祖先">
+<meta property="og:type" content="article">
+<meta property="og:title" content="调整最小不平衡子树">
+<meta property="og:url" content="https://koukihk.github.io/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/index.html">
+<meta property="og:site_name" content="koukihk">
+<meta property="og:description" content="什么是平衡二叉树？平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的 高度之差不超过1。 结点的平衡因子&#x3D;左子树高-右子树高。 什么是最小不平衡子树？往一个平衡二叉树（本文中均指“平衡二叉排序树”）插入新的叶子节点，从插入点由下往上，依次遍历插入点的各个祖先节点，记录第一个遍历到的 平衡因子|平衡因子|≥2 （即不平衡）的祖先">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png">
+<meta property="og:image" content="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png">
+<meta property="article:published_time" content="2022-10-12T02:58:01.000Z">
+<meta property="article:modified_time" content="2025-03-23T16:28:12.915Z">
+<meta property="article:author" content="koukihk">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png">
+
+
+<link rel="canonical" href="https://koukihk.github.io/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://koukihk.github.io/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/","path":"2022/10/12/调整最小不平衡子树/","title":"调整最小不平衡子树"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>调整最小不平衡子树 | koukihk</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">koukihk</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是平衡二叉树？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是最小不平衡子树？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LL%E5%9E%8B%E4%B8%8ERR%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">LL型与RR型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LL%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">LL型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RR%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">RR型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LR%E5%9E%8B%E4%B8%8ERL%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">LR型与RL型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LR%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">LR型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RL%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">RL型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E7%AE%97%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">验算小技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">koukihk</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/koukihk" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;koukihk" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:koukish.zh@gmail.com" title="E-Mail → mailto:koukish.zh@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://koukihk.github.io/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="koukihk">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="koukihk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="调整最小不平衡子树 | koukihk">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          调整最小不平衡子树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-12 10:58:01" itemprop="dateCreated datePublished" datetime="2022-10-12T10:58:01+08:00">2022-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-24 00:28:12" itemprop="dateModified" datetime="2025-03-24T00:28:12+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan: </span>
+    
+    <a title="调整最小不平衡子树" href="/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/#SOHUCS" itemprop="discussionUrl">
+      <span id="sourceId::337f8e088e3b5d32d4bbe7804fd9e1ad" class="cy_cmt_count" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="什么是平衡二叉树？"><a href="#什么是平衡二叉树？" class="headerlink" title="什么是平衡二叉树？"></a>什么是平衡二叉树？</h2><p><strong>平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的 高度之差不超过1。</strong></p>
+<p>结点的平衡因子&#x3D;左子树高-右子树高。</p>
+<h3 id="什么是最小不平衡子树？"><a href="#什么是最小不平衡子树？" class="headerlink" title="什么是最小不平衡子树？"></a>什么是最小不平衡子树？</h3><p>往一个<strong>平衡二叉树</strong>（本文中均指“<strong>平衡二叉排序树</strong>”）插入新的叶子节点，从插入点由下往上，依次遍历插入点的各个祖先节点，记录第一个遍历到的 平衡因子|平衡因子|≥2 （即<strong>不平衡</strong>）的祖先节点，以该节点为根节点的子树即为这棵树的<strong>最小不平衡子树</strong>。</p>
+<p>根据插入节点在最小不平衡子树中的位置，可以将最小不平衡子树分为<strong>LL、RR、LR、RL</strong>这四类</p>
+<span id="more"></span>
+
+<p>在处理问题前，先将最小不平衡子树抽象、简化为以下部分中的几个：</p>
+<ol>
+<li>最小不平衡子树的根节点A</li>
+<li>A的左子树AL（A-Left）</li>
+<li>A的右子树AR（A-Right’）</li>
+<li>A在插入点对应侧的子节点B</li>
+<li>B左子树BL（B-Left）</li>
+<li>B右子树BR（B-Right）</li>
+<li>插入节点所在的子树Ins（Insert）</li>
+</ol>
+<h2 id="LL型与RR型"><a href="#LL型与RR型" class="headerlink" title="LL型与RR型"></a>LL型与RR型</h2><h3 id="LL型"><a href="#LL型" class="headerlink" title="LL型"></a>LL型</h3><p>插入点在最小不平衡子树根节点A的<strong>左</strong>孩子B的<strong>左</strong>子树上（不一定要与B直接连接），即Left-Left，记为<strong>LL型</strong></p>
+<p><img src="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png"></p>
+<p>对于LL型，将最小不平衡子树<strong>简化</strong>为五个部分：</p>
+<ol>
+<li>根节点A</li>
+<li>A的左孩子节点B</li>
+<li>A的右子树AR（A-Right）</li>
+<li>插入点Ins（全称Inserted），此时同时也是B的左子树BL（B-Left）</li>
+<li>B的右子树BR</li>
+</ol>
+<p>这里注意无论AL、AR、BL、BR、Ins下有多少个节点，也无论插入的元素在Ins的哪个位置，都抽象成以上几个部分，再处理问题</p>
+<p><img src="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png"></p>
+<p>对于LL型，进行<strong>右旋</strong>，B取代A成为根节点，A当B的<strong>右</strong>孩子（对应<strong>右旋</strong>），A以两个除Ins之外的树为子树（注意两子树的相对左右顺序与旋转前一致），B以Ins树为左子树</p>
+<h3 id="RR型"><a href="#RR型" class="headerlink" title="RR型"></a><strong>RR</strong>型</h3><p>插入点在最小不平衡子树根节点A的右孩子B的右子树上（不一定要与B直接连接），即Right-Right，记为<strong>RR</strong>型</p>
+<p><img src="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png"></p>
+<p>将RR型最小不平衡子树<strong>简化</strong>为五个部分：</p>
+<ol>
+<li>根节点A</li>
+<li>A的右孩子节点B</li>
+<li>A的左子树AL</li>
+<li>插入点Ins，此时同时也是B的右子树BR</li>
+<li>B的左子树BL</li>
+</ol>
+<p><img src="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png"></p>
+<p>对于LL型，进行<strong>左旋</strong>，B取代A成为根节点，A当B的<strong>左</strong>孩子（对应<strong>左旋</strong>），A以两个除Ins之外的树为子树（相对左右顺序与旋转前一致），B以Ins树为右子树</p>
+<h2 id="LR型与RL型"><a href="#LR型与RL型" class="headerlink" title="LR型与RL型"></a>LR型与RL型</h2><p>LR型与RL型稍复杂，在简化与抽象时，较前面划分的几个part之外还增加了：</p>
+<ol>
+<li>插入节点所在子树的父节点C</li>
+<li>C节点的左子树CL（C-Left）</li>
+<li>C节点的右子树CR（C-Right）</li>
+</ol>
+<p>LL型与RR型只需要简化成<strong>五个部分</strong>，而LR型与RL型则需要简化成<strong>七个部分</strong></p>
+<h3 id="LR型"><a href="#LR型" class="headerlink" title="LR型"></a>LR型</h3><p>插入点在<strong>根节点A</strong>的<strong>左孩子B</strong>的<strong>右子树C</strong>上（不一定要与C直接连接），即Left-Right，记为<strong>LR型</strong></p>
+<p><img src="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png"></p>
+<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分<strong>左旋（Left）</strong>，<strong>C取代B</strong>的位置，以B为左孩子节点，以CR为右孩子，B将以BL为左子树、CL为右子树；</p>
+<p>接着把第二步中蓝框的部分<strong>右旋（Right）</strong>，<strong>C取代A</strong>的位置，依然以B为左孩子节点，以A为右孩子节点，A将以CR为左子树、AR为右子树；</p>
+<p><img src="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png"></p>
+<h3 id="RL型"><a href="#RL型" class="headerlink" title="RL型"></a>RL型</h3><p>插入点在<strong>根节点A</strong>的<strong>右孩子B</strong>的<strong>左子树C</strong>上（不一定要与C直接连接），即Right-Left，记为<strong>RL型</strong></p>
+<p><img src="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png"></p>
+<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分右<strong>旋（Right）</strong>，<strong>C取代B</strong>的位置，以B为右孩子节点，以CL为左孩子，B将以BR为右子树、CR为左子树；</p>
+<p>接着把第二步中蓝框的部分<strong>左旋（Left）</strong>，<strong>C取代A</strong>的位置，依然以B为右孩子节点，以A为左孩子节点，A将以AL为左子树、CL为右子树；</p>
+<h2 id="验算小技巧"><a href="#验算小技巧" class="headerlink" title="验算小技巧"></a>验算小技巧</h2><p>旋转后左右次序不变，调整前夹在两祖宗节点之间的子节点，在调整后依然要夹在两祖宗节点之间</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>王道计算机考研数据结构篇</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/jackielics6428">小李的学习笔记</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/26/%E8%AF%84%E4%BB%B7%E3%80%8A%E8%84%91%E9%AB%93%E5%9C%B0%E7%8B%B1%E3%80%8B/" rel="prev" title="评价《脑髓地狱》">
+                  <i class="fa fa-angle-left"></i> 评价《脑髓地狱》
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/12/10/dummy%E8%8A%82%E7%82%B9/" rel="next" title="dummy节点">
+                  dummy节点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS" sid="337f8e088e3b5d32d4bbe7804fd9e1ad"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">koukihk</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvDaf1vH","appkey":"68f07dcc8387d4eaba46593f43aa82ab","count":true}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>
