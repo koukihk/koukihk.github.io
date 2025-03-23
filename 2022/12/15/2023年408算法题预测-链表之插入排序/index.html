@@ -16,6 +16,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"koukihk.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
@@ -159,12 +161,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -269,7 +273,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img src="https://telegraph-image.pages.dev/file/c7e4e4ca7567fb38f427a.png"></p>
+    <div class="post-body" itemprop="articleBody"><h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/c7e4e4ca7567fb38f427a.png"></p>
 <p>获取题源请点击<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/insertion-sort-list/description/?languageTags=c">https://leetcode.cn/problems/insertion-sort-list/description/?languageTags=c</a></p>
 <span id="more"></span>
 
@@ -282,7 +286,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">insertionSortList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">NULL</span>)                                                        <span class="comment">//链表为空</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">L</span> =</span> (<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode)); <span class="comment">//辅助结点</span></span><br><span class="line">    L-&gt;next = head;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">cur</span> =</span> head-&gt;next, *pre = head, *tmp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="literal">NULL</span>)&#123;                                                     <span class="comment">//遍历链表</span></span><br><span class="line">        <span class="keyword">if</span>(cur-&gt;val &gt;= pre-&gt;val)&#123;                                           <span class="comment">//寻找需要向前插入的结点</span></span><br><span class="line">            cur = cur-&gt;next;</span><br><span class="line">            pre = pre-&gt;next;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            tmp = L;</span><br><span class="line">            <span class="keyword">while</span>(tmp-&gt;next-&gt;val &lt; cur-&gt;val)                                <span class="comment">//寻找插入位置</span></span><br><span class="line">                tmp = tmp-&gt;next;</span><br><span class="line">            pre-&gt;next = cur-&gt;next;                                          <span class="comment">//进行插入</span></span><br><span class="line">            cur-&gt;next = tmp-&gt;next;</span><br><span class="line">            tmp-&gt;next = cur;</span><br><span class="line">            cur = pre-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> L-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><p>特别地，由于408考试所用链表大多数为带头结点的链表，且结点结构不一致，因此最后写出的代码略有不同，但思路一致。</p>
-<h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img src="https://telegraph-image.pages.dev/file/02ad05c6a47e84350bbf4.jpg"></p>
+<h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img data-src="https://telegraph-image.pages.dev/file/02ad05c6a47e84350bbf4.jpg"></p>
 
     </div>
 
@@ -291,6 +295,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>koukihk
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://koukihk.github.io/2022/12/15/2023%E5%B9%B4408%E7%AE%97%E6%B3%95%E9%A2%98%E9%A2%84%E6%B5%8B-%E9%93%BE%E8%A1%A8%E4%B9%8B%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/" title="2023年408算法题预测-链表之插入排序">https://koukihk.github.io/2022/12/15/2023年408算法题预测-链表之插入排序/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
           </div>
@@ -367,6 +388,7 @@
 
 
 
+  <script src="/js/third-party/pace.js"></script>
 
 
   

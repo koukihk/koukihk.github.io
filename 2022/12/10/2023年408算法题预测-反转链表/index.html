@@ -16,6 +16,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"koukihk.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
@@ -160,12 +162,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -270,12 +274,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
+    <div class="post-body" itemprop="articleBody"><h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
 <span id="more"></span>
 
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><img src="https://telegraph-image.pages.dev/file/50a776383823725dd0078.png"></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><img data-src="https://telegraph-image.pages.dev/file/50a776383823725dd0078.png"></p>
 <h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版（略微修改）"><a href="#手写版（略微修改）" class="headerlink" title="手写版（略微修改）"></a>手写版（略微修改）</h4><p>若无法显示，请点击<a target="_blank" rel="noopener" href="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png">https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png</a></p>
-<p><img src="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png"></p>
 <h4 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseLinkedList</span><span class="params">(<span class="keyword">struct</span> ListNode *head)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">prev</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span> =</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span> =</span> curr-&gt;next;</span><br><span class="line">        curr-&gt;next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseBetween</span><span class="params">(<span class="keyword">struct</span> ListNode *head, <span class="type">int</span> left, <span class="type">int</span> right)</span> &#123;</span><br><span class="line">    <span class="comment">// 第一步：哨兵列队</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p1</span> =</span> head;</span><br><span class="line">    <span class="comment">// 从 head 走 left - 1 步，来到 p1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; left - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p1 走 1 步，来到 p2 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p2</span> =</span> p1-&gt;next;</span><br><span class="line">    <span class="comment">// 从 p2 走 right - left 步，来到 p3</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p3</span> =</span> p2;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; right - left; i++) &#123;</span><br><span class="line">        p3 = p3-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p3 走 1 步，来到 p4 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p4</span> =</span> p3-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：切断链接，分成三段链表</span></span><br><span class="line">    p1-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    p3-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：反转中间段链表</span></span><br><span class="line">    reverseLinkedList(p2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：重新拼接三段链表</span></span><br><span class="line">    p1-&gt;next = p3;</span><br><span class="line">    p2-&gt;next = p4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/suixinyuan1990">千葉原</a></p>
@@ -287,6 +291,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>koukihk
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://koukihk.github.io/2022/12/10/2023%E5%B9%B4408%E7%AE%97%E6%B3%95%E9%A2%98%E9%A2%84%E6%B5%8B-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="2023年408算法题预测 反转链表">https://koukihk.github.io/2022/12/10/2023年408算法题预测-反转链表/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
           </div>
@@ -363,6 +384,7 @@
 
 
 
+  <script src="/js/third-party/pace.js"></script>
 
 
   

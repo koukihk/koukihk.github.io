@@ -16,6 +16,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"koukihk.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
@@ -164,12 +166,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -291,7 +295,7 @@
 <li>插入节点所在的子树Ins（Insert）</li>
 </ol>
 <h2 id="LL型与RR型"><a href="#LL型与RR型" class="headerlink" title="LL型与RR型"></a>LL型与RR型</h2><h3 id="LL型"><a href="#LL型" class="headerlink" title="LL型"></a>LL型</h3><p>插入点在最小不平衡子树根节点A的<strong>左</strong>孩子B的<strong>左</strong>子树上（不一定要与B直接连接），即Left-Left，记为<strong>LL型</strong></p>
-<p><img src="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png"></p>
 <p>对于LL型，将最小不平衡子树<strong>简化</strong>为五个部分：</p>
 <ol>
 <li>根节点A</li>
@@ -301,10 +305,10 @@
 <li>B的右子树BR</li>
 </ol>
 <p>这里注意无论AL、AR、BL、BR、Ins下有多少个节点，也无论插入的元素在Ins的哪个位置，都抽象成以上几个部分，再处理问题</p>
-<p><img src="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png"></p>
 <p>对于LL型，进行<strong>右旋</strong>，B取代A成为根节点，A当B的<strong>右</strong>孩子（对应<strong>右旋</strong>），A以两个除Ins之外的树为子树（注意两子树的相对左右顺序与旋转前一致），B以Ins树为左子树</p>
 <h3 id="RR型"><a href="#RR型" class="headerlink" title="RR型"></a><strong>RR</strong>型</h3><p>插入点在最小不平衡子树根节点A的右孩子B的右子树上（不一定要与B直接连接），即Right-Right，记为<strong>RR</strong>型</p>
-<p><img src="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png"></p>
 <p>将RR型最小不平衡子树<strong>简化</strong>为五个部分：</p>
 <ol>
 <li>根节点A</li>
@@ -313,7 +317,7 @@
 <li>插入点Ins，此时同时也是B的右子树BR</li>
 <li>B的左子树BL</li>
 </ol>
-<p><img src="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png"></p>
 <p>对于LL型，进行<strong>左旋</strong>，B取代A成为根节点，A当B的<strong>左</strong>孩子（对应<strong>左旋</strong>），A以两个除Ins之外的树为子树（相对左右顺序与旋转前一致），B以Ins树为右子树</p>
 <h2 id="LR型与RL型"><a href="#LR型与RL型" class="headerlink" title="LR型与RL型"></a>LR型与RL型</h2><p>LR型与RL型稍复杂，在简化与抽象时，较前面划分的几个part之外还增加了：</p>
 <ol>
@@ -323,12 +327,12 @@
 </ol>
 <p>LL型与RR型只需要简化成<strong>五个部分</strong>，而LR型与RL型则需要简化成<strong>七个部分</strong></p>
 <h3 id="LR型"><a href="#LR型" class="headerlink" title="LR型"></a>LR型</h3><p>插入点在<strong>根节点A</strong>的<strong>左孩子B</strong>的<strong>右子树C</strong>上（不一定要与C直接连接），即Left-Right，记为<strong>LR型</strong></p>
-<p><img src="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png"></p>
 <p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分<strong>左旋（Left）</strong>，<strong>C取代B</strong>的位置，以B为左孩子节点，以CR为右孩子，B将以BL为左子树、CL为右子树；</p>
 <p>接着把第二步中蓝框的部分<strong>右旋（Right）</strong>，<strong>C取代A</strong>的位置，依然以B为左孩子节点，以A为右孩子节点，A将以CR为左子树、AR为右子树；</p>
-<p><img src="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png"></p>
 <h3 id="RL型"><a href="#RL型" class="headerlink" title="RL型"></a>RL型</h3><p>插入点在<strong>根节点A</strong>的<strong>右孩子B</strong>的<strong>左子树C</strong>上（不一定要与C直接连接），即Right-Left，记为<strong>RL型</strong></p>
-<p><img src="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png"></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png"></p>
 <p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分右<strong>旋（Right）</strong>，<strong>C取代B</strong>的位置，以B为右孩子节点，以CL为左孩子，B将以BR为右子树、CR为左子树；</p>
 <p>接着把第二步中蓝框的部分<strong>左旋（Left）</strong>，<strong>C取代A</strong>的位置，依然以B为右孩子节点，以A为左孩子节点，A将以AL为左子树、CL为右子树；</p>
 <h2 id="验算小技巧"><a href="#验算小技巧" class="headerlink" title="验算小技巧"></a>验算小技巧</h2><p>旋转后左右次序不变，调整前夹在两祖宗节点之间的子节点，在调整后依然要夹在两祖宗节点之间</p>
@@ -342,6 +346,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>koukihk
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://koukihk.github.io/2022/10/12/%E8%B0%83%E6%95%B4%E6%9C%80%E5%B0%8F%E4%B8%8D%E5%B9%B3%E8%A1%A1%E5%AD%90%E6%A0%91/" title="调整最小不平衡子树">https://koukihk.github.io/2022/10/12/调整最小不平衡子树/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
           </div>
@@ -418,6 +439,7 @@
 
 
 
+  <script src="/js/third-party/pace.js"></script>
 
 
   

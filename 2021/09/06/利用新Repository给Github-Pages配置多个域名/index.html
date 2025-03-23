@@ -16,6 +16,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"koukihk.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
@@ -160,12 +162,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -277,18 +281,18 @@
 
 <h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
 <h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
 <h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
 
 <p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
 <p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <a target="_blank" rel="noopener" href="http://www.kouki.xyz/">www.kouki.xyz</a> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
 <h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> current = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> target = current.<span class="title function_">substring</span>(current.<span class="title function_">indexOf</span>(<span class="string">&#x27;/&#x27;</span>, current.<span class="title function_">indexOf</span>(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">        location.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>至此，新建的Repository应包含下面几个文件。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
 <h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
 <h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <a target="_blank" rel="noopener" href="http://www.kouki.xyz/">www.kouki.xyz</a> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。</p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a target="_blank" rel="noopener" href="https://www.yanbinghu.com/2019/03/29/25951.html">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)</a></p>
@@ -300,6 +304,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>koukihk
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://koukihk.github.io/2021/09/06/%E5%88%A9%E7%94%A8%E6%96%B0Repository%E7%BB%99Github-Pages%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E5%9F%9F%E5%90%8D/" title="利用新Repository给Github Pages配置多个域名">https://koukihk.github.io/2021/09/06/利用新Repository给Github-Pages配置多个域名/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
               <a href="/tags/Git/" rel="tag"># Git</a>
           </div>
@@ -376,6 +397,7 @@
 
 
 
+  <script src="/js/third-party/pace.js"></script>
 
 
   
