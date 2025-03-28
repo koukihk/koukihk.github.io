@@ -49,7 +49,7 @@
 
 
 
-
+<link rel="dns-prefetch" href="https://waline2025-psi.vercel.app/">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -225,16 +225,24 @@
   
   <span class="post-meta-item">
     
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan: </span>
-    
-    <a title="AJAX学习笔记" href="/2023/01/10/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#SOHUCS" itemprop="discussionUrl">
-      <span id="sourceId::fd8243e1f10de47e1aa7db7c177a880a" class="cy_cmt_count" itemprop="commentCount"></span>
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline: </span>
+  
+    <a title="waline" href="/2023/01/10/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2023/01/10/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span>
     </a>
   </span>
   
+  
+    <span class="post-meta-item" title="Views">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span class="waline-pageview-count" data-path="/2023/01/10/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"></span>
+    </span>
   
 </div>
 
@@ -921,7 +929,7 @@
 
 
 
-    <div class="comments" id="SOHUCS" sid="fd8243e1f10de47e1aa7db7c177a880a"></div>
+    <div class="comments" id="waline"></div>
 </div>
   </main>
 
@@ -940,7 +948,6 @@
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
 
-<!-- 使用 Meting.js 直接加载网易云音乐歌单 - 使用简单设置 -->
 <meting-js
   fixed="true"
   mini="true"
@@ -978,6 +985,53 @@
   overflow-y: auto;
 }
 </style>
+
+<!-- Waline 样式修复脚本 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 等待 Waline 元素加载完成
+  const checkWaline = setInterval(function() {
+    const walineEl = document.querySelector('.wl-panel');
+    if (walineEl) {
+      clearInterval(checkWaline);
+      
+      // 强制应用亮色样式
+      const forceLightMode = document.createElement('style');
+      forceLightMode.textContent = `
+        :root {
+          --waline-theme-color: #42b983 !important;
+          --waline-bgcolor: #fff !important;
+          --waline-bgcolor-light: #f8f8f8 !important;
+          --waline-border-color: #ddd !important;
+          --waline-color: #444 !important;
+          --waline-info-color: #999 !important;
+        }
+        
+        .wl-panel, .wl-card, .wl-input, .wl-textarea, .wl-editor, .wl-header {
+          background-color: #fff !important;
+          color: #444 !important;
+        }
+        
+        .wl-content {
+          color: #444 !important;
+        }
+
+        .wl-btn {
+          background-color: #42b983 !important;
+          border-color: #42b983 !important;
+          color: #fff !important;
+        }
+
+        .wl-tab-item.active {
+          color: #42b983 !important;
+          border-color: #42b983 !important;
+        }
+      `;
+      document.head.appendChild(forceLightMode);
+    }
+  }, 100);
+});
+</script>
 
     </div>
   </footer>
@@ -1019,8 +1073,17 @@
 
 
 
-<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvDaf1vH","appkey":"68f07dcc8387d4eaba46593f43aa82ab","count":true}</script>
-<script src="/js/third-party/comments/changyan.js"></script>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"en","enable":true,"serverURL":"https://waline2025-psi.vercel.app/","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":true,"emoji":["https://unpkg.com/@waline/emojis@1.0.1/weibo","https://unpkg.com/@waline/emojis@1.0.1/bilibili","https://unpkg.com/@waline/emojis@1.0.1/alus","https://unpkg.com/@waline/emojis@1.0.1/qq"],"login":"enable","wordLimit":200,"requiredMeta":["nick","mail"],"dark":false,"placeholder":"","el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2023/01/10/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
 
 </body>
 </html>
