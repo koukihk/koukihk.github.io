@@ -2507,4 +2507,470 @@
         <tag>csp</tag>
       </tags>
   </entry>
+  <entry>
+    <title>输入URL到显示页面的全过程</title>
+    <url>/posts/5156546e.html</url>
+    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">输入 <span class="variable constant_">URL</span> → <span class="variable constant_">DNS</span> 解析 → <span class="variable constant_">TCP</span> 三次握手 → 发送 <span class="variable constant_">HTTP</span> 请求 → 服务器处理响应 →  </span><br><span class="line">浏览器解析 → 构建 <span class="variable constant_">DOM</span>/<span class="variable constant_">CSSOM</span> → 合成渲染树 → 布局与绘制 → <span class="variable constant_">TCP</span> 四次挥手  </span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<pre><code>&lt;style&gt;
+    :root &#123;
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --text-color: #2b2d42;
+        --light-text: #f8f9fa;
+        --bg-color: #f8f9fa;
+        --card-bg: rgba(255, 255, 255, 0.85);
+        --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        --border-radius: 12px;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --glass-effect: backdrop-filter: blur(16px) saturate(180%);
+    &#125;
+
+    * &#123;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    &#125;
+
+    body &#123;
+        font-family: &#39;Segoe UI&#39;, &#39;PingFang SC&#39;, &#39;Microsoft YaHei&#39;, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(72, 149, 239, 0.05) 0%, transparent 20%);
+        padding: 0 5%;
+    &#125;
+
+    .container &#123;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 0;
+    &#125;
+
+    header &#123;
+        text-align: center;
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s forwards;
+    &#125;
+
+    h1 &#123;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    &#125;
+
+    .subtitle &#123;
+        font-size: 1.1rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        max-width: 700px;
+        margin: 0 auto;
+    &#125;
+
+    .card &#123;
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: var(--transition);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.125);
+        opacity: 0;
+        transform: translateY(20px);
+    &#125;
+
+    .card:hover &#123;
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+    &#125;
+
+    h2 &#123;
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+    &#125;
+
+    h2::before &#123;
+        content: &quot;&quot;;
+        display: inline-block;
+        width: 8px;
+        height: 24px;
+        background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        border-radius: 4px;
+        margin-right: 12px;
+    &#125;
+
+    h3 &#123;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        margin: 1.5rem 0 1rem;
+    &#125;
+
+    ul, ol &#123;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    &#125;
+
+    li &#123;
+        margin-bottom: 0.5rem;
+        position: relative;
+    &#125;
+
+    li::before &#123;
+        content: &quot;•&quot;;
+        color: var(--accent-color);
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    &#125;
+
+    p &#123;
+        margin-bottom: 1rem;
+    &#125;
+
+    .highlight &#123;
+        background-color: rgba(67, 97, 238, 0.1);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: &#39;Courier New&#39;, monospace;
+        font-size: 0.9rem;
+    &#125;
+
+    .table-container &#123;
+        overflow-x: auto;
+        margin: 2rem 0;
+    &#125;
+
+    table &#123;
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    &#125;
+
+    th, td &#123;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    &#125;
+
+    th &#123;
+        background-color: var(--primary-color);
+        color: var(--light-text);
+        font-weight: 500;
+    &#125;
+
+    tr:nth-child(even) &#123;
+        background-color: rgba(67, 97, 238, 0.03);
+    &#125;
+
+    tr:hover &#123;
+        background-color: rgba(67, 97, 238, 0.05);
+    &#125;
+
+    .quote &#123;
+        background: rgba(72, 149, 239, 0.08);
+        border-left: 4px solid var(--accent-color);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        font-style: italic;
+        position: relative;
+    &#125;
+
+    .quote::before &#123;
+        content: &quot;&quot;&quot;;
+        font-size: 3rem;
+        color: var(--accent-color);
+        opacity: 0.2;
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        line-height: 1;
+    &#125;
+
+    .summary &#123;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(72, 149, 239, 0.1));
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        margin: 3rem 0;
+        position: relative;
+        overflow: hidden;
+    &#125;
+
+    .summary::before &#123;
+        content: &quot;&quot;;
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        transform: rotate(30deg);
+        z-index: -1;
+    &#125;
+
+    .footer &#123;
+        text-align: center;
+        margin-top: 4rem;
+        padding: 2rem 0;
+        color: var(--text-color);
+        opacity: 0.6;
+        font-size: 0.9rem;
+    &#125;
+
+    @keyframes fadeInUp &#123;
+        to &#123;
+            opacity: 1;
+            transform: translateY(0);
+        &#125;
+    &#125;
+
+    .animate-card &#123;
+        animation: fadeInUp 0.6s forwards;
+    &#125;
+
+    .icon &#123;
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        fill: var(--primary-color);
+    &#125;
+
+    .step-number &#123;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(to bottom right, var(--primary-color), var(--accent-color));
+        color: white;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-right: 12px;
+    &#125;
+
+    @media (max-width: 768px) &#123;
+        body &#123;
+            padding: 0 1rem;
+        &#125;
+        
+        h1 &#123;
+            font-size: 2rem;
+        &#125;
+        
+        .card &#123;
+            padding: 1.5rem;
+        &#125;
+    &#125;
+&lt;/style&gt;
+&lt;div class=&quot;container&quot;&gt;
+    &lt;header&gt;
+        &lt;h1&gt;面向面试的完整流程解析&lt;/h1&gt;
+        &lt;p class=&quot;subtitle&quot;&gt;整合技术要点与面试高频考点的回答框架，结合 OSI七层模型与核心流程&lt;/p&gt;
+    &lt;/header&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.1s&quot;&gt;
+        &lt;h2&gt;&lt;span class=&quot;step-number&quot;&gt;1&lt;/span&gt;DNS解析与缓存&lt;/h2&gt;
+        &lt;h3&gt;流程&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;strong&gt;浏览器缓存&lt;/strong&gt; → &lt;strong&gt;系统缓存&lt;/strong&gt;（hosts文件） → &lt;strong&gt;路由器缓存&lt;/strong&gt; → &lt;strong&gt;本地DNS服务器（ISP）&lt;/strong&gt; → 若未命中，触发递归查询：&lt;strong&gt;根域名服务器 → 顶级域名服务器（.com） → 权威域名服务器&lt;/strong&gt;，最终获取IP地址。&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;DNS预解析&lt;/strong&gt;：通过 &lt;span class=&quot;highlight&quot;&gt;&amp;lt;link rel=&quot;dns-prefetch&quot;&amp;gt;&lt;/span&gt; 提前解析关键域名，加速后续请求。&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;h3&gt;缓存失效&lt;/h3&gt;
+        &lt;p&gt;TTL（生存时间）到期或手动清除缓存时重新查询。&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.2s&quot;&gt;
+        &lt;h2&gt;&lt;span class=&quot;step-number&quot;&gt;2&lt;/span&gt;TCP三次握手（传输层）&lt;/h2&gt;
+        &lt;h3&gt;核心作用&lt;/h3&gt;
+        &lt;p&gt;确认双方收发能力，防止历史连接干扰（如过期SYN报文）。&lt;/p&gt;
+        &lt;h3&gt;三次步骤&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;客户端发送 &lt;span class=&quot;highlight&quot;&gt;SYN=1 + Seq=X&lt;/span&gt; → 服务器返回 &lt;span class=&quot;highlight&quot;&gt;SYN=1 + ACK=X+1 + Seq=Y&lt;/span&gt; → 客户端确认 &lt;span class=&quot;highlight&quot;&gt;ACK=Y+1&lt;/span&gt;。&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;h3&gt;比喻&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;客户端：&quot;我要连你&quot;（SYN） → 服务器：&quot;收到，同意连接&quot;（SYN-ACK） → 客户端：&quot;好的，开始传数据&quot;（ACK）。&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.3s&quot;&gt;
+        &lt;h2&gt;&lt;span class=&quot;step-number&quot;&gt;3&lt;/span&gt;HTTP请求与缓存策略（应用层）&lt;/h2&gt;
+        &lt;h3&gt;请求阶段&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;strong&gt;强缓存&lt;/strong&gt;：&lt;span class=&quot;highlight&quot;&gt;Cache-Control: max-age=3600&lt;/span&gt; 直接使用本地缓存（状态码200 from cache）。&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;协商缓存&lt;/strong&gt;：&lt;span class=&quot;highlight&quot;&gt;If-Modified-Since&lt;/span&gt;（时间戳）或 &lt;span class=&quot;highlight&quot;&gt;If-None-Match&lt;/span&gt;（ETag哈希）验证资源更新（状态码304）。&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;h3&gt;HTTPS扩展&lt;/h3&gt;
+        &lt;p&gt;TLS握手建立加密通道（非对称加密交换密钥 → 对称加密传输数据）。&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.4s&quot;&gt;
+        &lt;h2&gt;&lt;span class=&quot;step-number&quot;&gt;4&lt;/span&gt;浏览器解析与渲染（关键步骤）&lt;/h2&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;strong&gt;构建DOM树&lt;/strong&gt;：
+                &lt;ul&gt;
+                    &lt;li&gt;HTML解析器将字符流转换为Token，生成树状结构（自动补全未闭合标签）。&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;构建CSSOM树&lt;/strong&gt;：
+                &lt;ul&gt;
+                    &lt;li&gt;解析CSS生成样式规则树，&lt;strong&gt;阻塞渲染&lt;/strong&gt;直到CSSOM完成。&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;合成渲染树&lt;/strong&gt;：
+                &lt;ul&gt;
+                    &lt;li&gt;合并DOM与CSSOM，过滤不可见节点（如 &lt;span class=&quot;highlight&quot;&gt;display: none&lt;/span&gt;）。&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;布局与绘制&lt;/strong&gt;：
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;strong&gt;布局（Layout）&lt;/strong&gt;：计算节点位置与尺寸（可能触发&lt;strong&gt;回流/重排&lt;/strong&gt;）。&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;绘制（Painting）&lt;/strong&gt;：分层渲染（GPU加速）→ 合成显示。&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;h3&gt;JS阻塞&lt;/h3&gt;
+        &lt;p&gt;默认阻塞DOM解析，可通过 &lt;span class=&quot;highlight&quot;&gt;async&lt;/span&gt;（异步加载执行）或 &lt;span class=&quot;highlight&quot;&gt;defer&lt;/span&gt;（延迟执行）优化。&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.5s&quot;&gt;
+        &lt;h2&gt;&lt;span class=&quot;step-number&quot;&gt;5&lt;/span&gt;TCP四次挥手（传输层）&lt;/h2&gt;
+        &lt;h3&gt;流程&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;客户端发送 &lt;span class=&quot;highlight&quot;&gt;FIN=1&lt;/span&gt; → 服务器返回 &lt;span class=&quot;highlight&quot;&gt;ACK&lt;/span&gt; → 服务器发送 &lt;span class=&quot;highlight&quot;&gt;FIN=1&lt;/span&gt; → 客户端确认 &lt;span class=&quot;highlight&quot;&gt;ACK&lt;/span&gt;。&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;h3&gt;核心逻辑&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;strong&gt;TIME_WAIT状态&lt;/strong&gt;：客户端等待 &lt;span class=&quot;highlight&quot;&gt;2MSL&lt;/span&gt;（约60秒），确保服务器收到最终确认，防止残留报文干扰新连接。&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.6s&quot;&gt;
+        &lt;h2&gt;OSI七层模型映射&lt;/h2&gt;
+        &lt;div class=&quot;table-container&quot;&gt;
+            &lt;table&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;流程步骤&lt;/th&gt;
+                        &lt;th&gt;对应OSI层&lt;/th&gt;
+                        &lt;th&gt;核心协议/技术&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;DNS解析&lt;/td&gt;
+                        &lt;td&gt;应用层&lt;/td&gt;
+                        &lt;td&gt;DNS（UDP）&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;HTTP请求/响应&lt;/td&gt;
+                        &lt;td&gt;应用层&lt;/td&gt;
+                        &lt;td&gt;HTTP/HTTPS&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;TCP握手/挥手&lt;/td&gt;
+                        &lt;td&gt;传输层&lt;/td&gt;
+                        &lt;td&gt;TCP&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;IP寻址&lt;/td&gt;
+                        &lt;td&gt;网络层&lt;/td&gt;
+                        &lt;td&gt;IP、ICMP、ARP&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;数据帧传输&lt;/td&gt;
+                        &lt;td&gt;数据链路层&lt;/td&gt;
+                        &lt;td&gt;以太网、Wi-Fi&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;物理信号传输&lt;/td&gt;
+                        &lt;td&gt;物理层&lt;/td&gt;
+                        &lt;td&gt;光纤、电缆&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card animate-card&quot; style=&quot;animation-delay: 0.7s&quot;&gt;
+        &lt;h2&gt;面试高频优化点&lt;/h2&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;strong&gt;关键渲染路径优化&lt;/strong&gt;：内联关键CSS、延迟非关键JS、预加载关键资源。&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;TCP性能&lt;/strong&gt;：复用连接（HTTP/2多路复用）、减少握手次数（Keep-Alive）。&lt;/li&gt;
+            &lt;li&gt;&lt;strong&gt;缓存策略&lt;/strong&gt;：合理设置 &lt;span class=&quot;highlight&quot;&gt;Cache-Control&lt;/span&gt; 和 &lt;span class=&quot;highlight&quot;&gt;ETag&lt;/span&gt;，减少重复请求。&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;summary animate-card&quot; style=&quot;animation-delay: 0.8s&quot;&gt;
+        &lt;h2&gt;总结回答模板&lt;/h2&gt;
+        &lt;div class=&quot;quote&quot;&gt;
+            &quot;从输入URL到页面渲染主要经历：&lt;br&gt;&lt;br&gt;
+            1. &lt;strong&gt;DNS解析&lt;/strong&gt;（本地缓存 → 递归查询IP）；&lt;br&gt;
+            2. &lt;strong&gt;TCP三次握手&lt;/strong&gt;建立可靠连接；&lt;br&gt;
+            3. &lt;strong&gt;HTTP请求&lt;/strong&gt;（强缓存/协商缓存）与响应；&lt;br&gt;
+            4. &lt;strong&gt;浏览器解析&lt;/strong&gt;生成DOM/CSSOM树 → 合成渲染树 → 布局绘制；&lt;br&gt;
+            5. &lt;strong&gt;TCP四次挥手&lt;/strong&gt;关闭连接。&lt;br&gt;&lt;br&gt;
+            优化重点包括：减少DNS查询、复用TCP连接、缓存策略与关键渲染路径优化。&quot;
+        &lt;/div&gt;
+        &lt;p&gt;&lt;strong&gt;关联OSI模型&lt;/strong&gt;：可将流程映射到应用层（HTTP/DNS）、传输层（TCP）、网络层（IP）等层级，体现分层设计思想。&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;footer&quot;&gt;
+        &lt;p&gt;网页由问小白生成，仅供参考&lt;/p&gt;
+        &lt;p&gt;wenxiaobai.com · 2023年11月&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() &#123;
+        const cards = document.querySelectorAll(&#39;.animate-card&#39;);
+        
+        const observer = new IntersectionObserver((entries) =&gt; &#123;
+            entries.forEach(entry =&gt; &#123;
+                if (entry.isIntersecting) &#123;
+                    entry.target.style.animationPlayState = &#39;running&#39;;
+                    observer.unobserve(entry.target);
+                &#125;
+            &#125;);
+        &#125;, &#123;
+            threshold: 0.1
+        &#125;);
+
+        cards.forEach(card =&gt; &#123;
+            observer.observe(card);
+        &#125;);
+    &#125;);
+&lt;/script&gt;
+</code></pre>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>浏览器</tag>
+      </tags>
+  </entry>
 </search>
