@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2023年408算法题预测 反转链表</title>
+    <url>/posts/7297737e.html</url>
+    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
+<span id="more"></span>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><img data-src="https://telegraph-image.pages.dev/file/50a776383823725dd0078.png"></p>
+<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版（略微修改）"><a href="#手写版（略微修改）" class="headerlink" title="手写版（略微修改）"></a>手写版（略微修改）</h4><p>若无法显示，请点击<a href="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png">https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png</a></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png"></p>
+<h4 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseLinkedList</span><span class="params">(<span class="keyword">struct</span> ListNode *head)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">prev</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span> =</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span> =</span> curr-&gt;next;</span><br><span class="line">        curr-&gt;next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseBetween</span><span class="params">(<span class="keyword">struct</span> ListNode *head, <span class="type">int</span> left, <span class="type">int</span> right)</span> &#123;</span><br><span class="line">    <span class="comment">// 第一步：哨兵列队</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p1</span> =</span> head;</span><br><span class="line">    <span class="comment">// 从 head 走 left - 1 步，来到 p1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; left - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p1 走 1 步，来到 p2 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p2</span> =</span> p1-&gt;next;</span><br><span class="line">    <span class="comment">// 从 p2 走 right - left 步，来到 p3</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p3</span> =</span> p2;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; right - left; i++) &#123;</span><br><span class="line">        p3 = p3-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p3 走 1 步，来到 p4 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p4</span> =</span> p3-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：切断链接，分成三段链表</span></span><br><span class="line">    p1-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    p3-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：反转中间段链表</span></span><br><span class="line">    reverseLinkedList(p2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：重新拼接三段链表</span></span><br><span class="line">    p1-&gt;next = p3;</span><br><span class="line">    p2-&gt;next = p4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h3><p><a href="https://www.zhihu.com/people/suixinyuan1990">千葉原</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023年408算法题预测 环形链表</title>
+    <url>/posts/b5fa7dc6.html</url>
+    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/9de5a4fc0567b418621f3.png"></p>
+<p>获取题源请点击<a href="https://leetcode.cn/problems/linked-list-cycle/">https://leetcode.cn/problems/linked-list-cycle/</a></p>
+<span id="more"></span>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>请参见力扣题解区</p>
+<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img data-src="https://telegraph-image.pages.dev/file/d1a85e76b612429e87c3d.jpg"></p>
+<p>其他答案请参见力扣题解区</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2023年408算法题预测-链表之插入排序</title>
     <url>/posts/76850f28.html</url>
     <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/c7e4e4ca7567fb38f427a.png"></p>
@@ -23,212 +61,6 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2023年408算法题预测 反转链表</title>
-    <url>/posts/7297737e.html</url>
-    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
-<span id="more"></span>
-
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><img data-src="https://telegraph-image.pages.dev/file/50a776383823725dd0078.png"></p>
-<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版（略微修改）"><a href="#手写版（略微修改）" class="headerlink" title="手写版（略微修改）"></a>手写版（略微修改）</h4><p>若无法显示，请点击<a href="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png">https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png</a></p>
-<p><img data-src="https://telegraph-image.pages.dev/file/49854306da8b17e3bc502.png"></p>
-<h4 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseLinkedList</span><span class="params">(<span class="keyword">struct</span> ListNode *head)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">prev</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span> =</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span> =</span> curr-&gt;next;</span><br><span class="line">        curr-&gt;next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseBetween</span><span class="params">(<span class="keyword">struct</span> ListNode *head, <span class="type">int</span> left, <span class="type">int</span> right)</span> &#123;</span><br><span class="line">    <span class="comment">// 第一步：哨兵列队</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p1</span> =</span> head;</span><br><span class="line">    <span class="comment">// 从 head 走 left - 1 步，来到 p1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; left - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p1 走 1 步，来到 p2 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p2</span> =</span> p1-&gt;next;</span><br><span class="line">    <span class="comment">// 从 p2 走 right - left 步，来到 p3</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p3</span> =</span> p2;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; right - left; i++) &#123;</span><br><span class="line">        p3 = p3-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p3 走 1 步，来到 p4 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p4</span> =</span> p3-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：切断链接，分成三段链表</span></span><br><span class="line">    p1-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    p3-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：反转中间段链表</span></span><br><span class="line">    reverseLinkedList(p2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：重新拼接三段链表</span></span><br><span class="line">    p1-&gt;next = p3;</span><br><span class="line">    p2-&gt;next = p4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h3><p><a href="https://www.zhihu.com/people/suixinyuan1990">千葉原</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Chip testing</title>
-    <url>/posts/8787df53.html</url>
-    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Chip A says</strong></th>
-<th><strong>Chip B says</strong></th>
-<th><strong>Conclusion</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>B is good</td>
-<td>A is good</td>
-<td>both are good, or both are bad</td>
-</tr>
-<tr>
-<td>B is good</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is good</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-</tbody></table>
-<span id="more"></span>
-
-<ol>
-<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
-<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
-<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
-</ol>
-<p><strong>If more than half are bad</strong></p>
-<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
-<p><strong>Finding a single good chip in logarithmic time</strong></p>
-<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
-<p><strong>Finding the good chips</strong></p>
-<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>CLRS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客优化记录</title>
-    <url>/posts/916f4a50.html</url>
-    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
-<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>启用Highlight.js后，代码块高亮效果无效。</p>
-<span id="more"></span>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
-<li>法1：<del>改用prismjs</del></li>
-<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>**注意：**这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
-</div>
-
-<ul>
-<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
-<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
-</li>
-</ul>
-<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
-<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
-<div class="note warning"><p>**注意：**以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
-</div>
-
-<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
-</div>
-
-<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
-<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
-<thead>
-<tr>
-<th>运营方</th>
-<th>节点</th>
-<th>地域</th>
-<th>链接及格式</th>
-<th>上游</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>75CDN(360前端)</td>
-<td>360自有节点</td>
-<td>全球</td>
-<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
-<td>cdnjs</td>
-</tr>
-<tr>
-<td>知乎</td>
-<td>阿里云</td>
-<td>全球</td>
-<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-<tr>
-<td>百度</td>
-<td>百度云</td>
-<td>全球</td>
-<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
-<td>内建npm镜像（上游淘宝cmpnjs）</td>
-</tr>
-<tr>
-<td>饿了么</td>
-<td>阿里云</td>
-<td>中国大陆</td>
-<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-</tbody></table>
-<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
-<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
-
-<div class="note danger"><p>**警告：**必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
-</div>
-
-<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
-<div class="note info"><p>**提示：**也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
-</div>
-
-<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
-
-<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
-<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
-<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
-<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
-</ul>
-<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
-<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
-<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
-</ul>
-<p>（非中国大陆地区访客可完美浏览博客）</p>
-<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
-<li>寻找新的CDN服务商进行资源分发。</li>
-<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
-</ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
-<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -868,21 +700,228 @@
       </tags>
   </entry>
   <entry>
-    <title>2023年408算法题预测 环形链表</title>
-    <url>/posts/b5fa7dc6.html</url>
-    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/9de5a4fc0567b418621f3.png"></p>
-<p>获取题源请点击<a href="https://leetcode.cn/problems/linked-list-cycle/">https://leetcode.cn/problems/linked-list-cycle/</a></p>
+    <title>Chip testing</title>
+    <url>/posts/8787df53.html</url>
+    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Chip A says</strong></th>
+<th><strong>Chip B says</strong></th>
+<th><strong>Conclusion</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B is good</td>
+<td>A is good</td>
+<td>both are good, or both are bad</td>
+</tr>
+<tr>
+<td>B is good</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is good</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+</tbody></table>
 <span id="more"></span>
 
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>请参见力扣题解区</p>
-<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img data-src="https://telegraph-image.pages.dev/file/d1a85e76b612429e87c3d.jpg"></p>
-<p>其他答案请参见力扣题解区</p>
+<ol>
+<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
+<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
+<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
+</ol>
+<p><strong>If more than half are bad</strong></p>
+<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
+<p><strong>Finding a single good chip in logarithmic time</strong></p>
+<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
+<p><strong>Finding the good chips</strong></p>
+<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>试题</category>
       </categories>
       <tags>
-        <tag>数据结构</tag>
+        <tag>CLRS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/posts/175c8d74.html</url>
+    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客优化记录</title>
+    <url>/posts/916f4a50.html</url>
+    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
+<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>启用Highlight.js后，代码块高亮效果无效。</p>
+<span id="more"></span>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
+<li>法1：<del>改用prismjs</del></li>
+<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>**注意：**这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
+</div>
+
+<ul>
+<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
+<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
+</li>
+</ul>
+<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
+<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
+<div class="note warning"><p>**注意：**以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
+</div>
+
+<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
+</div>
+
+<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
+<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
+<thead>
+<tr>
+<th>运营方</th>
+<th>节点</th>
+<th>地域</th>
+<th>链接及格式</th>
+<th>上游</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>75CDN(360前端)</td>
+<td>360自有节点</td>
+<td>全球</td>
+<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
+<td>cdnjs</td>
+</tr>
+<tr>
+<td>知乎</td>
+<td>阿里云</td>
+<td>全球</td>
+<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+<tr>
+<td>百度</td>
+<td>百度云</td>
+<td>全球</td>
+<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
+<td>内建npm镜像（上游淘宝cmpnjs）</td>
+</tr>
+<tr>
+<td>饿了么</td>
+<td>阿里云</td>
+<td>中国大陆</td>
+<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+</tbody></table>
+<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
+<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
+
+<div class="note danger"><p>**警告：**必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
+</div>
+
+<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
+<div class="note info"><p>**提示：**也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
+</div>
+
+<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
+<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
+<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
+<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
+</ul>
+<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
+<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
+<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
+</ul>
+<p>（非中国大陆地区访客可完美浏览博客）</p>
+<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
+<li>寻找新的CDN服务商进行资源分发。</li>
+<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
+<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -939,45 +978,6 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/posts/175c8d74.html</url>
-    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -1192,30 +1192,33 @@
       </tags>
   </entry>
   <entry>
-    <title>dummy节点</title>
-    <url>/posts/556c2443.html</url>
-    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/posts/fc8787d6.html</url>
+    <content><![CDATA[<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
 <span id="more"></span>
 
-<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
-<ul>
-<li>作为新链表的头部<ul>
-<li>（可参考leetcode第2题、第21题）</li>
-</ul>
-</li>
-<li>解决链表的头部引起的极端问题<ul>
-<li>（可参考leetcode第19题、第24题）</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个&#x3D; &#x3D;</p>
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>经验</category>
       </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
   </entry>
   <entry>
     <title>Vue进阶学习笔记</title>
@@ -1670,79 +1673,30 @@
       </tags>
   </entry>
   <entry>
-    <title>二叉树的遍历方法及其Java代码实现</title>
-    <url>/posts/34812bb0.html</url>
-    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
-<ul>
-<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
-</ul>
+    <title>dummy节点</title>
+    <url>/posts/556c2443.html</url>
+    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
 <span id="more"></span>
 
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
-<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
-<p>首先要声明结点TreeNode类，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
 
-<p>再来创建一棵二叉树：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
-<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
-<p>还是一样，先看非递归前序遍历</p>
-<ol>
-<li>首先申请一个新的栈，记为stack；</li>
-<li>声明一个结点treeNode，让其指向node结点；</li>
-<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
-<li>重复步骤3，直到treenode为空；</li>
-<li>然后出栈，让treeNode指向treeNode的右孩子</li>
-<li>重复步骤3，直到stack为空.</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
-<p>具体过程：</p>
-<ol>
-<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
-<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
-<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
-<li>当stack为空并且cur为空时结束。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后再给大家介绍一下层序遍历</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>首先申请一个新的队列，记为queue；</li>
-<li>将头结点head压入queue中；</li>
-<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
-<li>重复步骤3，直到queue为空。</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
+<ul>
+<li>作为新链表的头部<ul>
+<li>（可参考leetcode第2题、第21题）</li>
+</ul>
+</li>
+<li>解决链表的头部引起的极端问题<ul>
+<li>（可参考leetcode第19题、第24题）</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
   </entry>
   <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
@@ -1879,73 +1833,6 @@
       </tags>
   </entry>
   <entry>
-    <title>利用新Repository给Github Pages配置多个域名</title>
-    <url>/posts/9b69c506.html</url>
-    <content><![CDATA[<h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
-<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
-<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
-<span id="more"></span>
-
-<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
-<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
-<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
-
-<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
-<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
-<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> current = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> target = current.<span class="title function_">substring</span>(current.<span class="title function_">indexOf</span>(<span class="string">&#x27;/&#x27;</span>, current.<span class="title function_">indexOf</span>(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">        location.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，新建的Repository应包含下面几个文件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
-<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.yanbinghu.com/2019/03/29/25951.html">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)</a></p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>期末预测之安全指数 202012-1</title>
-    <url>/posts/d9ae96d3.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
-<span id="more"></span>
-
-<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
-<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
-<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《灌篮高手》，坐在电影院里就足够了</title>
     <url>/posts/d4a3be1c.html</url>
     <content><![CDATA[<p>电影院里很久没有出现这样的景象了。</p>
@@ -2006,6 +1893,81 @@
       <categories>
         <category>随笔</category>
       </categories>
+  </entry>
+  <entry>
+    <title>二叉树的遍历方法及其Java代码实现</title>
+    <url>/posts/34812bb0.html</url>
+    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
+<ul>
+<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
+</ul>
+<span id="more"></span>
+
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
+<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
+<p>首先要声明结点TreeNode类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来创建一棵二叉树：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
+<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
+<p>还是一样，先看非递归前序遍历</p>
+<ol>
+<li>首先申请一个新的栈，记为stack；</li>
+<li>声明一个结点treeNode，让其指向node结点；</li>
+<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
+<li>重复步骤3，直到treenode为空；</li>
+<li>然后出栈，让treeNode指向treeNode的右孩子</li>
+<li>重复步骤3，直到stack为空.</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
+<p>具体过程：</p>
+<ol>
+<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
+<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
+<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
+<li>当stack为空并且cur为空时结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后再给大家介绍一下层序遍历</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>首先申请一个新的队列，记为queue；</li>
+<li>将头结点head压入queue中；</li>
+<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
+<li>重复步骤3，直到queue为空。</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
   </entry>
   <entry>
     <title>期末预测之最佳阈值 202012-2</title>
@@ -2101,32 +2063,97 @@
       </tags>
   </entry>
   <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/posts/fc8787d6.html</url>
-    <content><![CDATA[<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
+    <title>期末预测之安全指数 202012-1</title>
+    <url>/posts/d9ae96d3.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
 <span id="more"></span>
 
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
+<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
 
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个&#x3D; &#x3D;</p>
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
+<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用新Repository给Github Pages配置多个域名</title>
+    <url>/posts/9b69c506.html</url>
+    <content><![CDATA[<h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
+<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
+<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
+<span id="more"></span>
+
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
+<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
+<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
+
+<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
+<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
+<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> current = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> target = current.<span class="title function_">substring</span>(current.<span class="title function_">indexOf</span>(<span class="string">&#x27;/&#x27;</span>, current.<span class="title function_">indexOf</span>(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">        location.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，新建的Repository应包含下面几个文件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
+<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.yanbinghu.com/2019/03/29/25951.html">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)</a></p>
 ]]></content>
       <categories>
         <category>经验</category>
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>称检测点查询 202009-1</title>
+    <url>/posts/3b542d1c.html</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+<span id="more"></span>
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="type">int</span> id,<span class="type">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> X,<span class="type">int</span> Y,<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p<span class="number">1.</span>dis==p<span class="number">2.</span>dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p<span class="number">1.</span>id&lt;p<span class="number">2.</span>id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p<span class="number">1.</span>dis&lt;p<span class="number">2.</span>dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i<span class="number">+1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -2295,33 +2322,6 @@
       </tags>
   </entry>
   <entry>
-    <title>称检测点查询 202009-1</title>
-    <url>/posts/3b542d1c.html</url>
-    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
-<span id="more"></span>
-
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="type">int</span> id,<span class="type">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> X,<span class="type">int</span> Y,<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p<span class="number">1.</span>dis==p<span class="number">2.</span>dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p<span class="number">1.</span>id&lt;p<span class="number">2.</span>id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p<span class="number">1.</span>dis&lt;p<span class="number">2.</span>dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i<span class="number">+1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>评价《脑髓地狱》</title>
     <url>/posts/2b72e15e.html</url>
     <content><![CDATA[<p>   作为一个平时不常看日本推理小说，也几乎不会主动找来看的人，了解到这本书完全是通过关于这本书的某同人作品(笑)和同名改编电影。</p>
@@ -2421,14 +2421,25 @@
 <li><strong>DNS预解析</strong>：通过 <link rel="dns-prefetch"> 提前解析关键域名，加速后续请求。</li>
 </ol>
 <h3 id="TCP三次握手（传输层）"><a href="#TCP三次握手（传输层）" class="headerlink" title="TCP三次握手（传输层）"></a>TCP三次握手（传输层）</h3><h4 id="核心作用"><a href="#核心作用" class="headerlink" title="核心作用"></a>核心作用</h4><p>确认双方收发能力，防止历史连接干扰（如过期SYN报文）。</p>
-<h4 id="三次步骤"><a href="#三次步骤" class="headerlink" title="三次步骤"></a>三次步骤</h4><ol>
-<li>客户端发送 SYN&#x3D;1 + Seq&#x3D;X → 服务器返回 SYN&#x3D;1 + ACK&#x3D;X+1 + Seq&#x3D;Y → 客户端确认 ACK&#x3D;Y+1。</li>
+<h4 id="三次步骤"><a href="#三次步骤" class="headerlink" title="三次步骤"></a>三次步骤</h4><p>客户端发送 SYN&#x3D;1 + Seq&#x3D;X → 服务器返回 SYN&#x3D;1 + ACK&#x3D;X+1 + Seq&#x3D;Y → 客户端确认 ACK&#x3D;Y+1。</p>
+<h4 id="比喻"><a href="#比喻" class="headerlink" title="比喻"></a>比喻</h4><p>客户端：”我要连你”（SYN） → 服务器：”收到，同意连接”（SYN-ACK） → 客户端：”好的，开始传数据”（ACK）。</p>
+<h3 id="HTTP请求与缓存策略（应用层）"><a href="#HTTP请求与缓存策略（应用层）" class="headerlink" title="HTTP请求与缓存策略（应用层）"></a>HTTP请求与缓存策略（应用层）</h3><h4 id="请求阶段"><a href="#请求阶段" class="headerlink" title="请求阶段"></a>请求阶段</h4><ol>
+<li>强缓存：通过 HTTP 响应头（Cache-Contro属性，或者Expires 属性，过期时间）检查缓存是否在有效期，如果缓存资源有效，无需请求服务器。</li>
+<li>协商缓存：当强缓存未命中时，通过向服务器验证资源是否过期，决定是否使用缓存。如果服务器告知资源未改变（304 Not Modified），则浏览器从缓存中读取资源；如果服务器告知资源已改变，则浏览器会下载新资源并更新缓存。</li>
 </ol>
-<h4 id="比喻"><a href="#比喻" class="headerlink" title="比喻"></a>比喻</h4><ol>
-<li>客户端：”我要连你”（SYN） → 服务器：”收到，同意连接”（SYN-ACK） → 客户端：”好的，开始传数据”（ACK）。</li>
+<p>强缓存策略和协商缓存策略在缓存命中时都会直接使用本地的缓存副本，区别只在于协商缓存会向服务器发送一次请求。它们缓存不命中时，都会向服务器发送请求来获取资源。</p>
+<h4 id="HTTP-与-HTTPS-的区别"><a href="#HTTP-与-HTTPS-的区别" class="headerlink" title="HTTP 与 HTTPS 的区别"></a><strong>HTTP 与 HTTPS 的区别</strong></h4><ol>
+<li><strong>安全性</strong>：HTTPS 数据通过加密传输，防止被窃听或篡改</li>
+<li><strong>端口</strong>：HTTP 默认端口 80，HTTPS 默认端口 443</li>
+<li><strong>证书</strong>：HTTPS 需要数字证书，验证服务器身份；HTTP 无需证书</li>
+<li><strong>性能</strong>：HTTPS 因加密过程略慢于 HTTP</li>
 </ol>
-<h3 id="HTTP请求与缓存策略（应用层）"><a href="#HTTP请求与缓存策略（应用层）" class="headerlink" title="HTTP请求与缓存策略（应用层）"></a>HTTP请求与缓存策略（应用层）</h3><h4 id="请求阶段"><a href="#请求阶段" class="headerlink" title="请求阶段"></a>请求阶段</h4><p><strong>强缓存</strong>、<strong>协商缓存</strong></p>
-<h4 id="HTTPS扩展"><a href="#HTTPS扩展" class="headerlink" title="HTTPS扩展"></a>HTTPS扩展</h4><p>TLS握手建立加密通道（非对称加密交换密钥 → 对称加密传输数据）。</p>
+<p><strong>混合加密机制</strong>：</p>
+<ol>
+<li>访问网站时，浏览器先用非对称加密和服务器协商密钥，再用对称加密传输网页内容</li>
+<li><strong>非对称加密</strong>：用于握手阶段交换密钥（<strong>一对密钥</strong>（公钥+私钥）加密和解密，公钥公开，私钥保密，如 RSA 算法），客户端用服务端公钥加密会话密钥</li>
+<li><strong>对称加密</strong>：后续数据传输使用对称密钥（加密和解密使用**同一个密钥，**如 AES），加密速度快</li>
+</ol>
 <h3 id="浏览器解析与渲染（关键步骤）"><a href="#浏览器解析与渲染（关键步骤）" class="headerlink" title="浏览器解析与渲染（关键步骤）"></a>浏览器解析与渲染（关键步骤）</h3><ol>
 <li><p>构建DOM树</p>
 <p>解析HTML文档，生成树状结构（自动补全未闭合标签）。</p>
@@ -2445,6 +2456,12 @@
 </li>
 </ol>
 <h4 id="JS阻塞"><a href="#JS阻塞" class="headerlink" title="JS阻塞"></a>JS阻塞</h4><p>默认阻塞DOM解析，可通过 async（异步加载执行）或 defer（延迟执行）优化。</p>
+<ul>
+<li>async 是“下载完就执行”。</li>
+<li>defer 是“页面渲染完再执行”。</li>
+<li>所以，如果脚本无依赖关系，用 async 比较合适。 如果脚本需要在文档完全加载后运行，比如初始化脚本，用 defer 更合适。</li>
+<li>如果没有 defer 或 async 时，脚本加载和执行会完全阻塞 HTML 解析，影响页面加载速度</li>
+</ul>
 <h3 id="TCP四次挥手（传输层）"><a href="#TCP四次挥手（传输层）" class="headerlink" title="TCP四次挥手（传输层）"></a>TCP四次挥手（传输层）</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><ol>
 <li>客户端发送 FIN&#x3D;1 → 服务器返回 ACK → 服务器发送 FIN&#x3D;1 → 客户端确认 ACK。</li>
 </ol>
@@ -2490,7 +2507,7 @@
 <td align="left">光纤、电缆</td>
 </tr>
 </tbody></table>
-<h4 id="高频优化点"><a href="#高频优化点" class="headerlink" title="高频优化点"></a>高频优化点</h4><ol>
+<h3 id="高频优化点"><a href="#高频优化点" class="headerlink" title="高频优化点"></a>高频优化点</h3><ol>
 <li><strong>关键渲染路径优化</strong>：内联关键CSS、延迟非关键JS、预加载关键资源。</li>
 <li><strong>TCP性能</strong>：复用连接（HTTP&#x2F;2多路复用）、减少握手次数（Keep-Alive）。</li>
 <li><strong>缓存策略</strong>：合理设置 Cache-Control 和 ETag，减少重复请求。</li>
@@ -2543,32 +2560,6 @@
       </tags>
   </entry>
   <entry>
-    <title>重装系统后快速恢复Hexo环境</title>
-    <url>/posts/3d834efa.html</url>
-    <content><![CDATA[<p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，做好备份。</p>
-<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <a href="https://links.jianshu.com/go?to=https://git-scm.com/">https://git-scm.com/</a><br>Node.js: <a href="https://links.jianshu.com/go?to=https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<span id="more"></span>
-
-<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>一路回车即可。</p>
-<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
-<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
-<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果hexo命令不可用，需要修改系统环境配置。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>风险人群筛查202009-2</title>
     <url>/posts/3a23d7f5.html</url>
     <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>某地疫情爆发后，出于“应检尽检”的原则，我们想要通知所有近期经过该高危区域的居民参与核酸检测。</p>
@@ -2601,6 +2592,32 @@
       </categories>
       <tags>
         <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重装系统后快速恢复Hexo环境</title>
+    <url>/posts/3d834efa.html</url>
+    <content><![CDATA[<p>本方案仅适用于原项目文件夹未被删除的情况，数据无价，做好备份。</p>
+<h3 id="一、安装Git与Node-js"><a href="#一、安装Git与Node-js" class="headerlink" title="一、安装Git与Node.js"></a>一、安装Git与Node.js</h3><p>Git for Windows: <a href="https://links.jianshu.com/go?to=https://git-scm.com/">https://git-scm.com/</a><br>Node.js: <a href="https://links.jianshu.com/go?to=https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<span id="more"></span>
+
+<h3 id="二、生成SSH密钥"><a href="#二、生成SSH密钥" class="headerlink" title="二、生成SSH密钥"></a>二、生成SSH密钥</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;这里输入在GitHub的账户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;这里输入在GitHub的注册邮箱名&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;这里输入在 GitHub 的注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一路回车即可。</p>
+<h3 id="三、设置Github的SSH密钥"><a href="#三、设置Github的SSH密钥" class="headerlink" title="三、设置Github的SSH密钥"></a>三、设置Github的SSH密钥</h3><p> <code>C:\Users\主用户\.ssh</code>里有id_rsa和id_rsa.pub两个文件，复制id_rsa.pub的内容。</p>
+<p>登录 GitHub 账户，点击右上角个人头像的下拉菜单，依次点击 Settings &gt; SSH and GPG Keys，在 SSH Keys 页面右上角有个<code>New SSH Key</code>按钮，点击该按钮后，粘贴上刚才复制的公钥内容。这样，SSH Key 就配置好了。</p>
+<h3 id="四、安装Hexo与相关依赖"><a href="#四、安装Hexo与相关依赖" class="headerlink" title="四、安装Hexo与相关依赖"></a>四、安装Hexo与相关依赖</h3><p>打开项目根目录，Git Bash输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>如果hexo命令不可用，需要修改系统环境配置。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
