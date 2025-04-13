@@ -19,6 +19,62 @@
       </tags>
   </entry>
   <entry>
+    <title>Chip testing</title>
+    <url>/posts/8787df53.html</url>
+    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Chip A says</strong></th>
+<th><strong>Chip B says</strong></th>
+<th><strong>Conclusion</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B is good</td>
+<td>A is good</td>
+<td>both are good, or both are bad</td>
+</tr>
+<tr>
+<td>B is good</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is good</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
+<ol>
+<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
+<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
+<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
+</ol>
+<p><strong>If more than half are bad</strong></p>
+<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
+<p><strong>Finding a single good chip in logarithmic time</strong></p>
+<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
+<p><strong>Finding the good chips</strong></p>
+<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>CLRS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2023年408算法题预测 反转链表</title>
     <url>/posts/7297737e.html</url>
     <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
@@ -64,6 +120,45 @@
       </tags>
   </entry>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/posts/175c8d74.html</url>
+    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ISBN号码 201312-2</title>
     <url>/posts/73bd0af.html</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括$9$位数字、$1$位识别码和$3$位分隔符，其规定格式如“$x-xxx-xxxxx-x$”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如$0-670-82162-4$就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如$0$代表英语；第一个分隔符“$-$”之后的三位数字代表出版社，例如$670$代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以$1$加上次位数字乘以$2$……以此类推，用所得的结果$mod 11$，所得的余数即为识别码，如果余数为$10$，则识别码为大写字母$X$。例如ISBN号码$0-670-82162-4$中的识别码$4$是这样得到的：对$067082162$这$9$个数字，从左至右，分别乘以$1，2，…，9$，再求和，即$0×1+6×2+……+2×9&#x3D;158$，然后取$158 mod 11$的结果$4$作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“$Right$”；如果错误，则输出是正确的ISBN号码。</p>
@@ -87,6 +182,166 @@
       </categories>
       <tags>
         <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript中未声明的变量</title>
+    <url>/posts/87b92057.html</url>
+    <content><![CDATA[<p>JavaScript通常有<strong>3种</strong>声明变量的方式</p>
+<ol>
+<li>var和let -&gt; 只存在作用域的区别</li>
+<li>const -&gt; 只读</li>
+<li>直接赋值，不声明</li>
+</ol>
+<span id="more"></span>
+
+<p>其中第3种是最容易忽略的，这样会产生一个<strong>全局变量</strong>，算是<strong>未声明全局变量</strong>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">//  Uncaught ReferenceError: x is not defined</span></span><br><span class="line"><span class="comment">//这里只声明了foo但是没有运行foo，所以报错</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">// 显示为666</span></span><br><span class="line"><span class="comment">//可以看出，这里跳出了foo函数还能够打印出x的数值，所以为全局变量</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>比如下面这样直接给x赋值，前面不加任何关键字。这样做的结果是在js能被执行通过，但是会被警告。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">x = <span class="number">666</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客优化记录</title>
+    <url>/posts/916f4a50.html</url>
+    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
+<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>启用Highlight.js后，代码块高亮效果无效。</p>
+<span id="more"></span>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
+<li>法1：<del>改用prismjs</del></li>
+<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
+</div>
+
+<ul>
+<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
+<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
+</li>
+</ul>
+<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
+<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
+<div class="note warning"><p>以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
+</div>
+
+<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
+</div>
+
+<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
+<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
+<thead>
+<tr>
+<th>运营方</th>
+<th>节点</th>
+<th>地域</th>
+<th>链接及格式</th>
+<th>上游</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>75CDN(360前端)</td>
+<td>360自有节点</td>
+<td>全球</td>
+<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
+<td>cdnjs</td>
+</tr>
+<tr>
+<td>知乎</td>
+<td>阿里云</td>
+<td>全球</td>
+<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+<tr>
+<td>百度</td>
+<td>百度云</td>
+<td>全球</td>
+<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
+<td>内建npm镜像（上游淘宝cmpnjs）</td>
+</tr>
+<tr>
+<td>饿了么</td>
+<td>阿里云</td>
+<td>中国大陆</td>
+<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+</tbody></table>
+<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
+<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
+
+<div class="note danger"><p>必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
+</div>
+
+<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
+<div class="note info"><p>也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
+</div>
+
+<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
+<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
+<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
+<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
+</ul>
+<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
+<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
+<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
+</ul>
+<p>（非中国大陆地区访客可完美浏览博客）</p>
+<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
+<li>寻找新的CDN服务商进行资源分发。</li>
+<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
+<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -726,261 +981,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客优化记录</title>
-    <url>/posts/916f4a50.html</url>
-    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
-<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>启用Highlight.js后，代码块高亮效果无效。</p>
-<span id="more"></span>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
-<li>法1：<del>改用prismjs</del></li>
-<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
-</div>
-
-<ul>
-<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
-<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
-</li>
-</ul>
-<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
-<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
-<div class="note warning"><p>以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
-</div>
-
-<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
-</div>
-
-<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
-<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
-<thead>
-<tr>
-<th>运营方</th>
-<th>节点</th>
-<th>地域</th>
-<th>链接及格式</th>
-<th>上游</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>75CDN(360前端)</td>
-<td>360自有节点</td>
-<td>全球</td>
-<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
-<td>cdnjs</td>
-</tr>
-<tr>
-<td>知乎</td>
-<td>阿里云</td>
-<td>全球</td>
-<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-<tr>
-<td>百度</td>
-<td>百度云</td>
-<td>全球</td>
-<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
-<td>内建npm镜像（上游淘宝cmpnjs）</td>
-</tr>
-<tr>
-<td>饿了么</td>
-<td>阿里云</td>
-<td>中国大陆</td>
-<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-</tbody></table>
-<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
-<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
-
-<div class="note danger"><p>必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
-</div>
-
-<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
-<div class="note info"><p>也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
-</div>
-
-<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
-
-<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
-<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
-<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
-<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
-</ul>
-<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
-<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
-<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
-</ul>
-<p>（非中国大陆地区访客可完美浏览博客）</p>
-<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
-<li>寻找新的CDN服务商进行资源分发。</li>
-<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
-</ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
-<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/posts/175c8d74.html</url>
-    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Chip testing</title>
-    <url>/posts/8787df53.html</url>
-    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Chip A says</strong></th>
-<th><strong>Chip B says</strong></th>
-<th><strong>Conclusion</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>B is good</td>
-<td>A is good</td>
-<td>both are good, or both are bad</td>
-</tr>
-<tr>
-<td>B is good</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is good</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-</tbody></table>
-<span id="more"></span>
-
-<ol>
-<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
-<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
-<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
-</ol>
-<p><strong>If more than half are bad</strong></p>
-<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
-<p><strong>Finding a single good chip in logarithmic time</strong></p>
-<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
-<p><strong>Finding the good chips</strong></p>
-<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>CLRS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript中未声明的变量</title>
-    <url>/posts/87b92057.html</url>
-    <content><![CDATA[<p>JavaScript通常有<strong>3种</strong>声明变量的方式</p>
-<ol>
-<li>var和let -&gt; 只存在作用域的区别</li>
-<li>const -&gt; 只读</li>
-<li>直接赋值，不声明</li>
-</ol>
-<span id="more"></span>
-
-<p>其中第3种是最容易忽略的，这样会产生一个<strong>全局变量</strong>，算是<strong>未声明全局变量</strong>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">//  Uncaught ReferenceError: x is not defined</span></span><br><span class="line"><span class="comment">//这里只声明了foo但是没有运行foo，所以报错</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">// 显示为666</span></span><br><span class="line"><span class="comment">//可以看出，这里跳出了foo函数还能够打印出x的数值，所以为全局变量</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>比如下面这样直接给x赋值，前面不加任何关键字。这样做的结果是在js能被执行通过，但是会被警告。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">x = <span class="number">666</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue基础</title>
     <url>/posts/4b668c47.html</url>
     <content><![CDATA[<h3 id="Vue的介绍"><a href="#Vue的介绍" class="headerlink" title="Vue的介绍"></a>Vue的介绍</h3><p>官网教程:<a href="https://cn.vuejs.org/v2/guide/installation.html">https://cn.vuejs.org/v2/guide/installation.html</a></p>
@@ -1189,52 +1189,6 @@
       </categories>
       <tags>
         <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jotai：原子化状态管理在现代 React App中的实践</title>
-    <url>/posts/2279e119.html</url>
-    <content><![CDATA[<p>在构建复杂的 React 应用时，状态管理是一个不可避免的核心问题。从组件的本地 state 到跨组件共享的全局状态，选择一个合适的库来优雅地处理这些数据流至关重要。在我们最近的某个项目中，就选择了 <a href="https://jotai.org/">Jotai</a> 作为状态管理解决方案。</p>
-<h2 id="什么是-Jotai？"><a href="#什么是-Jotai？" class="headerlink" title="什么是 Jotai？"></a>什么是 Jotai？</h2><p>Jotai 是一个为 React 设计的原始（primitive）且灵活（flexible）的状态管理库。它的核心思想是 <strong>原子化（atomic）</strong>。与 Redux 或 Zustand 等库将所有状态集中存储在一个大的 store 中不同，Jotai 将状态分解为一个个独立的、微小的单元，称为 <strong>原子（atom）</strong>。</p>
-<p>你可以将 atom 想象成 React <code>useState</code> 的全局版本，但它更强大，支持派生状态、异步操作以及与 React Suspense 的集成。</p>
-<span id="more"></span>
-
-<h2 id="为什么选择-Jotai？"><a href="#为什么选择-Jotai？" class="headerlink" title="为什么选择 Jotai？"></a>为什么选择 Jotai？</h2><p>在我们的项目中，我们需要管理诸如用户交互产生的对话框状态、聊天历史记录、当前激活的会话等多种状态。我们评估了不同的方案后，最终选择了 Jotai，主要基于以下几点考虑：</p>
-<ol>
-<li><strong>简洁性与低心智负担</strong>：Jotai 的 API 非常简洁直观。定义和使用 atom 感觉就像使用 React 内置的 Hook 一样自然，几乎没有额外的学习成本和模板代码。这使得开发者可以更专注于业务逻辑本身。</li>
-<li><strong>原子化的优势</strong>：<ul>
-<li><strong>精确的重渲染</strong>：只有订阅了某个特定 atom 的组件才会在该 atom 更新时重渲染。这避免了大型 store 更新时可能导致的全局性、不必要的渲染，从而提升了应用的性能。</li>
-<li><strong>模块化与可维护性</strong>：状态被分解到独立的 atom 中，使得代码更易于组织、理解和维护。每个 atom 只负责一小块状态，职责清晰。</li>
-</ul>
-</li>
-<li><strong>强大的派生状态能力</strong>：Jotai 可以轻松地基于一个或多个其他 atom 创建派生 atom。这意味着你可以根据基础状态计算出新的状态，而无需手动同步，保证了状态的一致性。</li>
-<li><strong>开箱即用的工具集</strong>：Jotai 提供了丰富的工具函数（Utilities），例如 <code>atomWithStorage</code>，可以非常方便地将 atom 的状态持久化到 <code>localStorage</code> 或 <code>sessionStorage</code>，简化了本地数据持久化的实现。</li>
-</ol>
-<h2 id="Jotai-在项目中的实践亮点"><a href="#Jotai-在项目中的实践亮点" class="headerlink" title="Jotai 在项目中的实践亮点"></a>Jotai 在项目中的实践亮点</h2><p>在我们的项目中，Jotai 的优势具体体现在以下几个方面：</p>
-<h3 id="1-基础状态管理-atom"><a href="#1-基础状态管理-atom" class="headerlink" title="1. 基础状态管理 ( atom )"></a>1. 基础状态管理 ( <code>atom</code> )</h3><p>我们使用 <code>atom</code> 来定义基础的状态单元。例如，管理不同类型的对话框状态：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义不同类型的对话框可能的数据结构</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">DialogContent</span> &#123;</span><br><span class="line">  <span class="comment">// ... 对话框的具体内容</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储用户触发对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> userDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储模态对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> modalDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br></pre></td></tr></table></figure>
-
-<p>通过这种方式，不同类型的对话框状态被清晰地分离到各自的 atom 中，互不干扰。组件可以按需订阅它们需要的 atom。</p>
-<h3 id="2-派生状态-Derived-Atoms"><a href="#2-派生状态-Derived-Atoms" class="headerlink" title="2. 派生状态 (Derived Atoms)"></a>2. 派生状态 (Derived Atoms)</h3><p>当需要组合或基于现有状态计算新状态时，派生 atom 就派上了用场。例如，我们需要一个包含所有类型对话框的列表：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 userDialogsAtom 和 modalDialogsAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个派生 atom，它的值是 userDialogs 和 modalDialogs 的合并结果</span></span><br><span class="line"><span class="keyword">const</span> combinedDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userDialogs = <span class="title function_">get</span>(userDialogsAtom);</span><br><span class="line">  <span class="keyword">const</span> modalDialogs = <span class="title function_">get</span>(modalDialogsAtom);</span><br><span class="line">  <span class="keyword">return</span> [...userDialogs, ...modalDialogs];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>combinedDialogsAtom</code> 的值会自动根据 <code>userDialogsAtom</code> 和 <code>modalDialogsAtom</code> 的变化而更新。任何订阅了 <code>combinedDialogsAtom</code> 的组件都会在依赖项变化时获得最新的合并列表，而无需手动监听和合并。</p>
-<p>同样，我们使用派生 atom 来获取当前活动的聊天会话：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 activeHistoryIdAtom 和 chatHistoriesAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前激活的聊天会话</span></span><br><span class="line"><span class="keyword">const</span> currentSessionAtom = <span class="title function_">atom</span>(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> activeId = <span class="title function_">get</span>(activeHistoryIdAtom);        <span class="comment">// 依赖 1: 当前激活的 ID</span></span><br><span class="line">  <span class="keyword">const</span> histories = <span class="title function_">get</span>(chatHistoriesAtom);      <span class="comment">// 依赖 2: 所有历史记录</span></span><br><span class="line">  <span class="keyword">return</span> histories.<span class="title function_">find</span>(<span class="function"><span class="params">h</span> =&gt;</span> h.<span class="property">id</span> === activeId) || <span class="literal">null</span>; <span class="comment">// 根据 ID 查找</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>currentSessionAtom</code> 依赖于 <code>activeHistoryIdAtom</code> 和 <code>chatHistoriesAtom</code>。当用户切换会话（<code>activeHistoryIdAtom</code> 变化）或历史记录本身更新时（<code>chatHistoriesAtom</code> 变化），<code>currentSessionAtom</code> 会自动重新计算，确保 UI 显示的是正确的当前会话数据。</p>
-<h3 id="3-状态持久化-atomWithStorage"><a href="#3-状态持久化-atomWithStorage" class="headerlink" title="3. 状态持久化 ( atomWithStorage )"></a>3. 状态持久化 ( <code>atomWithStorage</code> )</h3><p>对于需要持久化的状态，如用户的聊天历史记录列表和当前选择的活动会话 ID，我们使用了 <code>atomWithStorage</code> 工具函数。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atomWithStorage &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai/utils&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ChatHistory</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// ... 其他历史记录信息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将当前激活的会话 ID 持久化到 localStorage，键名为 &#x27;activeHistoryId&#x27;</span></span><br><span class="line"><span class="keyword">const</span> activeHistoryIdAtom = atomWithStorage&lt;<span class="built_in">string</span> | <span class="literal">null</span>&gt;(<span class="string">&#x27;activeHistoryId&#x27;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将所有聊天历史记录列表持久化到 localStorage，键名为 &#x27;chatHistories&#x27;</span></span><br><span class="line"><span class="keyword">const</span> chatHistoriesAtom = atomWithStorage&lt;<span class="title class_">ChatHistory</span>[]&gt;(<span class="string">&#x27;chatHistories&#x27;</span>, []);</span><br></pre></td></tr></table></figure>
-
-<p>只需一行代码，Jotai 就处理了与 <code>localStorage</code> 的读写同步。这极大地简化了状态持久化的逻辑，使开发者无需编写繁琐的 <code>localStorage.getItem</code> 和 <code>localStorage.setItem</code> 调用以及相关的 effect 逻辑。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Jotai 以其原子化、简洁和灵活的特性，为我们的 React 项目提供了一个高效且易于维护的状态管理方案。它的核心理念与 React Hooks 高度契合，使得状态管理变得更加直观和分散化。通过精确的重渲染优化、强大的派生状态能力以及便捷的持久化工具，Jotai 帮助我们构建了性能更好、代码结构更清晰的应用。如果你正在寻找一个轻量级、现代化的 React 状态管理库，Jotai 绝对值得一试。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-        <tag>Jotai</tag>
       </tags>
   </entry>
   <entry>
@@ -1690,30 +1644,50 @@
       </tags>
   </entry>
   <entry>
-    <title>dummy节点</title>
-    <url>/posts/556c2443.html</url>
-    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
+    <title>Jotai：原子化状态管理在现代 React App中的实践</title>
+    <url>/posts/2279e119.html</url>
+    <content><![CDATA[<p>在构建复杂的 React 应用时，状态管理是一个不可避免的核心问题。从组件的本地 state 到跨组件共享的全局状态，选择一个合适的库来优雅地处理这些数据流至关重要。在我们最近的某个项目中，就选择了 <a href="https://jotai.org/">Jotai</a> 作为状态管理解决方案。</p>
+<h2 id="什么是-Jotai？"><a href="#什么是-Jotai？" class="headerlink" title="什么是 Jotai？"></a>什么是 Jotai？</h2><p>Jotai 是一个为 React 设计的原始（primitive）且灵活（flexible）的状态管理库。它的核心思想是 <strong>原子化（atomic）</strong>。与 Redux 或 Zustand 等库将所有状态集中存储在一个大的 store 中不同，Jotai 将状态分解为一个个独立的、微小的单元，称为 <strong>原子（atom）</strong>。</p>
+<p>你可以将 atom 想象成 React <code>useState</code> 的全局版本，但它更强大，支持派生状态、异步操作以及与 React Suspense 的集成。</p>
 <span id="more"></span>
 
-<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
+<h2 id="为什么选择-Jotai？"><a href="#为什么选择-Jotai？" class="headerlink" title="为什么选择 Jotai？"></a>为什么选择 Jotai？</h2><p>在我们的项目中，我们需要管理诸如用户交互产生的对话框状态、聊天历史记录、当前激活的会话等多种状态。我们评估了不同的方案后，最终选择了 Jotai，主要基于以下几点考虑：</p>
+<ol>
+<li><strong>简洁性与低心智负担</strong>：Jotai 的 API 非常简洁直观。定义和使用 atom 感觉就像使用 React 内置的 Hook 一样自然，几乎没有额外的学习成本和模板代码。这使得开发者可以更专注于业务逻辑本身。</li>
+<li><strong>原子化的优势</strong>：<ul>
+<li><strong>精确的重渲染</strong>：只有订阅了某个特定 atom 的组件才会在该 atom 更新时重渲染。这避免了大型 store 更新时可能导致的全局性、不必要的渲染，从而提升了应用的性能。</li>
+<li><strong>模块化与可维护性</strong>：状态被分解到独立的 atom 中，使得代码更易于组织、理解和维护。每个 atom 只负责一小块状态，职责清晰。</li>
+</ul>
+</li>
+<li><strong>强大的派生状态能力</strong>：Jotai 可以轻松地基于一个或多个其他 atom 创建派生 atom。这意味着你可以根据基础状态计算出新的状态，而无需手动同步，保证了状态的一致性。</li>
+<li><strong>开箱即用的工具集</strong>：Jotai 提供了丰富的工具函数（Utilities），例如 <code>atomWithStorage</code>，可以非常方便地将 atom 的状态持久化到 <code>localStorage</code> 或 <code>sessionStorage</code>，简化了本地数据持久化的实现。</li>
+</ol>
+<h2 id="Jotai-在项目中的实践亮点"><a href="#Jotai-在项目中的实践亮点" class="headerlink" title="Jotai 在项目中的实践亮点"></a>Jotai 在项目中的实践亮点</h2><p>在我们的项目中，Jotai 的优势具体体现在以下几个方面：</p>
+<h3 id="1-基础状态管理-atom"><a href="#1-基础状态管理-atom" class="headerlink" title="1. 基础状态管理 ( atom )"></a>1. 基础状态管理 ( <code>atom</code> )</h3><p>我们使用 <code>atom</code> 来定义基础的状态单元。例如，管理不同类型的对话框状态：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义不同类型的对话框可能的数据结构</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">DialogContent</span> &#123;</span><br><span class="line">  <span class="comment">// ... 对话框的具体内容</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储用户触发对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> userDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储模态对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> modalDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
-<ul>
-<li>作为新链表的头部<ul>
-<li>（可参考leetcode第2题、第21题）</li>
-</ul>
-</li>
-<li>解决链表的头部引起的极端问题<ul>
-<li>（可参考leetcode第19题、第24题）</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
+<p>通过这种方式，不同类型的对话框状态被清晰地分离到各自的 atom 中，互不干扰。组件可以按需订阅它们需要的 atom。</p>
+<h3 id="2-派生状态-Derived-Atoms"><a href="#2-派生状态-Derived-Atoms" class="headerlink" title="2. 派生状态 (Derived Atoms)"></a>2. 派生状态 (Derived Atoms)</h3><p>当需要组合或基于现有状态计算新状态时，派生 atom 就派上了用场。例如，我们需要一个包含所有类型对话框的列表：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 userDialogsAtom 和 modalDialogsAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个派生 atom，它的值是 userDialogs 和 modalDialogs 的合并结果</span></span><br><span class="line"><span class="keyword">const</span> combinedDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userDialogs = <span class="title function_">get</span>(userDialogsAtom);</span><br><span class="line">  <span class="keyword">const</span> modalDialogs = <span class="title function_">get</span>(modalDialogsAtom);</span><br><span class="line">  <span class="keyword">return</span> [...userDialogs, ...modalDialogs];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>combinedDialogsAtom</code> 的值会自动根据 <code>userDialogsAtom</code> 和 <code>modalDialogsAtom</code> 的变化而更新。任何订阅了 <code>combinedDialogsAtom</code> 的组件都会在依赖项变化时获得最新的合并列表，而无需手动监听和合并。</p>
+<p>同样，我们使用派生 atom 来获取当前活动的聊天会话：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 activeHistoryIdAtom 和 chatHistoriesAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前激活的聊天会话</span></span><br><span class="line"><span class="keyword">const</span> currentSessionAtom = <span class="title function_">atom</span>(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> activeId = <span class="title function_">get</span>(activeHistoryIdAtom);        <span class="comment">// 依赖 1: 当前激活的 ID</span></span><br><span class="line">  <span class="keyword">const</span> histories = <span class="title function_">get</span>(chatHistoriesAtom);      <span class="comment">// 依赖 2: 所有历史记录</span></span><br><span class="line">  <span class="keyword">return</span> histories.<span class="title function_">find</span>(<span class="function"><span class="params">h</span> =&gt;</span> h.<span class="property">id</span> === activeId) || <span class="literal">null</span>; <span class="comment">// 根据 ID 查找</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>currentSessionAtom</code> 依赖于 <code>activeHistoryIdAtom</code> 和 <code>chatHistoriesAtom</code>。当用户切换会话（<code>activeHistoryIdAtom</code> 变化）或历史记录本身更新时（<code>chatHistoriesAtom</code> 变化），<code>currentSessionAtom</code> 会自动重新计算，确保 UI 显示的是正确的当前会话数据。</p>
+<h3 id="3-状态持久化-atomWithStorage"><a href="#3-状态持久化-atomWithStorage" class="headerlink" title="3. 状态持久化 ( atomWithStorage )"></a>3. 状态持久化 ( <code>atomWithStorage</code> )</h3><p>对于需要持久化的状态，如用户的聊天历史记录列表和当前选择的活动会话 ID，我们使用了 <code>atomWithStorage</code> 工具函数。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atomWithStorage &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai/utils&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ChatHistory</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// ... 其他历史记录信息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将当前激活的会话 ID 持久化到 localStorage，键名为 &#x27;activeHistoryId&#x27;</span></span><br><span class="line"><span class="keyword">const</span> activeHistoryIdAtom = atomWithStorage&lt;<span class="built_in">string</span> | <span class="literal">null</span>&gt;(<span class="string">&#x27;activeHistoryId&#x27;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将所有聊天历史记录列表持久化到 localStorage，键名为 &#x27;chatHistories&#x27;</span></span><br><span class="line"><span class="keyword">const</span> chatHistoriesAtom = atomWithStorage&lt;<span class="title class_">ChatHistory</span>[]&gt;(<span class="string">&#x27;chatHistories&#x27;</span>, []);</span><br></pre></td></tr></table></figure>
+
+<p>只需一行代码，Jotai 就处理了与 <code>localStorage</code> 的读写同步。这极大地简化了状态持久化的逻辑，使开发者无需编写繁琐的 <code>localStorage.getItem</code> 和 <code>localStorage.setItem</code> 调用以及相关的 effect 逻辑。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Jotai 以其原子化、简洁和灵活的特性，为我们的 React 项目提供了一个高效且易于维护的状态管理方案。它的核心理念与 React Hooks 高度契合，使得状态管理变得更加直观和分散化。通过精确的重渲染优化、强大的派生状态能力以及便捷的持久化工具，Jotai 帮助我们构建了性能更好、代码结构更清晰的应用。如果你正在寻找一个轻量级、现代化的 React 状态管理库，Jotai 绝对值得一试。</p>
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>经验</category>
       </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>Jotai</tag>
+      </tags>
   </entry>
   <entry>
     <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
@@ -1743,68 +1717,6 @@
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>《灌篮高手》，坐在电影院里就足够了</title>
-    <url>/posts/d4a3be1c.html</url>
-    <content><![CDATA[<p>电影院里很久没有出现这样的景象了。</p>
-<p>零点首映时，中年人们拖着疲惫的身躯，从城市的各个角落中钻出来，趁着夜色摸到电影院。</p>
-<p>在排队进场之前，他们有的还在回复工作内容，有的还在叮嘱父母哄睡孩子，更多的人则打开搜索引擎，搜索当年戛然而止的记忆。</p>
-<p>只有那些穿在外套里面，皱皱巴巴、微微变色的球衣，证明着他们不曾忘记的青春。虽然有些衣服明显不再合身，有些号码都已经斑驳、脱落，但是他们还是穿着来了。</p>
-<p>200斤的“樱木花道”就站在40岁的“流川枫”身前，后面排队的是发际线堪忧的“仙道彰”……</p>
-<p>当手绘的湘北五虎线稿跃然于大银幕上时，电影院中鸦雀无声，五个少年迎面“走起来”时，电影院中窸窸窣窣抽纸巾的声音提醒着观众：</p>
-<p>“那个回忆，他们回来了。”</p>
-<span id="more"></span>
-
-<p>和此前的漫画以及TV版动画不同，电影版《灌篮高手》的主角，从樱木花道换成了宫城良田。</p>
-<p>那是一个身高只有168cm的16岁少年。在大部分关于《灌篮高手》的回忆中，宫城良田只是湘北五虎里面那个跑得飞快，很会传球的小个子。</p>
-<p>颜值不如流川枫、搞笑没有樱木花道尽力、精神属性不敌赤木刚宪、戏剧冲突更比不上三井寿，在湘北的比赛中，更是鲜有看到宫城良田以一己之力战胜对手的战例。</p>
-<p>宫城良田在观众中的人气甚至不如仙道彰、花形透、藤真健司……有观众曾经表示，漫画中水户洋平的戏份都要比宫城良田多。</p>
-<p>电影上映前，井上雄彦曾表示，当初创作《灌篮高手》的时候，自己仅仅23岁，而如今27年过去，人生视角和价值观发生了巨大的变化。</p>
-<p>“毕竟大家都生活在痛苦中，不是所有人都拥有无限的可能性。”井上雄彦说。</p>
-<p>和不少打着怀旧牌的创作者一样，《灌篮高手》同样面临着究竟是迎合老粉丝，还是照顾新观众的问题，无论偏向哪一边，都很容易翻车。</p>
-<p>其实，电影中宫城良田的一部分故事，在当年《灌篮高手》完结后，井上雄彦曾经创作过一部叫做《耳环》的短篇作品，讲述了在哥哥去世后，宫城良田和一个女孩子的故事，在那部作品中，海边的洞穴、捕鱼去世的哥哥都曾经出现过。</p>
-<p>但这部作品的影响力并不高，很多当年喜爱《灌篮高手》的年轻人，也并不都看过《耳环》。</p>
-<p>对于新观众而言，由于比赛只有一场，需要一个完整的故事线索来承接比赛的内容，一个较为丰满，具有冲突的故事，却是可以降低新观众观影的门槛。</p>
-<p>电影中的宫城良田的剧情线很简单，自幼丧父，12岁时哥哥也去世，就剩下母亲一人拉扯自己和妹妹，受到去世的哥哥影响，宫城良田小学起就喜欢篮球，并且以击败山王工业为目标，篮球对于宫城良田来说既像一个爱好，也像是某种缅怀仪式。</p>
-<p>带着击败山王的梦想，一家人从冲绳来到神奈川，宫城也进入湘北高中，从而结识了赤木刚宪、樱木花道等人，最终在全国大赛中战胜山王工业。</p>
-<p>宫城良田的故事和湘北VS山王工业的比赛，穿插呈现，基本就是全片的内容。对于老观众来说，那场比赛的结果甚至是过程，都已经无须赘述。赤木的受限、三井的爆发、流川的觉醒以及樱木的绝杀，这些都不是新鲜事。</p>
-<p>电影版《灌篮高手》采用了3D建模渲染成2D画风的“三渲二”的技术，在上映前遭到了不少老粉的吐槽，认为这样的处理缺少了曾经那样要扎破纸张的线条表现力，人物的面部和肢体线条平整光滑后，也不那么能让人接受。</p>
-<p>从观感上看，球员们的篮球技术动作确实比20多年前更真实，但是面部表情也的确呈现出了一种“医美过度”的感觉。尤其是这个版本的“流川枫”，不知道是活在什么群体的“审美点”上。</p>
-<p>由于加入了大量宫城良田家庭戏份回忆，让湘北VS山王的比赛变得稍显破碎，而宫城良田的家庭戏，也并没有真正做到前后呼应，山王的比赛和宫城良田的故事仍然会让观众感受到脱节。</p>
-<p>而在原作中，湘北和山王的比赛中有大量细节被取消，仍然令观众感到遗憾。山王的强大只在宫城良田的回忆中进行了铺垫，而鱼住纯骂醒赤木刚宪，樱木表白晴子说“我很喜欢，这次是真心的”的告白都没有出现，脱力后三井寿说的那句“我是三井寿，一个永不放弃的人……”也没有出现。</p>
-<p>这些细节的缺失，让这个回忆杀显得遗憾大于满足。</p>
-<p>在井上雄彦的《灌篮高手》中，篮球虽然是主角，但从来不是全部，一群不完美的人，因为篮球凑在一起，互相之间的摩擦和变化以及成长，才是《灌篮高手》真正吸引人的地方。</p>
-<p>主角们幼稚、不成熟却拼搏不认输，而一众配角们的存在都只为阐述“友爱”二字，拿水户洋平来说，为了樱木专心打球，水户洋平替樱木扛下了打架斗殴的责任，并用攒下的打工钱买摄像机、录影带，协助拍摄，以纠正樱木的错误动作，让读者看到了到底什么是真朋友。</p>
-<p>大量出色的细节和配角，让这些年轻人的青春不那样平凡，在电影中，或是因为体量的原因，这些东西均无法呈现，令人非常遗憾。</p>
-<p>在当年，不少年轻人在初看《灌篮高手》时，甚至没有看过一场正式的篮球比赛转播，很多人的篮球初恋，便是来自《灌篮高手》。</p>
-<p>曾经漫画和动画中写实的篮球技战术，如今也随着电视转播技术的先进、大型赛事的影响力增大而消解，没有年轻人再选择《灌篮高手》作为自己的篮球启蒙。</p>
-<p>所以无论井上雄彦怎样讨巧，怎么妥协，《灌篮高手》注定不是一部能承载“拉新”能力的电影作品，它仍然只是一部用于收割情怀的作品。</p>
-<p>但对于大部分购票观影的中年人来说，能买上一张票，坐在电影院里，已经足够了。</p>
-<hr>
-
-<p>井上雄彦在谈到宫城良田的时候，说他就像自己。</p>
-<p>宫城良田和井上雄彦一样，是家中三个孩子的老二，夹在中间；在湘北，赤木刚宪、木暮公延、三井寿是三年级生，流川枫、樱木花道则是一年级生，宫城良田仍然是夹在中间。</p>
-<p>所以他决定在26年后重启，把这个“夹在中间”的人推到台前来，让人们看到他的成长经历、过往的苦难和最终鼓起的勇气和决心。</p>
-<p>这其实是《灌篮高手》和其他贩卖情怀的作品最大的不同之处，虽然俗套，但井上雄彦依然希望和读者一起成长，而非停在当年，收割余利。</p>
-<p>巧合的是，当年那些看着湘北披荆斩棘的孩子，如今也正是被“夹在中间”的人。</p>
-<p>小孩子可以熊，老年人可以犟，唯独夹在中间的人必须循规蹈矩，必须墨守成规，必须活得无比正确且正常。</p>
-<p>在电影版的灌篮高手里，井上没有过多地着墨于“梦想”“友情”“热血”，反而花了很大的笔墨在城市乡村的反差、单身母亲的艰难生活上，就连原著中的青春懵懂的爱情，也几乎没有任何描述。电影中，赤木晴子就坐在看台上高宫望的身边，毫无任何光环可言。</p>
-<p>每个被夹在中间的中年人，都像是面对着一个“山王工业”的宫城良田，但又远没有宫城良田幸运。宫城良田速度很快，但身高不够，对抗有限，还缺乏投篮能力。但他身边有精神力拉满的赤木刚宪、有技术全面的流川枫、有外线投射出众的三井寿，甚至还有天赋爆棚的樱木花道。</p>
-<p>在山王工业头牌泽北荣治的一次次杀入篮下得分后，这帮体力透支、能力明显不如对手的年轻人，甚至还能打出此前没有的变化和应对，最终靠流川枫和樱木花道连线，压哨绝杀比赛。</p>
-<p>而那个镜片闪光，肚腩肥硕的老头，更是不可多得的人生导师，他熟悉每个人的特点，尊重个体，并且放大他们的优点，甚至可以允许他们在场上“任性”。</p>
-<p>这一切，在“夹在中间”的人看来，简直就是奢望。生活哪有那么多以弱克强，哪有那么多压哨逆转，更多只是遗憾退场。</p>
-<p>电影中，输掉比赛后的泽北荣治，在球员通道中无助地跪下哭泣，那才是“夹在中间”的人们的常态。</p>
-<p>安西教练说“自己放弃，比赛就结束了”，中年们哭了；樱木花道说“这就是我最光荣的时刻”，中年们也哭了；樱木花道绝杀后和流川枫的世纪击掌，中年们又哭了……</p>
-<p>但在电影院中哭泣的中年人，仅仅是哭青春回来了么？还有很大的一部分在哭，青春回不来了。在那些消逝的青春汗水中，我们到底失去了什么，又得到了什么？</p>
-<p>不知道有多少观众注意到电影中，湘北和山王工业比赛中，湘北替补席上的那个叫做石井健太郎的球员，全场比赛他都没有获得一分钟上场机会，在比赛临近尾声的时候，石井健太郎高举双臂，眼泪肆意流淌，却没有一句对白。</p>
-<p>等到影片结束，彩蛋播完，那两首经典的音乐《好想大声说爱你》和《直到世界的尽头》都没有响起，取而代之的则是两首节奏性更强、唱腔接近嘶吼的作品。</p>
-<p>伴随着嘶吼，灯光亮起，那些被“夹在中间”的观众们，默默擦干眼泪，站起身把球衣塞进裤子，系紧。</p>
-<p>然后，一头扎进黑暗的夜色里。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
   </entry>
   <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
@@ -1941,37 +1853,66 @@
       </tags>
   </entry>
   <entry>
-    <title>利用新Repository给Github Pages配置多个域名</title>
-    <url>/posts/9b69c506.html</url>
-    <content><![CDATA[<h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
-<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
-<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
+    <title>《灌篮高手》，坐在电影院里就足够了</title>
+    <url>/posts/d4a3be1c.html</url>
+    <content><![CDATA[<p>电影院里很久没有出现这样的景象了。</p>
+<p>零点首映时，中年人们拖着疲惫的身躯，从城市的各个角落中钻出来，趁着夜色摸到电影院。</p>
+<p>在排队进场之前，他们有的还在回复工作内容，有的还在叮嘱父母哄睡孩子，更多的人则打开搜索引擎，搜索当年戛然而止的记忆。</p>
+<p>只有那些穿在外套里面，皱皱巴巴、微微变色的球衣，证明着他们不曾忘记的青春。虽然有些衣服明显不再合身，有些号码都已经斑驳、脱落，但是他们还是穿着来了。</p>
+<p>200斤的“樱木花道”就站在40岁的“流川枫”身前，后面排队的是发际线堪忧的“仙道彰”……</p>
+<p>当手绘的湘北五虎线稿跃然于大银幕上时，电影院中鸦雀无声，五个少年迎面“走起来”时，电影院中窸窸窣窣抽纸巾的声音提醒着观众：</p>
+<p>“那个回忆，他们回来了。”</p>
 <span id="more"></span>
 
-<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
-<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
-<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
+<p>和此前的漫画以及TV版动画不同，电影版《灌篮高手》的主角，从樱木花道换成了宫城良田。</p>
+<p>那是一个身高只有168cm的16岁少年。在大部分关于《灌篮高手》的回忆中，宫城良田只是湘北五虎里面那个跑得飞快，很会传球的小个子。</p>
+<p>颜值不如流川枫、搞笑没有樱木花道尽力、精神属性不敌赤木刚宪、戏剧冲突更比不上三井寿，在湘北的比赛中，更是鲜有看到宫城良田以一己之力战胜对手的战例。</p>
+<p>宫城良田在观众中的人气甚至不如仙道彰、花形透、藤真健司……有观众曾经表示，漫画中水户洋平的戏份都要比宫城良田多。</p>
+<p>电影上映前，井上雄彦曾表示，当初创作《灌篮高手》的时候，自己仅仅23岁，而如今27年过去，人生视角和价值观发生了巨大的变化。</p>
+<p>“毕竟大家都生活在痛苦中，不是所有人都拥有无限的可能性。”井上雄彦说。</p>
+<p>和不少打着怀旧牌的创作者一样，《灌篮高手》同样面临着究竟是迎合老粉丝，还是照顾新观众的问题，无论偏向哪一边，都很容易翻车。</p>
+<p>其实，电影中宫城良田的一部分故事，在当年《灌篮高手》完结后，井上雄彦曾经创作过一部叫做《耳环》的短篇作品，讲述了在哥哥去世后，宫城良田和一个女孩子的故事，在那部作品中，海边的洞穴、捕鱼去世的哥哥都曾经出现过。</p>
+<p>但这部作品的影响力并不高，很多当年喜爱《灌篮高手》的年轻人，也并不都看过《耳环》。</p>
+<p>对于新观众而言，由于比赛只有一场，需要一个完整的故事线索来承接比赛的内容，一个较为丰满，具有冲突的故事，却是可以降低新观众观影的门槛。</p>
+<p>电影中的宫城良田的剧情线很简单，自幼丧父，12岁时哥哥也去世，就剩下母亲一人拉扯自己和妹妹，受到去世的哥哥影响，宫城良田小学起就喜欢篮球，并且以击败山王工业为目标，篮球对于宫城良田来说既像一个爱好，也像是某种缅怀仪式。</p>
+<p>带着击败山王的梦想，一家人从冲绳来到神奈川，宫城也进入湘北高中，从而结识了赤木刚宪、樱木花道等人，最终在全国大赛中战胜山王工业。</p>
+<p>宫城良田的故事和湘北VS山王工业的比赛，穿插呈现，基本就是全片的内容。对于老观众来说，那场比赛的结果甚至是过程，都已经无须赘述。赤木的受限、三井的爆发、流川的觉醒以及樱木的绝杀，这些都不是新鲜事。</p>
+<p>电影版《灌篮高手》采用了3D建模渲染成2D画风的“三渲二”的技术，在上映前遭到了不少老粉的吐槽，认为这样的处理缺少了曾经那样要扎破纸张的线条表现力，人物的面部和肢体线条平整光滑后，也不那么能让人接受。</p>
+<p>从观感上看，球员们的篮球技术动作确实比20多年前更真实，但是面部表情也的确呈现出了一种“医美过度”的感觉。尤其是这个版本的“流川枫”，不知道是活在什么群体的“审美点”上。</p>
+<p>由于加入了大量宫城良田家庭戏份回忆，让湘北VS山王的比赛变得稍显破碎，而宫城良田的家庭戏，也并没有真正做到前后呼应，山王的比赛和宫城良田的故事仍然会让观众感受到脱节。</p>
+<p>而在原作中，湘北和山王的比赛中有大量细节被取消，仍然令观众感到遗憾。山王的强大只在宫城良田的回忆中进行了铺垫，而鱼住纯骂醒赤木刚宪，樱木表白晴子说“我很喜欢，这次是真心的”的告白都没有出现，脱力后三井寿说的那句“我是三井寿，一个永不放弃的人……”也没有出现。</p>
+<p>这些细节的缺失，让这个回忆杀显得遗憾大于满足。</p>
+<p>在井上雄彦的《灌篮高手》中，篮球虽然是主角，但从来不是全部，一群不完美的人，因为篮球凑在一起，互相之间的摩擦和变化以及成长，才是《灌篮高手》真正吸引人的地方。</p>
+<p>主角们幼稚、不成熟却拼搏不认输，而一众配角们的存在都只为阐述“友爱”二字，拿水户洋平来说，为了樱木专心打球，水户洋平替樱木扛下了打架斗殴的责任，并用攒下的打工钱买摄像机、录影带，协助拍摄，以纠正樱木的错误动作，让读者看到了到底什么是真朋友。</p>
+<p>大量出色的细节和配角，让这些年轻人的青春不那样平凡，在电影中，或是因为体量的原因，这些东西均无法呈现，令人非常遗憾。</p>
+<p>在当年，不少年轻人在初看《灌篮高手》时，甚至没有看过一场正式的篮球比赛转播，很多人的篮球初恋，便是来自《灌篮高手》。</p>
+<p>曾经漫画和动画中写实的篮球技战术，如今也随着电视转播技术的先进、大型赛事的影响力增大而消解，没有年轻人再选择《灌篮高手》作为自己的篮球启蒙。</p>
+<p>所以无论井上雄彦怎样讨巧，怎么妥协，《灌篮高手》注定不是一部能承载“拉新”能力的电影作品，它仍然只是一部用于收割情怀的作品。</p>
+<p>但对于大部分购票观影的中年人来说，能买上一张票，坐在电影院里，已经足够了。</p>
+<hr>
 
-<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
-<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
-<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> current = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> target = current.<span class="title function_">substring</span>(current.<span class="title function_">indexOf</span>(<span class="string">&#x27;/&#x27;</span>, current.<span class="title function_">indexOf</span>(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">        location.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，新建的Repository应包含下面几个文件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
-<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.yanbinghu.com/2019/03/29/25951.html">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)</a></p>
+<p>井上雄彦在谈到宫城良田的时候，说他就像自己。</p>
+<p>宫城良田和井上雄彦一样，是家中三个孩子的老二，夹在中间；在湘北，赤木刚宪、木暮公延、三井寿是三年级生，流川枫、樱木花道则是一年级生，宫城良田仍然是夹在中间。</p>
+<p>所以他决定在26年后重启，把这个“夹在中间”的人推到台前来，让人们看到他的成长经历、过往的苦难和最终鼓起的勇气和决心。</p>
+<p>这其实是《灌篮高手》和其他贩卖情怀的作品最大的不同之处，虽然俗套，但井上雄彦依然希望和读者一起成长，而非停在当年，收割余利。</p>
+<p>巧合的是，当年那些看着湘北披荆斩棘的孩子，如今也正是被“夹在中间”的人。</p>
+<p>小孩子可以熊，老年人可以犟，唯独夹在中间的人必须循规蹈矩，必须墨守成规，必须活得无比正确且正常。</p>
+<p>在电影版的灌篮高手里，井上没有过多地着墨于“梦想”“友情”“热血”，反而花了很大的笔墨在城市乡村的反差、单身母亲的艰难生活上，就连原著中的青春懵懂的爱情，也几乎没有任何描述。电影中，赤木晴子就坐在看台上高宫望的身边，毫无任何光环可言。</p>
+<p>每个被夹在中间的中年人，都像是面对着一个“山王工业”的宫城良田，但又远没有宫城良田幸运。宫城良田速度很快，但身高不够，对抗有限，还缺乏投篮能力。但他身边有精神力拉满的赤木刚宪、有技术全面的流川枫、有外线投射出众的三井寿，甚至还有天赋爆棚的樱木花道。</p>
+<p>在山王工业头牌泽北荣治的一次次杀入篮下得分后，这帮体力透支、能力明显不如对手的年轻人，甚至还能打出此前没有的变化和应对，最终靠流川枫和樱木花道连线，压哨绝杀比赛。</p>
+<p>而那个镜片闪光，肚腩肥硕的老头，更是不可多得的人生导师，他熟悉每个人的特点，尊重个体，并且放大他们的优点，甚至可以允许他们在场上“任性”。</p>
+<p>这一切，在“夹在中间”的人看来，简直就是奢望。生活哪有那么多以弱克强，哪有那么多压哨逆转，更多只是遗憾退场。</p>
+<p>电影中，输掉比赛后的泽北荣治，在球员通道中无助地跪下哭泣，那才是“夹在中间”的人们的常态。</p>
+<p>安西教练说“自己放弃，比赛就结束了”，中年们哭了；樱木花道说“这就是我最光荣的时刻”，中年们也哭了；樱木花道绝杀后和流川枫的世纪击掌，中年们又哭了……</p>
+<p>但在电影院中哭泣的中年人，仅仅是哭青春回来了么？还有很大的一部分在哭，青春回不来了。在那些消逝的青春汗水中，我们到底失去了什么，又得到了什么？</p>
+<p>不知道有多少观众注意到电影中，湘北和山王工业比赛中，湘北替补席上的那个叫做石井健太郎的球员，全场比赛他都没有获得一分钟上场机会，在比赛临近尾声的时候，石井健太郎高举双臂，眼泪肆意流淌，却没有一句对白。</p>
+<p>等到影片结束，彩蛋播完，那两首经典的音乐《好想大声说爱你》和《直到世界的尽头》都没有响起，取而代之的则是两首节奏性更强、唱腔接近嘶吼的作品。</p>
+<p>伴随着嘶吼，灯光亮起，那些被“夹在中间”的观众们，默默擦干眼泪，站起身把球衣塞进裤子，系紧。</p>
+<p>然后，一头扎进黑暗的夜色里。</p>
 ]]></content>
       <categories>
-        <category>经验</category>
+        <category>随笔</category>
       </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
   </entry>
   <entry>
     <title>二叉树的遍历方法及其Java代码实现</title>
@@ -2049,6 +1990,73 @@
       </tags>
   </entry>
   <entry>
+    <title>期末预测之安全指数 202012-1</title>
+    <url>/posts/d9ae96d3.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
+<span id="more"></span>
+
+<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
+<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
+<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用新Repository给Github Pages配置多个域名</title>
+    <url>/posts/9b69c506.html</url>
+    <content><![CDATA[<h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
+<h5 id="踩坑经历"><a href="#踩坑经历" class="headerlink" title="踩坑经历"></a>踩坑经历</h5><p>Github Pages对应的Repository下有一个CNAME文件，它包含了你的自定义域名，但是只能添加一条记录，不能添加两条域名记录。</p>
+<p>直接在域名DNS服务商进行DNS配置也是不可以的，否则会出现“404 There is not a GitHub Pages site here.”的错误信息。</p>
+<span id="more"></span>
+
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>我们可以通过设置另外一个新的Github Pages来绑定新的域名，再通过新的Github Pages来重定向到指定的Github Pages。下面介绍方法步骤。</p>
+<h5 id="第一步：新建Repository"><a href="#第一步：新建Repository" class="headerlink" title="第一步：新建Repository"></a>第一步：新建Repository</h5><p>打开Github主页，点击右上角的加号，在下拉框内选择New Repository来新建一个名字任意的Repository。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-50-49.png"></p>
+<h5 id="第二步：配置Repository"><a href="#第二步：配置Repository" class="headerlink" title="第二步：配置Repository"></a>第二步：配置Repository</h5><p>我创建了一个名字为Site-Redirecting的Repository。为了使这个Repository能使用Github Pages服务，在创建一个全新的Repository后，可以向Repository内放置一个<code>_config.yml</code> 文件（内容参考如下）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">title: koukihk</span><br><span class="line">author: koukihk</span><br></pre></td></tr></table></figure>
+
+<p>保存文件后，在Repository内的Setting-&gt;Pages内配置你的域名信息。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_10-53-08.png"></p>
+<p>以图示新域名为例子，配置成功后，如果在DNS服务商处将 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> 这个域名解析到新Github Pages，就能通过它访问到新Github Pages，只不过Page没有内容。</p>
+<h5 id="第三步：新建重定向页面"><a href="#第三步：新建重定向页面" class="headerlink" title="第三步：新建重定向页面"></a>第三步：新建重定向页面</h5><p>在Repository内新建一个html文件，目的是通过它将重定向到我们原来的Github Pages，内容可以参考下面。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>正在重定向……<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> domain = <span class="string">&quot;kouki.ltd&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> current = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> target = current.<span class="title function_">substring</span>(current.<span class="title function_">indexOf</span>(<span class="string">&#x27;/&#x27;</span>, current.<span class="title function_">indexOf</span>(<span class="string">&#x27;:&#x27;</span>) + <span class="number">3</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">        location.<span class="property">href</span> = <span class="string">&quot;//&quot;</span> + domain + target;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        正在重定向……</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，新建的Repository应包含下面几个文件。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Snipaste_2021-09-06_11-01-34.png"></p>
+<h5 id="第四步：配置新域名DNS"><a href="#第四步：配置新域名DNS" class="headerlink" title="第四步：配置新域名DNS"></a>第四步：配置新域名DNS</h5><p>在你的DNS服务商处，将新域名解析到和旧域名一样的地址即可，即旧域名是怎样解析的新域名就怎样解析，建议使用一条A记录和一条CNAME记录，关于如何配置可以参考其他文章。</p>
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>打开新域名 <a href="http://www.kouki.xyz/">www.kouki.xyz</a> ，标签上显示短暂的“正在重定向”提示，随后跳转到旧域名。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.yanbinghu.com/2019/03/29/25951.html">多个域名映射同一个github pages | 守望的个人博客 (yanbinghu.com)</a></p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在Hexo博客中适配APlayer和Waline的深色模式体验</title>
     <url>/posts/c05c62e8.html</url>
     <content><![CDATA[<p>使用DarkMode.js实现深色模式后，发现第三方组件如APlayer音乐播放器和Waline评论系统并不能自动适配深色模式，这会导致深色模式下的显示效果不统一。</p>
@@ -2079,6 +2087,32 @@
       <tags>
         <tag>Hexo</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>dummy节点</title>
+    <url>/posts/556c2443.html</url>
+    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
+<span id="more"></span>
+
+<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
+<ul>
+<li>作为新链表的头部<ul>
+<li>（可参考leetcode第2题、第21题）</li>
+</ul>
+</li>
+<li>解决链表的头部引起的极端问题<ul>
+<li>（可参考leetcode第19题、第24题）</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
   </entry>
   <entry>
     <title>期末预测之最佳阈值 202012-2</title>
@@ -2144,70 +2178,6 @@
       </tags>
   </entry>
   <entry>
-    <title>期末预测之安全指数 202012-1</title>
-    <url>/posts/d9ae96d3.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
-<span id="more"></span>
-
-<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
-<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
-<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>未初始化警告 202203-1</title>
-    <url>/posts/45202b01.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>一个未经初始化的变量，里面存储的值可能是任意的。因此直接使用未初始化的变量，比如将其赋值给另一个变量，并不符合一般的编程逻辑。代码中出现这种情况，往往是因为遗漏了初始化语句、或是打错了变量名。对代码中使用了未初始化变量的语句进行检查，可以方便地排查出代码中的一些隐秘 Bug。</p>
-<span id="more"></span>
-
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>考虑一段包含$ k $条赋值语句的简单代码。该段代码最多使用到$ n $个变量，分别记作$ a_1,a_2,⋯,a_n$；该段代码使用的常量均记作$a_0$。</p>
-<p>第$ i $条$（1≤i≤k）$赋值语句为$a_{xi}&#x3D;a_{yi}$，满足$1≤xi≤n、0≤yi≤n$，表示将$a_{yi} $的值赋给变量$a_{xi}$。其中 $a_{xi}$ 被称为该赋值语句的<strong>左值</strong>，一定是个变量；$a_{yi}$ 被称为<strong>右值</strong>，可以是一个常量或变量。</p>
-<p>对于任意一条赋值语句 $a_{xi}&#x3D;a_{yi}$，如果右值 $a_{yi}$ 是一个变量，则其应该在此之前被初始化过。<br>具体来说，如果变量 $a_{yi}$ 在前 $i−1$ 条赋值语句中做为<strong>左值</strong>出现过，即存在 $j&lt;i$ 满足 $xj&#x3D;yi$（这里无需考虑第 $j$ 条赋值语句本身是否也有右值未初始化的问题），我们就认为在第 i 条赋值语句中 $a_{yi}$ 已被初始化；<br>否则，我们认为该条语句存在右值未初始化的问题。</p>
-<p>按照上述规则，试统计给定的代码中，有多少条赋值语句右值未被初始化。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入的第一行包含空格分隔的两个正整数$n、k$，分别表示变量的数量和赋值语句的条数。</p>
-<p>接下来输入$ k $行，其中第$ i $行$（1≤i≤k）$包含空格分隔的两个正整数$ xi、yi$，表示第$ i $条赋值语句。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一个整数，表示有右值未被初始化问题的赋值语句条数。</p>
-<h2 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10 7</span><br><span class="line">1 2</span><br><span class="line">3 3</span><br><span class="line">3 0</span><br><span class="line">3 3</span><br><span class="line">6 2</span><br><span class="line">2 1</span><br><span class="line">8 2</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例解释"><a href="#样例解释" class="headerlink" title="样例解释"></a>样例解释</h2><p>其中第一、二、五条赋值语句右值未被初始化。</p>
-<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>50% 的测试数据满足$ 0&lt;n,k≤1000$；</p>
-<p>全部的测试数据满足$ 0&lt;n,k≤10^5$ 。</p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> state[<span class="number">100001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,k,i,ans=<span class="number">0</span>;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> left,right;</span><br><span class="line">	state[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i++&lt;k)&#123;</span><br><span class="line">		cin&gt;&gt;left&gt;&gt;right;</span><br><span class="line">		<span class="keyword">if</span>(state[right]==<span class="number">0</span>)&#123;</span><br><span class="line">			ans++;</span><br><span class="line">		&#125;</span><br><span class="line">		state[left]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>某互联网大厂前端暑期实习面经与复盘</title>
     <url>/posts/18d2e115.html</url>
     <content><![CDATA[<h3 id="TL-JD"><a href="#TL-JD" class="headerlink" title="TL &amp; JD"></a>TL &amp; JD</h3><p>3.28 投递</p>
@@ -2253,6 +2223,77 @@
       </categories>
       <tags>
         <tag>面经</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>王道数据结构P191关于二叉树的算法归纳</title>
+    <url>/posts/1537acf2.html</url>
+    <content><![CDATA[<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount1</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
+<p>也可以用非递归方法，使用队列层次遍历。</p>
+<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount2</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount0</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Height</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="type">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">LevelWidth</span><span class="params">(BiTree T, <span class="type">int</span> a[], <span class="type">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span><br><span class="line">&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">Width</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="type">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Del_0</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先叶子是指左右孩子都没有的结点。</p>
+<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
+<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="type">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="type">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Get_Max</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="type">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="type">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Exc</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">PreAndLevel</span><span class="params">(BiTree T, <span class="type">int</span> i)</span>	</span><br><span class="line">&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <a href="https://blog.csdn.net/qq_36645322?type=blog"> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>未初始化警告 202203-1</title>
+    <url>/posts/45202b01.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>一个未经初始化的变量，里面存储的值可能是任意的。因此直接使用未初始化的变量，比如将其赋值给另一个变量，并不符合一般的编程逻辑。代码中出现这种情况，往往是因为遗漏了初始化语句、或是打错了变量名。对代码中使用了未初始化变量的语句进行检查，可以方便地排查出代码中的一些隐秘 Bug。</p>
+<span id="more"></span>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>考虑一段包含$ k $条赋值语句的简单代码。该段代码最多使用到$ n $个变量，分别记作$ a_1,a_2,⋯,a_n$；该段代码使用的常量均记作$a_0$。</p>
+<p>第$ i $条$（1≤i≤k）$赋值语句为$a_{xi}&#x3D;a_{yi}$，满足$1≤xi≤n、0≤yi≤n$，表示将$a_{yi} $的值赋给变量$a_{xi}$。其中 $a_{xi}$ 被称为该赋值语句的<strong>左值</strong>，一定是个变量；$a_{yi}$ 被称为<strong>右值</strong>，可以是一个常量或变量。</p>
+<p>对于任意一条赋值语句 $a_{xi}&#x3D;a_{yi}$，如果右值 $a_{yi}$ 是一个变量，则其应该在此之前被初始化过。<br>具体来说，如果变量 $a_{yi}$ 在前 $i−1$ 条赋值语句中做为<strong>左值</strong>出现过，即存在 $j&lt;i$ 满足 $xj&#x3D;yi$（这里无需考虑第 $j$ 条赋值语句本身是否也有右值未初始化的问题），我们就认为在第 i 条赋值语句中 $a_{yi}$ 已被初始化；<br>否则，我们认为该条语句存在右值未初始化的问题。</p>
+<p>按照上述规则，试统计给定的代码中，有多少条赋值语句右值未被初始化。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入的第一行包含空格分隔的两个正整数$n、k$，分别表示变量的数量和赋值语句的条数。</p>
+<p>接下来输入$ k $行，其中第$ i $行$（1≤i≤k）$包含空格分隔的两个正整数$ xi、yi$，表示第$ i $条赋值语句。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一个整数，表示有右值未被初始化问题的赋值语句条数。</p>
+<h2 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10 7</span><br><span class="line">1 2</span><br><span class="line">3 3</span><br><span class="line">3 0</span><br><span class="line">3 3</span><br><span class="line">6 2</span><br><span class="line">2 1</span><br><span class="line">8 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例输出"><a href="#样例输出" class="headerlink" title="样例输出"></a>样例输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例解释"><a href="#样例解释" class="headerlink" title="样例解释"></a>样例解释</h2><p>其中第一、二、五条赋值语句右值未被初始化。</p>
+<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>50% 的测试数据满足$ 0&lt;n,k≤1000$；</p>
+<p>全部的测试数据满足$ 0&lt;n,k≤10^5$ 。</p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> state[<span class="number">100001</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,k,i,ans=<span class="number">0</span>;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;k;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> left,right;</span><br><span class="line">	state[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i++&lt;k)&#123;</span><br><span class="line">		cin&gt;&gt;left&gt;&gt;right;</span><br><span class="line">		<span class="keyword">if</span>(state[right]==<span class="number">0</span>)&#123;</span><br><span class="line">			ans++;</span><br><span class="line">		&#125;</span><br><span class="line">		state[left]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -2380,95 +2421,6 @@
       </tags>
   </entry>
   <entry>
-    <title>评价《脑髓地狱》</title>
-    <url>/posts/2b72e15e.html</url>
-    <content><![CDATA[<p>   作为一个平时不常看日本推理小说，也几乎不会主动找来看的人，了解到这本书完全是通过关于这本书的某同人作品(笑)和同名改编电影。</p>
-<span id="more"></span>
-
-<p>  在阅读《脑髓地狱》之前，我先在网络上找到了几篇没有内容雷的感想短文参考，发现这实在是个连剧透都是需要长篇才交待完的故事，再加上作者冗长的叙事手法，导致书中同样的讯息不断重复出现，想要速读时又错过重点，需要返回重读，令不少读者抓狂。</p>
-<p>  回到正题，写这篇文章是想要记录阅读了《脑髓地狱》这部被誉为“变格派的杰作”奇书的感觉。有人说看完脑髓地狱犹如自己下了一趟地狱、被故事弄得头昏脑胀、它的文字就是要让人读起来觉得厌恶等等。所有的读后感都指出阅读脑髓地狱并不是那么愉快的经验，但都同样会叫人把书看完(而不是放下书不要阅读它)，并感叹这是一部奇书。另外就是在阅读之前想要稍为了解一下剧情作心理准备的时候，发现那些读后感并不是没有剧透，只不过是瞎子摸象(这本书不只是象，应该是瞎子摸哥斯拉的程度)，根本没能获得任何心理准备的作用。</p>
-<p>  但是要问《脑髓地狱》值不值得看，我会说是值得(但我短期都不会看第二遍)。有些故事是儿戏写来玩的，有些故事是很认真严肃的，更有些故事看了会感觉到这个人奉献了自己的生命在文字中，令写作到达一个新境界。《脑髓地狱》就令我有这样的感觉。</p>
-<p>  《脑髓地狱》初稿写于1926年，正是精神分析学派的重要人物傅柯的诞生年，出版于1935年，傅柯关于精神病研究的书《疯癫与文明》在25年后才面世。就这方面而言，梦野对于“疯子解放治疗”的理解实在十分超前。 尽管现今从科学看来，他的理论不一定正确(例如胎儿之梦，人类怀胎十月不是因为要发一个比其他物种长的“胎儿之梦”，推翻的例子:长颈鹿怀孕期有16个月)，但他当时能想出来实在是鬼才级的创意。</p>
-<p>  另外，我最喜欢的是吴青秀打算画美女变白骨图来向唐太宗进谏，先不论为什么他认为说服唐太宗需要这么恐怖的图画，但梦野能够想到这样的主意实在很疯狂。能够想到都只是还好，但还要写下来其实需要很大的勇气。这样不顾一切的写作我想就是大家明明都没有愉快地阅读到《脑髓地狱》，却又无奈地只能认同它的原因。</p>
-<p>  梦野写《脑髓地狱》的笔力犹如他笔下为科学疯狂的两位博士，又像疯狂画家吴青秀，是燃烧生命的艺术，为此我们不得不对梦野予以尊敬。</p>
-<p><em>我们人类的精神生活就是，在上述各种心理之中，以最低级、单纯者为中心逐一向外，借由高级复杂的动物心理包裹，最外层再包裹所谓的人皮，用交际、制度、身份家世、面子人格等等蝴蝶结或标签装饰，施加化妆，喷洒香水，然后昂首阔步于马路上。但若是解剖其内容，绝大部分就如前面所述，只是重现潜藏在人体细胞中历代祖先的动物心理记忆。</em></p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>调整最小不平衡子树</title>
-    <url>/posts/b2633b2f.html</url>
-    <content><![CDATA[<h2 id="什么是平衡二叉树？"><a href="#什么是平衡二叉树？" class="headerlink" title="什么是平衡二叉树？"></a>什么是平衡二叉树？</h2><p><strong>平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的 高度之差不超过1。</strong></p>
-<p>结点的平衡因子&#x3D;左子树高-右子树高。</p>
-<h3 id="什么是最小不平衡子树？"><a href="#什么是最小不平衡子树？" class="headerlink" title="什么是最小不平衡子树？"></a>什么是最小不平衡子树？</h3><p>往一个<strong>平衡二叉树</strong>（本文中均指“<strong>平衡二叉排序树</strong>”）插入新的叶子节点，从插入点由下往上，依次遍历插入点的各个祖先节点，记录第一个遍历到的 平衡因子|平衡因子|≥2 （即<strong>不平衡</strong>）的祖先节点，以该节点为根节点的子树即为这棵树的<strong>最小不平衡子树</strong>。</p>
-<p>根据插入节点在最小不平衡子树中的位置，可以将最小不平衡子树分为<strong>LL、RR、LR、RL</strong>这四类</p>
-<span id="more"></span>
-
-<p>在处理问题前，先将最小不平衡子树抽象、简化为以下部分中的几个：</p>
-<ol>
-<li>最小不平衡子树的根节点A</li>
-<li>A的左子树AL（A-Left）</li>
-<li>A的右子树AR（A-Right’）</li>
-<li>A在插入点对应侧的子节点B</li>
-<li>B左子树BL（B-Left）</li>
-<li>B右子树BR（B-Right）</li>
-<li>插入节点所在的子树Ins（Insert）</li>
-</ol>
-<h2 id="LL型与RR型"><a href="#LL型与RR型" class="headerlink" title="LL型与RR型"></a>LL型与RR型</h2><h3 id="LL型"><a href="#LL型" class="headerlink" title="LL型"></a>LL型</h3><p>插入点在最小不平衡子树根节点A的<strong>左</strong>孩子B的<strong>左</strong>子树上（不一定要与B直接连接），即Left-Left，记为<strong>LL型</strong></p>
-<p><img data-src="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png"></p>
-<p>对于LL型，将最小不平衡子树<strong>简化</strong>为五个部分：</p>
-<ol>
-<li>根节点A</li>
-<li>A的左孩子节点B</li>
-<li>A的右子树AR（A-Right）</li>
-<li>插入点Ins（全称Inserted），此时同时也是B的左子树BL（B-Left）</li>
-<li>B的右子树BR</li>
-</ol>
-<p>这里注意无论AL、AR、BL、BR、Ins下有多少个节点，也无论插入的元素在Ins的哪个位置，都抽象成以上几个部分，再处理问题</p>
-<p><img data-src="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png"></p>
-<p>对于LL型，进行<strong>右旋</strong>，B取代A成为根节点，A当B的<strong>右</strong>孩子（对应<strong>右旋</strong>），A以两个除Ins之外的树为子树（注意两子树的相对左右顺序与旋转前一致），B以Ins树为左子树</p>
-<h3 id="RR型"><a href="#RR型" class="headerlink" title="RR型"></a><strong>RR</strong>型</h3><p>插入点在最小不平衡子树根节点A的右孩子B的右子树上（不一定要与B直接连接），即Right-Right，记为<strong>RR</strong>型</p>
-<p><img data-src="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png"></p>
-<p>将RR型最小不平衡子树<strong>简化</strong>为五个部分：</p>
-<ol>
-<li>根节点A</li>
-<li>A的右孩子节点B</li>
-<li>A的左子树AL</li>
-<li>插入点Ins，此时同时也是B的右子树BR</li>
-<li>B的左子树BL</li>
-</ol>
-<p><img data-src="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png"></p>
-<p>对于LL型，进行<strong>左旋</strong>，B取代A成为根节点，A当B的<strong>左</strong>孩子（对应<strong>左旋</strong>），A以两个除Ins之外的树为子树（相对左右顺序与旋转前一致），B以Ins树为右子树</p>
-<h2 id="LR型与RL型"><a href="#LR型与RL型" class="headerlink" title="LR型与RL型"></a>LR型与RL型</h2><p>LR型与RL型稍复杂，在简化与抽象时，较前面划分的几个part之外还增加了：</p>
-<ol>
-<li>插入节点所在子树的父节点C</li>
-<li>C节点的左子树CL（C-Left）</li>
-<li>C节点的右子树CR（C-Right）</li>
-</ol>
-<p>LL型与RR型只需要简化成<strong>五个部分</strong>，而LR型与RL型则需要简化成<strong>七个部分</strong></p>
-<h3 id="LR型"><a href="#LR型" class="headerlink" title="LR型"></a>LR型</h3><p>插入点在<strong>根节点A</strong>的<strong>左孩子B</strong>的<strong>右子树C</strong>上（不一定要与C直接连接），即Left-Right，记为<strong>LR型</strong></p>
-<p><img data-src="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png"></p>
-<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分<strong>左旋（Left）</strong>，<strong>C取代B</strong>的位置，以B为左孩子节点，以CR为右孩子，B将以BL为左子树、CL为右子树；</p>
-<p>接着把第二步中蓝框的部分<strong>右旋（Right）</strong>，<strong>C取代A</strong>的位置，依然以B为左孩子节点，以A为右孩子节点，A将以CR为左子树、AR为右子树；</p>
-<p><img data-src="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png"></p>
-<h3 id="RL型"><a href="#RL型" class="headerlink" title="RL型"></a>RL型</h3><p>插入点在<strong>根节点A</strong>的<strong>右孩子B</strong>的<strong>左子树C</strong>上（不一定要与C直接连接），即Right-Left，记为<strong>RL型</strong></p>
-<p><img data-src="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png"></p>
-<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分右<strong>旋（Right）</strong>，<strong>C取代B</strong>的位置，以B为右孩子节点，以CL为左孩子，B将以BR为右子树、CR为左子树；</p>
-<p>接着把第二步中蓝框的部分<strong>左旋（Left）</strong>，<strong>C取代A</strong>的位置，依然以B为右孩子节点，以A为左孩子节点，A将以AL为左子树、CL为右子树；</p>
-<h2 id="验算小技巧"><a href="#验算小技巧" class="headerlink" title="验算小技巧"></a>验算小技巧</h2><p>旋转后左右次序不变，调整前夹在两祖宗节点之间的子节点，在调整后依然要夹在两祖宗节点之间</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>王道计算机考研数据结构篇</p>
-<p><a href="https://www.zhihu.com/people/jackielics6428">小李的学习笔记</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>称检测点查询 202009-1</title>
     <url>/posts/3b542d1c.html</url>
     <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
@@ -2494,6 +2446,24 @@
       <tags>
         <tag>csp</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>评价《脑髓地狱》</title>
+    <url>/posts/2b72e15e.html</url>
+    <content><![CDATA[<p>   作为一个平时不常看日本推理小说，也几乎不会主动找来看的人，了解到这本书完全是通过关于这本书的某同人作品(笑)和同名改编电影。</p>
+<span id="more"></span>
+
+<p>  在阅读《脑髓地狱》之前，我先在网络上找到了几篇没有内容雷的感想短文参考，发现这实在是个连剧透都是需要长篇才交待完的故事，再加上作者冗长的叙事手法，导致书中同样的讯息不断重复出现，想要速读时又错过重点，需要返回重读，令不少读者抓狂。</p>
+<p>  回到正题，写这篇文章是想要记录阅读了《脑髓地狱》这部被誉为“变格派的杰作”奇书的感觉。有人说看完脑髓地狱犹如自己下了一趟地狱、被故事弄得头昏脑胀、它的文字就是要让人读起来觉得厌恶等等。所有的读后感都指出阅读脑髓地狱并不是那么愉快的经验，但都同样会叫人把书看完(而不是放下书不要阅读它)，并感叹这是一部奇书。另外就是在阅读之前想要稍为了解一下剧情作心理准备的时候，发现那些读后感并不是没有剧透，只不过是瞎子摸象(这本书不只是象，应该是瞎子摸哥斯拉的程度)，根本没能获得任何心理准备的作用。</p>
+<p>  但是要问《脑髓地狱》值不值得看，我会说是值得(但我短期都不会看第二遍)。有些故事是儿戏写来玩的，有些故事是很认真严肃的，更有些故事看了会感觉到这个人奉献了自己的生命在文字中，令写作到达一个新境界。《脑髓地狱》就令我有这样的感觉。</p>
+<p>  《脑髓地狱》初稿写于1926年，正是精神分析学派的重要人物傅柯的诞生年，出版于1935年，傅柯关于精神病研究的书《疯癫与文明》在25年后才面世。就这方面而言，梦野对于“疯子解放治疗”的理解实在十分超前。 尽管现今从科学看来，他的理论不一定正确(例如胎儿之梦，人类怀胎十月不是因为要发一个比其他物种长的“胎儿之梦”，推翻的例子:长颈鹿怀孕期有16个月)，但他当时能想出来实在是鬼才级的创意。</p>
+<p>  另外，我最喜欢的是吴青秀打算画美女变白骨图来向唐太宗进谏，先不论为什么他认为说服唐太宗需要这么恐怖的图画，但梦野能够想到这样的主意实在很疯狂。能够想到都只是还好，但还要写下来其实需要很大的勇气。这样不顾一切的写作我想就是大家明明都没有愉快地阅读到《脑髓地狱》，却又无奈地只能认同它的原因。</p>
+<p>  梦野写《脑髓地狱》的笔力犹如他笔下为科学疯狂的两位博士，又像疯狂画家吴青秀，是燃烧生命的艺术，为此我们不得不对梦野予以尊敬。</p>
+<p><em>我们人类的精神生活就是，在上述各种心理之中，以最低级、单纯者为中心逐一向外，借由高级复杂的动物心理包裹，最外层再包裹所谓的人皮，用交际、制度、身份家世、面子人格等等蝴蝶结或标签装饰，施加化妆，喷洒香水，然后昂首阔步于马路上。但若是解剖其内容，绝大部分就如前面所述，只是重现潜藏在人体细胞中历代祖先的动物心理记忆。</em></p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
   </entry>
   <entry>
     <title>输入URL到显示页面的全过程</title>
@@ -2615,38 +2585,68 @@
       </tags>
   </entry>
   <entry>
-    <title>王道数据结构P191关于二叉树的算法归纳</title>
-    <url>/posts/1537acf2.html</url>
-    <content><![CDATA[<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
-
+    <title>调整最小不平衡子树</title>
+    <url>/posts/b2633b2f.html</url>
+    <content><![CDATA[<h2 id="什么是平衡二叉树？"><a href="#什么是平衡二叉树？" class="headerlink" title="什么是平衡二叉树？"></a>什么是平衡二叉树？</h2><p><strong>平衡二叉树（Balanced Binary Tree），简称平衡树（AVL树）——树上任一结点的左子树和右子树的 高度之差不超过1。</strong></p>
+<p>结点的平衡因子&#x3D;左子树高-右子树高。</p>
+<h3 id="什么是最小不平衡子树？"><a href="#什么是最小不平衡子树？" class="headerlink" title="什么是最小不平衡子树？"></a>什么是最小不平衡子树？</h3><p>往一个<strong>平衡二叉树</strong>（本文中均指“<strong>平衡二叉排序树</strong>”）插入新的叶子节点，从插入点由下往上，依次遍历插入点的各个祖先节点，记录第一个遍历到的 平衡因子|平衡因子|≥2 （即<strong>不平衡</strong>）的祖先节点，以该节点为根节点的子树即为这棵树的<strong>最小不平衡子树</strong>。</p>
+<p>根据插入节点在最小不平衡子树中的位置，可以将最小不平衡子树分为<strong>LL、RR、LR、RL</strong>这四类</p>
 <span id="more"></span>
 
-<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount1</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
-<p>也可以用非递归方法，使用队列层次遍历。</p>
-<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount2</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount0</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Height</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="type">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">LevelWidth</span><span class="params">(BiTree T, <span class="type">int</span> a[], <span class="type">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span><br><span class="line">&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">Width</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="type">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Del_0</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先叶子是指左右孩子都没有的结点。</p>
-<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
-<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="type">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="type">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Get_Max</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="type">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="type">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Exc</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">PreAndLevel</span><span class="params">(BiTree T, <span class="type">int</span> i)</span>	</span><br><span class="line">&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <a href="https://blog.csdn.net/qq_36645322?type=blog"> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主</a></p>
+<p>在处理问题前，先将最小不平衡子树抽象、简化为以下部分中的几个：</p>
+<ol>
+<li>最小不平衡子树的根节点A</li>
+<li>A的左子树AL（A-Left）</li>
+<li>A的右子树AR（A-Right’）</li>
+<li>A在插入点对应侧的子节点B</li>
+<li>B左子树BL（B-Left）</li>
+<li>B右子树BR（B-Right）</li>
+<li>插入节点所在的子树Ins（Insert）</li>
+</ol>
+<h2 id="LL型与RR型"><a href="#LL型与RR型" class="headerlink" title="LL型与RR型"></a>LL型与RR型</h2><h3 id="LL型"><a href="#LL型" class="headerlink" title="LL型"></a>LL型</h3><p>插入点在最小不平衡子树根节点A的<strong>左</strong>孩子B的<strong>左</strong>子树上（不一定要与B直接连接），即Left-Left，记为<strong>LL型</strong></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/aa963646ac9cc39de0ffb.png"></p>
+<p>对于LL型，将最小不平衡子树<strong>简化</strong>为五个部分：</p>
+<ol>
+<li>根节点A</li>
+<li>A的左孩子节点B</li>
+<li>A的右子树AR（A-Right）</li>
+<li>插入点Ins（全称Inserted），此时同时也是B的左子树BL（B-Left）</li>
+<li>B的右子树BR</li>
+</ol>
+<p>这里注意无论AL、AR、BL、BR、Ins下有多少个节点，也无论插入的元素在Ins的哪个位置，都抽象成以上几个部分，再处理问题</p>
+<p><img data-src="https://telegraph-image.pages.dev/file/02da879217f27764ff499.png"></p>
+<p>对于LL型，进行<strong>右旋</strong>，B取代A成为根节点，A当B的<strong>右</strong>孩子（对应<strong>右旋</strong>），A以两个除Ins之外的树为子树（注意两子树的相对左右顺序与旋转前一致），B以Ins树为左子树</p>
+<h3 id="RR型"><a href="#RR型" class="headerlink" title="RR型"></a><strong>RR</strong>型</h3><p>插入点在最小不平衡子树根节点A的右孩子B的右子树上（不一定要与B直接连接），即Right-Right，记为<strong>RR</strong>型</p>
+<p><img data-src="https://telegraph-image.pages.dev/file/525fff69ec057e3c6a08a.png"></p>
+<p>将RR型最小不平衡子树<strong>简化</strong>为五个部分：</p>
+<ol>
+<li>根节点A</li>
+<li>A的右孩子节点B</li>
+<li>A的左子树AL</li>
+<li>插入点Ins，此时同时也是B的右子树BR</li>
+<li>B的左子树BL</li>
+</ol>
+<p><img data-src="https://telegraph-image.pages.dev/file/6eb29f4cfca47965fa401.png"></p>
+<p>对于LL型，进行<strong>左旋</strong>，B取代A成为根节点，A当B的<strong>左</strong>孩子（对应<strong>左旋</strong>），A以两个除Ins之外的树为子树（相对左右顺序与旋转前一致），B以Ins树为右子树</p>
+<h2 id="LR型与RL型"><a href="#LR型与RL型" class="headerlink" title="LR型与RL型"></a>LR型与RL型</h2><p>LR型与RL型稍复杂，在简化与抽象时，较前面划分的几个part之外还增加了：</p>
+<ol>
+<li>插入节点所在子树的父节点C</li>
+<li>C节点的左子树CL（C-Left）</li>
+<li>C节点的右子树CR（C-Right）</li>
+</ol>
+<p>LL型与RR型只需要简化成<strong>五个部分</strong>，而LR型与RL型则需要简化成<strong>七个部分</strong></p>
+<h3 id="LR型"><a href="#LR型" class="headerlink" title="LR型"></a>LR型</h3><p>插入点在<strong>根节点A</strong>的<strong>左孩子B</strong>的<strong>右子树C</strong>上（不一定要与C直接连接），即Left-Right，记为<strong>LR型</strong></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/d53cc2abdd38d35127373.png"></p>
+<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分<strong>左旋（Left）</strong>，<strong>C取代B</strong>的位置，以B为左孩子节点，以CR为右孩子，B将以BL为左子树、CL为右子树；</p>
+<p>接着把第二步中蓝框的部分<strong>右旋（Right）</strong>，<strong>C取代A</strong>的位置，依然以B为左孩子节点，以A为右孩子节点，A将以CR为左子树、AR为右子树；</p>
+<p><img data-src="https://telegraph-image.pages.dev/file/5ea418ce2da051ac5ffd7.png"></p>
+<h3 id="RL型"><a href="#RL型" class="headerlink" title="RL型"></a>RL型</h3><p>插入点在<strong>根节点A</strong>的<strong>右孩子B</strong>的<strong>左子树C</strong>上（不一定要与C直接连接），即Right-Left，记为<strong>RL型</strong></p>
+<p><img data-src="https://telegraph-image.pages.dev/file/dc3e75781dfbbdd07dd52.png"></p>
+<p><strong>无论Ins是在C的左子树上还是右子树上</strong>，都先把第一步红框中的部分右<strong>旋（Right）</strong>，<strong>C取代B</strong>的位置，以B为右孩子节点，以CL为左孩子，B将以BR为右子树、CR为左子树；</p>
+<p>接着把第二步中蓝框的部分<strong>左旋（Left）</strong>，<strong>C取代A</strong>的位置，依然以B为右孩子节点，以A为左孩子节点，A将以AL为左子树、CL为右子树；</p>
+<h2 id="验算小技巧"><a href="#验算小技巧" class="headerlink" title="验算小技巧"></a>验算小技巧</h2><p>旋转后左右次序不变，调整前夹在两祖宗节点之间的子节点，在调整后依然要夹在两祖宗节点之间</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>王道计算机考研数据结构篇</p>
+<p><a href="https://www.zhihu.com/people/jackielics6428">小李的学习笔记</a></p>
 ]]></content>
       <categories>
         <category>笔记</category>
