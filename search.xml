@@ -21,62 +21,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Chip testing</title>
-    <url>/posts/8787df53.html</url>
-    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Chip A says</strong></th>
-<th><strong>Chip B says</strong></th>
-<th><strong>Conclusion</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>B is good</td>
-<td>A is good</td>
-<td>both are good, or both are bad</td>
-</tr>
-<tr>
-<td>B is good</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is good</td>
-<td>at least one is bad</td>
-</tr>
-<tr>
-<td>B is bad</td>
-<td>A is bad</td>
-<td>at least one is bad</td>
-</tr>
-</tbody></table>
-<span id="more"></span>
-
-<ol>
-<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
-<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
-<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
-</ol>
-<p><strong>If more than half are bad</strong></p>
-<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
-<p><strong>Finding a single good chip in logarithmic time</strong></p>
-<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
-<p><strong>Finding the good chips</strong></p>
-<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>CLRS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023年408算法题预测 环形链表</title>
     <url>/posts/b5fa7dc6.html</url>
     <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/9de5a4fc0567b418621f3.png"></p>
@@ -117,71 +61,6 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/posts/175c8d74.html</url>
-    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISBN号码 201312-2</title>
-    <url>/posts/73bd0af.html</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括$9$位数字、$1$位识别码和$3$位分隔符，其规定格式如“$x-xxx-xxxxx-x$”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如$0-670-82162-4$就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如$0$代表英语；第一个分隔符“$-$”之后的三位数字代表出版社，例如$670$代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以$1$加上次位数字乘以$2$……以此类推，用所得的结果$mod 11$，所得的余数即为识别码，如果余数为$10$，则识别码为大写字母$X$。例如ISBN号码$0-670-82162-4$中的识别码$4$是这样得到的：对$067082162$这$9$个数字，从左至右，分别乘以$1，2，…，9$，再求和，即$0×1+6×2+……+2×9&#x3D;158$，然后取$158 mod 11$的结果$4$作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“$Right$”；如果错误，则输出是正确的ISBN号码。</p>
-<span id="more"></span>
-
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“$Right$”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“$-$”）。</p>
-<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>$0-670-82162-4$</p>
-<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>$Right$</p>
-<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>$0-670-82162-0$</p>
-<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>$0-670-82162-4$</p>
-<h2 id="正确解答（Dev-CPP环境）"><a href="#正确解答（Dev-CPP环境）" class="headerlink" title="正确解答（Dev-CPP环境）"></a>正确解答（Dev-CPP环境）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;cin&gt;&gt;str;</span><br><span class="line">    <span class="type">int</span> s=<span class="number">0</span>;<span class="type">int</span> p=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;str.<span class="built_in">length</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i]!=<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">            <span class="type">int</span> t=str[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            s+=t*p;</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> j=str[str.<span class="built_in">length</span>()<span class="number">-1</span>]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]==<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]!=<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;<span class="string">&#x27;X&#x27;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j==s%<span class="number">11</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;s%<span class="number">11</span>&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不完全正确解答（Dev-CPP环境，仅70分）"><a href="#不完全正确解答（Dev-CPP环境，仅70分）" class="headerlink" title="不完全正确解答（Dev-CPP环境，仅70分）"></a>不完全正确解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="type">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="type">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -821,6 +700,45 @@
       </tags>
   </entry>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/posts/175c8d74.html</url>
+    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客优化记录</title>
     <url>/posts/916f4a50.html</url>
     <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
@@ -948,6 +866,134 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISBN号码 201312-2</title>
+    <url>/posts/73bd0af.html</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括$9$位数字、$1$位识别码和$3$位分隔符，其规定格式如“$x-xxx-xxxxx-x$”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如$0-670-82162-4$就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如$0$代表英语；第一个分隔符“$-$”之后的三位数字代表出版社，例如$670$代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以$1$加上次位数字乘以$2$……以此类推，用所得的结果$mod 11$，所得的余数即为识别码，如果余数为$10$，则识别码为大写字母$X$。例如ISBN号码$0-670-82162-4$中的识别码$4$是这样得到的：对$067082162$这$9$个数字，从左至右，分别乘以$1，2，…，9$，再求和，即$0×1+6×2+……+2×9&#x3D;158$，然后取$158 mod 11$的结果$4$作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“$Right$”；如果错误，则输出是正确的ISBN号码。</p>
+<span id="more"></span>
+
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“$Right$”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“$-$”）。</p>
+<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>$0-670-82162-4$</p>
+<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>$Right$</p>
+<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>$0-670-82162-0$</p>
+<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>$0-670-82162-4$</p>
+<h2 id="正确解答（Dev-CPP环境）"><a href="#正确解答（Dev-CPP环境）" class="headerlink" title="正确解答（Dev-CPP环境）"></a>正确解答（Dev-CPP环境）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;cin&gt;&gt;str;</span><br><span class="line">    <span class="type">int</span> s=<span class="number">0</span>;<span class="type">int</span> p=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;str.<span class="built_in">length</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i]!=<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">            <span class="type">int</span> t=str[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            s+=t*p;</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> j=str[str.<span class="built_in">length</span>()<span class="number">-1</span>]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]==<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]!=<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;<span class="string">&#x27;X&#x27;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j==s%<span class="number">11</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;s%<span class="number">11</span>&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不完全正确解答（Dev-CPP环境，仅70分）"><a href="#不完全正确解答（Dev-CPP环境，仅70分）" class="headerlink" title="不完全正确解答（Dev-CPP环境，仅70分）"></a>不完全正确解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="type">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="type">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Chip testing</title>
+    <url>/posts/8787df53.html</url>
+    <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Chip A says</strong></th>
+<th><strong>Chip B says</strong></th>
+<th><strong>Conclusion</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B is good</td>
+<td>A is good</td>
+<td>both are good, or both are bad</td>
+</tr>
+<tr>
+<td>B is good</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is good</td>
+<td>at least one is bad</td>
+</tr>
+<tr>
+<td>B is bad</td>
+<td>A is bad</td>
+<td>at least one is bad</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
+<ol>
+<li>Show that if more than <strong>n&#x2F;2</strong> chips are bad, the professor cannot necessarily determine which chips are good using any strategy based on this kind of pairwise test. Assume that the bad chips can conspire to fool the professor.</li>
+<li>Consider the problem of finding a single good chip from among <strong>n</strong> chips, assuming that more than <strong>n&#x2F;2</strong> of the chips are good. Show that <strong>⌊n&#x2F;2⌋</strong> pairwise tests are sufficient to reduce the problem to one of nearly half the size.</li>
+<li>Show that the good chips can be identified with <strong>Θ(n)</strong> pairwise tests, assuming that more than <strong>n&#x2F;2</strong> chips are good. Give and solve the recurrence that describes the number of tests.</li>
+</ol>
+<p><strong>If more than half are bad</strong></p>
+<p>Lets say that there are <strong>g&lt;n&#x2F;2</strong> good chips. The same amount of the remaining bad chips can choose to act similar to good chips. That is, they can identify each other as good and all other as faulty. Since this is what the good chips would do, both groups are symmetric in regards to the operation of pairwise comparison. No strategy can distinguish between the two groups.</p>
+<p><strong>Finding a single good chip in logarithmic time</strong></p>
+<p>We split the chips in groups of two and compare them. We can take one of the chips if the outcome is the first one (both are good or both are bad) and but both away otherwise. When putting away, we’re removing at least one bad chip for every good one we remove. Out of the pairs we’ve chosen a chip from, there would be more good chips than bad chips (there would be more good pairs, because the good chips are more than the half). Now we have at most <strong>n&#x2F;2</strong> chips, where at least half of them are good.</p>
+<p><strong>Finding the good chips</strong></p>
+<p>The recurrence for finding at least one good chip is:<br>$$<br>T(n)&#x3D;T(n&#x2F;2)+n&#x2F;2<br>$$<br>By the master method, this is Θ(n). After we’ve found one, we can compare it will all others, which is a Θ(n) operation. And the total number of tests is:<br>$$<br>O(n)+n−1&#x3D;Θ(n).<br>$$<br><strong>Python code</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoodChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> other.good()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BadChip</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">good</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> [<span class="literal">True</span>, <span class="literal">False</span>][random.randint(<span class="number">0</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jig</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> [a.check(b), b.check(a)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">diogenes</span>(<span class="params">chips, verbose = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">find_single</span>(<span class="params">chips</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(chips) &lt;= <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> chips[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            halfpoint = <span class="built_in">len</span>(chips) // <span class="number">2</span></span><br><span class="line">            pairs     = <span class="built_in">zip</span>(chips[<span class="number">0</span>:halfpoint], chips[halfpoint:halfpoint * <span class="number">2</span>])</span><br><span class="line">            kept      = [a <span class="keyword">for</span> (a, b) <span class="keyword">in</span> pairs <span class="keyword">if</span> jig(a, b) == [<span class="literal">True</span>, <span class="literal">True</span>]]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>CLRS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jotai：原子化状态管理在现代 React App中的实践</title>
+    <url>/posts/2279e119.html</url>
+    <content><![CDATA[<p>在构建复杂的 React 应用时，状态管理是一个不可避免的核心问题。从组件的本地 state 到跨组件共享的全局状态，选择一个合适的库来优雅地处理这些数据流至关重要。在我们最近的某个项目中，就选择了 <a href="https://jotai.org/">Jotai</a> 作为状态管理解决方案。</p>
+<h2 id="什么是-Jotai？"><a href="#什么是-Jotai？" class="headerlink" title="什么是 Jotai？"></a>什么是 Jotai？</h2><p>Jotai 是一个为 React 设计的原始（primitive）且灵活（flexible）的状态管理库。它的核心思想是 <strong>原子化（atomic）</strong>。与 Redux 或 Zustand 等库将所有状态集中存储在一个大的 store 中不同，Jotai 将状态分解为一个个独立的、微小的单元，称为 <strong>原子（atom）</strong>。</p>
+<p>你可以将 atom 想象成 React <code>useState</code> 的全局版本，但它更强大，支持派生状态、异步操作以及与 React Suspense 的集成。</p>
+<span id="more"></span>
+
+<h2 id="为什么选择-Jotai？"><a href="#为什么选择-Jotai？" class="headerlink" title="为什么选择 Jotai？"></a>为什么选择 Jotai？</h2><p>在我们的项目中，我们需要管理诸如用户交互产生的对话框状态、聊天历史记录、当前激活的会话等多种状态。我们评估了不同的方案后，最终选择了 Jotai，主要基于以下几点考虑：</p>
+<ol>
+<li><strong>简洁性与低心智负担</strong>：Jotai 的 API 非常简洁直观。定义和使用 atom 感觉就像使用 React 内置的 Hook 一样自然，几乎没有额外的学习成本和模板代码。这使得开发者可以更专注于业务逻辑本身。</li>
+<li><strong>原子化的优势</strong>：<ul>
+<li><strong>精确的重渲染</strong>：只有订阅了某个特定 atom 的组件才会在该 atom 更新时重渲染。这避免了大型 store 更新时可能导致的全局性、不必要的渲染，从而提升了应用的性能。</li>
+<li><strong>模块化与可维护性</strong>：状态被分解到独立的 atom 中，使得代码更易于组织、理解和维护。每个 atom 只负责一小块状态，职责清晰。</li>
+</ul>
+</li>
+<li><strong>强大的派生状态能力</strong>：Jotai 可以轻松地基于一个或多个其他 atom 创建派生 atom。这意味着你可以根据基础状态计算出新的状态，而无需手动同步，保证了状态的一致性。</li>
+<li><strong>开箱即用的工具集</strong>：Jotai 提供了丰富的工具函数（Utilities），例如 <code>atomWithStorage</code>，可以非常方便地将 atom 的状态持久化到 <code>localStorage</code> 或 <code>sessionStorage</code>，简化了本地数据持久化的实现。</li>
+</ol>
+<h2 id="Jotai-在项目中的实践亮点"><a href="#Jotai-在项目中的实践亮点" class="headerlink" title="Jotai 在项目中的实践亮点"></a>Jotai 在项目中的实践亮点</h2><p>在我们的项目中，Jotai 的优势具体体现在以下几个方面：</p>
+<h3 id="1-基础状态管理-atom"><a href="#1-基础状态管理-atom" class="headerlink" title="1. 基础状态管理 ( atom )"></a>1. 基础状态管理 ( <code>atom</code> )</h3><p>我们使用 <code>atom</code> 来定义基础的状态单元。例如，管理不同类型的对话框状态：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义不同类型的对话框可能的数据结构</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">DialogContent</span> &#123;</span><br><span class="line">  <span class="comment">// ... 对话框的具体内容</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储用户触发对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> userDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储模态对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> modalDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br></pre></td></tr></table></figure>
+
+<p>通过这种方式，不同类型的对话框状态被清晰地分离到各自的 atom 中，互不干扰。组件可以按需订阅它们需要的 atom。</p>
+<h3 id="2-派生状态-Derived-Atoms"><a href="#2-派生状态-Derived-Atoms" class="headerlink" title="2. 派生状态 (Derived Atoms)"></a>2. 派生状态 (Derived Atoms)</h3><p>当需要组合或基于现有状态计算新状态时，派生 atom 就派上了用场。例如，我们需要一个包含所有类型对话框的列表：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 userDialogsAtom 和 modalDialogsAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个派生 atom，它的值是 userDialogs 和 modalDialogs 的合并结果</span></span><br><span class="line"><span class="keyword">const</span> combinedDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userDialogs = <span class="title function_">get</span>(userDialogsAtom);</span><br><span class="line">  <span class="keyword">const</span> modalDialogs = <span class="title function_">get</span>(modalDialogsAtom);</span><br><span class="line">  <span class="keyword">return</span> [...userDialogs, ...modalDialogs];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>combinedDialogsAtom</code> 的值会自动根据 <code>userDialogsAtom</code> 和 <code>modalDialogsAtom</code> 的变化而更新。任何订阅了 <code>combinedDialogsAtom</code> 的组件都会在依赖项变化时获得最新的合并列表，而无需手动监听和合并。</p>
+<p>同样，我们使用派生 atom 来获取当前活动的聊天会话：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 activeHistoryIdAtom 和 chatHistoriesAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前激活的聊天会话</span></span><br><span class="line"><span class="keyword">const</span> currentSessionAtom = <span class="title function_">atom</span>(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> activeId = <span class="title function_">get</span>(activeHistoryIdAtom);        <span class="comment">// 依赖 1: 当前激活的 ID</span></span><br><span class="line">  <span class="keyword">const</span> histories = <span class="title function_">get</span>(chatHistoriesAtom);      <span class="comment">// 依赖 2: 所有历史记录</span></span><br><span class="line">  <span class="keyword">return</span> histories.<span class="title function_">find</span>(<span class="function"><span class="params">h</span> =&gt;</span> h.<span class="property">id</span> === activeId) || <span class="literal">null</span>; <span class="comment">// 根据 ID 查找</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>currentSessionAtom</code> 依赖于 <code>activeHistoryIdAtom</code> 和 <code>chatHistoriesAtom</code>。当用户切换会话（<code>activeHistoryIdAtom</code> 变化）或历史记录本身更新时（<code>chatHistoriesAtom</code> 变化），<code>currentSessionAtom</code> 会自动重新计算，确保 UI 显示的是正确的当前会话数据。</p>
+<h3 id="3-状态持久化-atomWithStorage"><a href="#3-状态持久化-atomWithStorage" class="headerlink" title="3. 状态持久化 ( atomWithStorage )"></a>3. 状态持久化 ( <code>atomWithStorage</code> )</h3><p>对于需要持久化的状态，如用户的聊天历史记录列表和当前选择的活动会话 ID，我们使用了 <code>atomWithStorage</code> 工具函数。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atomWithStorage &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai/utils&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ChatHistory</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// ... 其他历史记录信息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将当前激活的会话 ID 持久化到 localStorage，键名为 &#x27;activeHistoryId&#x27;</span></span><br><span class="line"><span class="keyword">const</span> activeHistoryIdAtom = atomWithStorage&lt;<span class="built_in">string</span> | <span class="literal">null</span>&gt;(<span class="string">&#x27;activeHistoryId&#x27;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将所有聊天历史记录列表持久化到 localStorage，键名为 &#x27;chatHistories&#x27;</span></span><br><span class="line"><span class="keyword">const</span> chatHistoriesAtom = atomWithStorage&lt;<span class="title class_">ChatHistory</span>[]&gt;(<span class="string">&#x27;chatHistories&#x27;</span>, []);</span><br></pre></td></tr></table></figure>
+
+<p>只需一行代码，Jotai 就处理了与 <code>localStorage</code> 的读写同步。这极大地简化了状态持久化的逻辑，使开发者无需编写繁琐的 <code>localStorage.getItem</code> 和 <code>localStorage.setItem</code> 调用以及相关的 effect 逻辑。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Jotai 以其原子化、简洁和灵活的特性，为我们的 React 项目提供了一个高效且易于维护的状态管理方案。它的核心理念与 React Hooks 高度契合，使得状态管理变得更加直观和分散化。通过精确的重渲染优化、强大的派生状态能力以及便捷的持久化工具，Jotai 帮助我们构建了性能更好、代码结构更清晰的应用。如果你正在寻找一个轻量级、现代化的 React 状态管理库，Jotai 绝对值得一试。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>Jotai</tag>
       </tags>
   </entry>
   <entry>
@@ -1216,52 +1262,6 @@
       <categories>
         <category>笔记</category>
       </categories>
-  </entry>
-  <entry>
-    <title>Jotai：原子化状态管理在现代 React App中的实践</title>
-    <url>/posts/2279e119.html</url>
-    <content><![CDATA[<p>在构建复杂的 React 应用时，状态管理是一个不可避免的核心问题。从组件的本地 state 到跨组件共享的全局状态，选择一个合适的库来优雅地处理这些数据流至关重要。在我们最近的某个项目中，就选择了 <a href="https://jotai.org/">Jotai</a> 作为状态管理解决方案。</p>
-<h2 id="什么是-Jotai？"><a href="#什么是-Jotai？" class="headerlink" title="什么是 Jotai？"></a>什么是 Jotai？</h2><p>Jotai 是一个为 React 设计的原始（primitive）且灵活（flexible）的状态管理库。它的核心思想是 <strong>原子化（atomic）</strong>。与 Redux 或 Zustand 等库将所有状态集中存储在一个大的 store 中不同，Jotai 将状态分解为一个个独立的、微小的单元，称为 <strong>原子（atom）</strong>。</p>
-<p>你可以将 atom 想象成 React <code>useState</code> 的全局版本，但它更强大，支持派生状态、异步操作以及与 React Suspense 的集成。</p>
-<span id="more"></span>
-
-<h2 id="为什么选择-Jotai？"><a href="#为什么选择-Jotai？" class="headerlink" title="为什么选择 Jotai？"></a>为什么选择 Jotai？</h2><p>在我们的项目中，我们需要管理诸如用户交互产生的对话框状态、聊天历史记录、当前激活的会话等多种状态。我们评估了不同的方案后，最终选择了 Jotai，主要基于以下几点考虑：</p>
-<ol>
-<li><strong>简洁性与低心智负担</strong>：Jotai 的 API 非常简洁直观。定义和使用 atom 感觉就像使用 React 内置的 Hook 一样自然，几乎没有额外的学习成本和模板代码。这使得开发者可以更专注于业务逻辑本身。</li>
-<li><strong>原子化的优势</strong>：<ul>
-<li><strong>精确的重渲染</strong>：只有订阅了某个特定 atom 的组件才会在该 atom 更新时重渲染。这避免了大型 store 更新时可能导致的全局性、不必要的渲染，从而提升了应用的性能。</li>
-<li><strong>模块化与可维护性</strong>：状态被分解到独立的 atom 中，使得代码更易于组织、理解和维护。每个 atom 只负责一小块状态，职责清晰。</li>
-</ul>
-</li>
-<li><strong>强大的派生状态能力</strong>：Jotai 可以轻松地基于一个或多个其他 atom 创建派生 atom。这意味着你可以根据基础状态计算出新的状态，而无需手动同步，保证了状态的一致性。</li>
-<li><strong>开箱即用的工具集</strong>：Jotai 提供了丰富的工具函数（Utilities），例如 <code>atomWithStorage</code>，可以非常方便地将 atom 的状态持久化到 <code>localStorage</code> 或 <code>sessionStorage</code>，简化了本地数据持久化的实现。</li>
-</ol>
-<h2 id="Jotai-在项目中的实践亮点"><a href="#Jotai-在项目中的实践亮点" class="headerlink" title="Jotai 在项目中的实践亮点"></a>Jotai 在项目中的实践亮点</h2><p>在我们的项目中，Jotai 的优势具体体现在以下几个方面：</p>
-<h3 id="1-基础状态管理-atom"><a href="#1-基础状态管理-atom" class="headerlink" title="1. 基础状态管理 ( atom )"></a>1. 基础状态管理 ( <code>atom</code> )</h3><p>我们使用 <code>atom</code> 来定义基础的状态单元。例如，管理不同类型的对话框状态：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义不同类型的对话框可能的数据结构</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">DialogContent</span> &#123;</span><br><span class="line">  <span class="comment">// ... 对话框的具体内容</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储用户触发对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> userDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 atom 定义存储模态对话框的数组</span></span><br><span class="line"><span class="keyword">const</span> modalDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;([]);</span><br></pre></td></tr></table></figure>
-
-<p>通过这种方式，不同类型的对话框状态被清晰地分离到各自的 atom 中，互不干扰。组件可以按需订阅它们需要的 atom。</p>
-<h3 id="2-派生状态-Derived-Atoms"><a href="#2-派生状态-Derived-Atoms" class="headerlink" title="2. 派生状态 (Derived Atoms)"></a>2. 派生状态 (Derived Atoms)</h3><p>当需要组合或基于现有状态计算新状态时，派生 atom 就派上了用场。例如，我们需要一个包含所有类型对话框的列表：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 userDialogsAtom 和 modalDialogsAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个派生 atom，它的值是 userDialogs 和 modalDialogs 的合并结果</span></span><br><span class="line"><span class="keyword">const</span> combinedDialogsAtom = atom&lt;<span class="title class_">DialogContent</span>[]&gt;(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userDialogs = <span class="title function_">get</span>(userDialogsAtom);</span><br><span class="line">  <span class="keyword">const</span> modalDialogs = <span class="title function_">get</span>(modalDialogsAtom);</span><br><span class="line">  <span class="keyword">return</span> [...userDialogs, ...modalDialogs];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>combinedDialogsAtom</code> 的值会自动根据 <code>userDialogsAtom</code> 和 <code>modalDialogsAtom</code> 的变化而更新。任何订阅了 <code>combinedDialogsAtom</code> 的组件都会在依赖项变化时获得最新的合并列表，而无需手动监听和合并。</p>
-<p>同样，我们使用派生 atom 来获取当前活动的聊天会话：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&quot;jotai&quot;</span>;</span><br><span class="line"><span class="comment">// (假设 activeHistoryIdAtom 和 chatHistoriesAtom 已定义)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前激活的聊天会话</span></span><br><span class="line"><span class="keyword">const</span> currentSessionAtom = <span class="title function_">atom</span>(<span class="function">(<span class="params">get</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> activeId = <span class="title function_">get</span>(activeHistoryIdAtom);        <span class="comment">// 依赖 1: 当前激活的 ID</span></span><br><span class="line">  <span class="keyword">const</span> histories = <span class="title function_">get</span>(chatHistoriesAtom);      <span class="comment">// 依赖 2: 所有历史记录</span></span><br><span class="line">  <span class="keyword">return</span> histories.<span class="title function_">find</span>(<span class="function"><span class="params">h</span> =&gt;</span> h.<span class="property">id</span> === activeId) || <span class="literal">null</span>; <span class="comment">// 根据 ID 查找</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p><code>currentSessionAtom</code> 依赖于 <code>activeHistoryIdAtom</code> 和 <code>chatHistoriesAtom</code>。当用户切换会话（<code>activeHistoryIdAtom</code> 变化）或历史记录本身更新时（<code>chatHistoriesAtom</code> 变化），<code>currentSessionAtom</code> 会自动重新计算，确保 UI 显示的是正确的当前会话数据。</p>
-<h3 id="3-状态持久化-atomWithStorage"><a href="#3-状态持久化-atomWithStorage" class="headerlink" title="3. 状态持久化 ( atomWithStorage )"></a>3. 状态持久化 ( <code>atomWithStorage</code> )</h3><p>对于需要持久化的状态，如用户的聊天历史记录列表和当前选择的活动会话 ID，我们使用了 <code>atomWithStorage</code> 工具函数。</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atomWithStorage &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai/utils&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ChatHistory</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="comment">// ... 其他历史记录信息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将当前激活的会话 ID 持久化到 localStorage，键名为 &#x27;activeHistoryId&#x27;</span></span><br><span class="line"><span class="keyword">const</span> activeHistoryIdAtom = atomWithStorage&lt;<span class="built_in">string</span> | <span class="literal">null</span>&gt;(<span class="string">&#x27;activeHistoryId&#x27;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将所有聊天历史记录列表持久化到 localStorage，键名为 &#x27;chatHistories&#x27;</span></span><br><span class="line"><span class="keyword">const</span> chatHistoriesAtom = atomWithStorage&lt;<span class="title class_">ChatHistory</span>[]&gt;(<span class="string">&#x27;chatHistories&#x27;</span>, []);</span><br></pre></td></tr></table></figure>
-
-<p>只需一行代码，Jotai 就处理了与 <code>localStorage</code> 的读写同步。这极大地简化了状态持久化的逻辑，使开发者无需编写繁琐的 <code>localStorage.getItem</code> 和 <code>localStorage.setItem</code> 调用以及相关的 effect 逻辑。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Jotai 以其原子化、简洁和灵活的特性，为我们的 React 项目提供了一个高效且易于维护的状态管理方案。它的核心理念与 React Hooks 高度契合，使得状态管理变得更加直观和分散化。通过精确的重渲染优化、强大的派生状态能力以及便捷的持久化工具，Jotai 帮助我们构建了性能更好、代码结构更清晰的应用。如果你正在寻找一个轻量级、现代化的 React 状态管理库，Jotai 绝对值得一试。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-        <tag>Jotai</tag>
-      </tags>
   </entry>
   <entry>
     <title>Vue进阶学习笔记</title>
@@ -1778,6 +1778,35 @@
       </categories>
   </entry>
   <entry>
+    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
+    <url>/posts/fc8787d6.html</url>
+    <content><![CDATA[<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
+
+<p>这个错误大概有2个原因：</p>
+<ol>
+<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
+</li>
+<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
+<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行部署推送。</p>
+<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个&#x3D; &#x3D;</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>为站点添加Aplayer全局播放器（两种布局方案）</title>
     <url>/posts/1128bacf.html</url>
     <content><![CDATA[<p>Aplayer是一个基于JavaScript的播放器插件，而MetingJs则是基于Aplayer插件封装好的插件，开箱即用。</p>
@@ -1945,144 +1974,6 @@
       </tags>
   </entry>
   <entry>
-    <title>git踩坑之解决error: failed to push some refs to 远程库的报错</title>
-    <url>/posts/fc8787d6.html</url>
-    <content><![CDATA[<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>首先这个报错大概长这个样子，一般出现在部署到远程库时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: failed to push some refs to &#x27;git@github.com:xxx/xxx.git</span><br></pre></td></tr></table></figure>
-
-<p>这个错误大概有2个原因：</p>
-<ol>
-<li><p>网络错误（在我大天朝的网络下出现什么玄学问题很正常的）</p>
-</li>
-<li><p>远程库分支内容与本地内容存在双边不同步差异，系统总是先拉取再推送，但是拉取总是失败</p>
-</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="对于网络错误的解决办法"><a href="#对于网络错误的解决办法" class="headerlink" title="对于网络错误的解决办法"></a>对于网络错误的解决办法</h3><p>首先建议先多试几次部署，如果还不行可以把远程库地址改成SSH方式进行尝试。不过这样修改了之后再部署可能提示SSH Key不存在或者无法提交，那么就再重新生成一次SSH Key，具体怎么操作可以百度。</p>
-<h3 id="对于第二种原因的解决办法"><a href="#对于第二种原因的解决办法" class="headerlink" title="对于第二种原因的解决办法"></a>对于第二种原因的解决办法</h3><p>先用下面的命令来撤除上一次commit，把远程库中的更新合并到本地库中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull --rebase origin master</span><br></pre></td></tr></table></figure>
-
-<p>然后再进行部署推送。</p>
-<p>注意最好不要用git push -f强制推送，尤其是项目存在多个维护者时，否则可能丢失历史数据（百度上好多教程直接让用这个&#x3D; &#x3D;</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>期末预测之安全指数 202012-1</title>
-    <url>/posts/d9ae96d3.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
-<span id="more"></span>
-
-<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
-<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
-<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二叉树的遍历方法及其Java代码实现</title>
-    <url>/posts/34812bb0.html</url>
-    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
-<ul>
-<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
-</ul>
-<span id="more"></span>
-
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
-<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
-<p>首先要声明结点TreeNode类，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>再来创建一棵二叉树：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
-<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
-<p>还是一样，先看非递归前序遍历</p>
-<ol>
-<li>首先申请一个新的栈，记为stack；</li>
-<li>声明一个结点treeNode，让其指向node结点；</li>
-<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
-<li>重复步骤3，直到treenode为空；</li>
-<li>然后出栈，让treeNode指向treeNode的右孩子</li>
-<li>重复步骤3，直到stack为空.</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
-<p>具体过程：</p>
-<ol>
-<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
-<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
-<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
-<li>当stack为空并且cur为空时结束。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后再给大家介绍一下层序遍历</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>首先申请一个新的队列，记为queue；</li>
-<li>将头结点head压入queue中；</li>
-<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
-<li>重复步骤3，直到queue为空。</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在Hexo博客中适配APlayer和Waline的深色模式体验</title>
     <url>/posts/c05c62e8.html</url>
     <content><![CDATA[<p>使用DarkMode.js实现深色模式后，发现第三方组件如APlayer音乐播放器和Waline评论系统并不能自动适配深色模式，这会导致深色模式下的显示效果不统一。</p>
@@ -2115,59 +2006,30 @@
       </tags>
   </entry>
   <entry>
-    <title>期末预测之最佳阈值 202012-2</title>
-    <url>/posts/e7a7ed06.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
-<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
-<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
+    <title>期末预测之安全指数 202012-1</title>
+    <url>/posts/d9ae96d3.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>   期末要到了，小菜同学找到了自己的好朋友顿顿，希望可以预测一下自己这学期是否会挂科。</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><strong>题目描述</strong></h2><p>   首先，顿顿选取了如“课堂表现”、“自习时长”、“作业得分”、“社团活动参与度”等 项指标作为预测的依据。<br>   然后，顿顿根据自己平日里对小菜的暗中观察，以百分制给每一项指标打分，即小菜同学第$ i（1≤i≤n）$项指标的得分$score_i$ 是一个 $[0, 100]$范围内的整数。<br>   鉴于每一项指标的重要性不尽相同，顿顿用一个$ [-10, 10] $范围内的整数 $w_i$来表示第$ i（1≤i≤n）$项指标的重要程度。<br>   最后，小菜同学期末的安全指数$ y $定义如下：<br><img data-src="https://img-blog.csdnimg.cn/20201229233253886.png" alt="p1"></p>
 <span id="more"></span>
 
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
-<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
-<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
-<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
-<p>$θ^* &#x3D; \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j&#x3D;1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) &#x3D;&#x3D; result_j ) }<br>$</p>
-<p>该公式亦可等价地表述为如下规则：</p>
-<ol>
-<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
-<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
-<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
-</ol>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
-<p>输入的第一行包含一个正整数$m$ 。</p>
-<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
-<p>输出一个整数，表示最佳阈值$θ^*$。</p>
-<p>样例1输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
+<p>   其中$ ReLU(x) &#x3D; max(0,x) $是一种常见的激活函数。<br>   因为使用了$ ReLU $函数，安全指数一定是个非负值。<br>   如果安全指数过低（甚至为零)，则说明小菜同学这学期很可能要挂科了……<br>   已知每一项指标的重要程度 $w_i$和相应的得分 $score_i$ ，快来算算小菜同学期末的安全指数吧。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>   从标准输入读入数据。<br>   输入的第一行包含一个正整数 n，保证 2≤n≤$10^5$。<br>   接下来输入 n 行，其中第 i（1≤i≤n)行包含用空格分隔的两个整数 $w_i$ 和$score_i$  ，分别表示第 i 项指标的重要程度和小菜同学该项的得分。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>   输出到标准输出。<br>   输出一个非负整数 $y$，表示小菜同学期末的安全指数。</p>
+<h2 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a><strong>样例1</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">2 60</span><br><span class="line">10 100</span><br><span class="line">0 70</span><br><span class="line">0 0</span><br><span class="line">-10 50</span><br><span class="line">10 60</span><br><span class="line">1234567</span><br></pre></td></tr></table></figure>
 
-<p>样例1输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1220</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
-<p>样例1解释</p>
-<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
-<p>θ&#x3D;0 时，预测正确次数为 4；</p>
-<p>θ&#x3D;1 时，预测正确次数为 5；</p>
-<p>θ&#x3D;3 时，预测正确次数为 5；</p>
-<p>θ&#x3D;5 时，预测正确次数为 4；</p>
-<p>θ&#x3D;7 时，预测正确次数为 3。</p>
-<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
-<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
-<p>依规则三，$θ^*&#x3D;max1,3&#x3D;3$。</p>
-<p>样例2输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/20201229234402643.png" alt="p2"></p>
+<h2 id="样例2"><a href="#样例2" class="headerlink" title="样例2"></a><strong>样例2</strong></h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">-10 100</span><br><span class="line">-1 15</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
 
-<p>样例2输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 
-<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
-<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<a href="https://blog.csdn.net/qq_43464088/article/details/112080044">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="type">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="type">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr<span class="number">+1</span>,pr+n<span class="number">+1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="type">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解释<br><img data-src="https://img-blog.csdnimg.cn/2020122923461377.png" alt="p3"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> n,ReLU=<span class="number">0</span>,score,w;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;score,&amp;w);</span><br><span class="line">		ReLU=ReLU+score*w;</span><br><span class="line">		n--;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ReLU&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		ReLU=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ReLU);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -2302,6 +2164,81 @@
       </tags>
   </entry>
   <entry>
+    <title>二叉树的遍历方法及其Java代码实现</title>
+    <url>/posts/34812bb0.html</url>
+    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
+<ul>
+<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
+</ul>
+<span id="more"></span>
+
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
+<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
+<p>首先要声明结点TreeNode类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来创建一棵二叉树：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
+<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
+<p>还是一样，先看非递归前序遍历</p>
+<ol>
+<li>首先申请一个新的栈，记为stack；</li>
+<li>声明一个结点treeNode，让其指向node结点；</li>
+<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
+<li>重复步骤3，直到treenode为空；</li>
+<li>然后出栈，让treeNode指向treeNode的右孩子</li>
+<li>重复步骤3，直到stack为空.</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
+<p>具体过程：</p>
+<ol>
+<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
+<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
+<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
+<li>当stack为空并且cur为空时结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后再给大家介绍一下层序遍历</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>首先申请一个新的队列，记为queue；</li>
+<li>将头结点head压入queue中；</li>
+<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
+<li>重复步骤3，直到queue为空。</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>未初始化警告 202203-1</title>
     <url>/posts/45202b01.html</url>
     <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>一个未经初始化的变量，里面存储的值可能是任意的。因此直接使用未初始化的变量，比如将其赋值给另一个变量，并不符合一般的编程逻辑。代码中出现这种情况，往往是因为遗漏了初始化语句、或是打错了变量名。对代码中使用了未初始化变量的语句进行检查，可以方便地排查出代码中的一些隐秘 Bug。</p>
@@ -2332,23 +2269,59 @@
       </tags>
   </entry>
   <entry>
-    <title>称检测点查询 202009-1</title>
-    <url>/posts/3b542d1c.html</url>
-    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+    <title>期末预测之最佳阈值 202012-2</title>
+    <url>/posts/e7a7ed06.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
+<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
+<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
 <span id="more"></span>
 
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
-<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
+<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
+<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
+<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
+<p>$θ^* &#x3D; \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j&#x3D;1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) &#x3D;&#x3D; result_j ) }<br>$</p>
+<p>该公式亦可等价地表述为如下规则：</p>
+<ol>
+<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
+<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
+<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
+</ol>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
+<p>输入的第一行包含一个正整数$m$ 。</p>
+<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
+<p>输出一个整数，表示最佳阈值$θ^*$。</p>
+<p>样例1输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
 
-<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>样例1输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
 
-<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+<p>样例1解释</p>
+<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
+<p>θ&#x3D;0 时，预测正确次数为 4；</p>
+<p>θ&#x3D;1 时，预测正确次数为 5；</p>
+<p>θ&#x3D;3 时，预测正确次数为 5；</p>
+<p>θ&#x3D;5 时，预测正确次数为 4；</p>
+<p>θ&#x3D;7 时，预测正确次数为 3。</p>
+<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
+<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
+<p>依规则三，$θ^*&#x3D;max1,3&#x3D;3$。</p>
+<p>样例2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
 
-<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>样例2输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
 
-<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="type">int</span> id,<span class="type">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> X,<span class="type">int</span> Y,<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p<span class="number">1.</span>dis==p<span class="number">2.</span>dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p<span class="number">1.</span>id&lt;p<span class="number">2.</span>id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p<span class="number">1.</span>dis&lt;p<span class="number">2.</span>dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i<span class="number">+1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
+<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<a href="https://blog.csdn.net/qq_43464088/article/details/112080044">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="type">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="type">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr<span class="number">+1</span>,pr+n<span class="number">+1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="type">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -2397,6 +2370,87 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>称检测点查询 202009-1</title>
+    <url>/posts/3b542d1c.html</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>2020 年 6 月 8 日，国务院联防联控机制发布《关于加快推进新冠病毒核酸检测的实施意见》，提出对“密切接触者”等八类重点人群“应检尽检”，其他人群“愿检尽检”。<br>某市设有$n$个核酸检测点，编号从$1$到$n$，其中$i$号检测点的位置可以表示为一个平面整数坐标$(x_i, y_i)$。<br>为方便预约核酸检测，请根据市民所在位置$(X, Y)$，查询距其最近的三个检测点。<br>多个检测点距离相同时，编号较小的视为更近。</p>
+<span id="more"></span>
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>输入共$n+1$行。<br>第一行包含用空格分隔的三个整数$n、X$和$Y$，表示检测点总数和市民所在位置。<br>第二行到第$n+1$行依次输入$n$个检测点的坐标。第$i+1$行$（1≤i≤n）$包含用空格分隔的两个整数$x_i$和$y_i$，表示$i$号检测点所在位置。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出共三行，按距离从近到远，依次输出距离该市民最近的三个检测点编号。</p>
+<h2 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2 2</span><br><span class="line">2 2</span><br><span class="line">2 3</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 0 1</span><br><span class="line">-1 0</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">0 2</span><br><span class="line">-1 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2解释："><a href="#样例2解释：" class="headerlink" title="样例2解释："></a>样例2解释：</h2><p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/Require.png"></p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">int</span> dis;</span><br><span class="line">	<span class="built_in">Point</span>(<span class="type">int</span> id,<span class="type">int</span> dis)&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">		<span class="keyword">this</span>-&gt;dis=dis;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calc</span><span class="params">(<span class="type">int</span> X,<span class="type">int</span> Y,<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (X-x)*(X-x)+(Y-y)*(Y-y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(Point p1,Point p2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p<span class="number">1.</span>dis==p<span class="number">2.</span>dis)&#123;</span><br><span class="line">		<span class="keyword">return</span> p<span class="number">1.</span>id&lt;p<span class="number">2.</span>id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p<span class="number">1.</span>dis&lt;p<span class="number">2.</span>dis;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,X,Y,px,py,d;</span><br><span class="line">	vector&lt;Point&gt; points;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;X&gt;&gt;Y;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		cin&gt;&gt;px&gt;&gt;py;</span><br><span class="line">		d=<span class="built_in">calc</span>(X,Y,px,py);</span><br><span class="line">		points.<span class="built_in">push_back</span>(<span class="built_in">Point</span>(i<span class="number">+1</span>,d));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(points.<span class="built_in">begin</span>(),points.<span class="built_in">end</span>(),cmp);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">		cout&lt;&lt;points[i].id&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>评价《脑髓地狱》</title>
+    <url>/posts/2b72e15e.html</url>
+    <content><![CDATA[<p>   作为一个平时不常看日本推理小说，也几乎不会主动找来看的人，了解到这本书完全是通过关于这本书的某同人作品(笑)和同名改编电影。</p>
+<span id="more"></span>
+
+<p>  在阅读《脑髓地狱》之前，我先在网络上找到了几篇没有内容雷的感想短文参考，发现这实在是个连剧透都是需要长篇才交待完的故事，再加上作者冗长的叙事手法，导致书中同样的讯息不断重复出现，想要速读时又错过重点，需要返回重读，令不少读者抓狂。</p>
+<p>  回到正题，写这篇文章是想要记录阅读了《脑髓地狱》这部被誉为“变格派的杰作”奇书的感觉。有人说看完脑髓地狱犹如自己下了一趟地狱、被故事弄得头昏脑胀、它的文字就是要让人读起来觉得厌恶等等。所有的读后感都指出阅读脑髓地狱并不是那么愉快的经验，但都同样会叫人把书看完(而不是放下书不要阅读它)，并感叹这是一部奇书。另外就是在阅读之前想要稍为了解一下剧情作心理准备的时候，发现那些读后感并不是没有剧透，只不过是瞎子摸象(这本书不只是象，应该是瞎子摸哥斯拉的程度)，根本没能获得任何心理准备的作用。</p>
+<p>  但是要问《脑髓地狱》值不值得看，我会说是值得(但我短期都不会看第二遍)。有些故事是儿戏写来玩的，有些故事是很认真严肃的，更有些故事看了会感觉到这个人奉献了自己的生命在文字中，令写作到达一个新境界。《脑髓地狱》就令我有这样的感觉。</p>
+<p>  《脑髓地狱》初稿写于1926年，正是精神分析学派的重要人物傅柯的诞生年，出版于1935年，傅柯关于精神病研究的书《疯癫与文明》在25年后才面世。就这方面而言，梦野对于“疯子解放治疗”的理解实在十分超前。 尽管现今从科学看来，他的理论不一定正确(例如胎儿之梦，人类怀胎十月不是因为要发一个比其他物种长的“胎儿之梦”，推翻的例子:长颈鹿怀孕期有16个月)，但他当时能想出来实在是鬼才级的创意。</p>
+<p>  另外，我最喜欢的是吴青秀打算画美女变白骨图来向唐太宗进谏，先不论为什么他认为说服唐太宗需要这么恐怖的图画，但梦野能够想到这样的主意实在很疯狂。能够想到都只是还好，但还要写下来其实需要很大的勇气。这样不顾一切的写作我想就是大家明明都没有愉快地阅读到《脑髓地狱》，却又无奈地只能认同它的原因。</p>
+<p>  梦野写《脑髓地狱》的笔力犹如他笔下为科学疯狂的两位博士，又像疯狂画家吴青秀，是燃烧生命的艺术，为此我们不得不对梦野予以尊敬。</p>
+<p><em>我们人类的精神生活就是，在上述各种心理之中，以最低级、单纯者为中心逐一向外，借由高级复杂的动物心理包裹，最外层再包裹所谓的人皮，用交际、制度、身份家世、面子人格等等蝴蝶结或标签装饰，施加化妆，喷洒香水，然后昂首阔步于马路上。但若是解剖其内容，绝大部分就如前面所述，只是重现潜藏在人体细胞中历代祖先的动物心理记忆。</em></p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>邻域均值 202104-2</title>
+    <url>/posts/7ca04377.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
+<span id="more"></span>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)&#x3D;{A_{xy}|0≤x,y&lt;n\ and\ |x−i|≤r\ and\ |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
+<p>如果元素$A_{ij}$邻域中所有元素的平均值小于或等于一个给定的阈值$t$，我们就认为该元素对应位置的像素处于较暗区域。<br>下图给出了两个例子，左侧图像的较暗区域在右侧图像中展示为黑色，其余区域展示为白色。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/202104-2.jpg"></p>
+<p>现给定邻域参数r和阈值t，试统计输入灰度图像中有多少像素处于<strong>较暗区域</strong>。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>输入共$n+1$行。</p>
+<p>输入的第一行包含四个用空格分隔的正整数$n、L、r$和$t$，含义如前文所述。</p>
+<p>第二到第$n+1$行输入矩阵$A$。<br>第$i+2（0≤i&lt;n）$行包含用空格分隔的$n$个整数，依次为$A_{i0},A_{i1},⋯,A_{i(n−1)}$。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>输出一个整数，表示输入灰度图像中处于较暗区域的像素总数。</p>
+<h2 id="样例1输入"><a href="#样例1输入" class="headerlink" title="样例1输入"></a><strong>样例1输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 16 1 6</span><br><span class="line">0 1 2 3</span><br><span class="line">4 5 6 7</span><br><span class="line">8 9 10 11</span><br><span class="line">12 13 14 15</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例1输出"><a href="#样例1输出" class="headerlink" title="样例1输出"></a><strong>样例1输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2输入"><a href="#样例2输入" class="headerlink" title="样例2输入"></a><strong>样例2输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11 8 2 2</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 7</span><br><span class="line">7 0 0 0 7 0 0 0 7 0 7</span><br><span class="line">7 0 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 0 0 0 0 7 0 7 0 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2输出"><a href="#样例2输出" class="headerlink" title="样例2输出"></a><strong>样例2输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">83</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a><strong>数据范围</strong></h2><p>70%的测试数据满足$n≤100、r≤10$。</p>
+<p>全部的测试数据满足$0&lt;n≤600、0&lt;r≤100$且$2≤t&lt;L≤256$。</p>
+<h2 id="解答（Dev-CPP-环境）"><a href="#解答（Dev-CPP-环境）" class="headerlink" title="解答（Dev-CPP 环境）"></a>解答（Dev-CPP 环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">605</span>][<span class="number">605</span>],sum[<span class="number">605</span>][<span class="number">605</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmax</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmin</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> n,L,r,t;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;L&gt;&gt;r&gt;&gt;t;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			cin&gt;&gt;a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//存储像素矩阵</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			sum[i][j]=sum[i<span class="number">-1</span>][j]+sum[i][j<span class="number">-1</span>]-sum[i<span class="number">-1</span>][j<span class="number">-1</span>]+a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//计算像素矩阵前缀和</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> avg,num;</span><br><span class="line">	<span class="type">int</span> x1,x2,y1,y2;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			x1=<span class="built_in">jmax</span>(<span class="number">1</span>,i-r);</span><br><span class="line">			y1=<span class="built_in">jmax</span>(<span class="number">1</span>,j-r);</span><br><span class="line">			x2=<span class="built_in">jmin</span>(n,i+r);</span><br><span class="line">			y2=<span class="built_in">jmin</span>(n,j+r);</span><br><span class="line">			<span class="comment">// 确定邻域边界点</span></span><br><span class="line"></span><br><span class="line">			num=(x2-x1<span class="number">+1</span>)*(y2-y1<span class="number">+1</span>);</span><br><span class="line">			avg=(sum[x2][y2]-sum[x1<span class="number">-1</span>][y2]-sum[x2][y1<span class="number">-1</span>]+sum[x1<span class="number">-1</span>][y1<span class="number">-1</span>])*<span class="number">1.0</span>/num;</span><br><span class="line">			<span class="keyword">if</span>(avg&lt;=t)&#123;</span><br><span class="line">				ans++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
@@ -2469,24 +2523,6 @@
       <tags>
         <tag>数据结构</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>评价《脑髓地狱》</title>
-    <url>/posts/2b72e15e.html</url>
-    <content><![CDATA[<p>   作为一个平时不常看日本推理小说，也几乎不会主动找来看的人，了解到这本书完全是通过关于这本书的某同人作品(笑)和同名改编电影。</p>
-<span id="more"></span>
-
-<p>  在阅读《脑髓地狱》之前，我先在网络上找到了几篇没有内容雷的感想短文参考，发现这实在是个连剧透都是需要长篇才交待完的故事，再加上作者冗长的叙事手法，导致书中同样的讯息不断重复出现，想要速读时又错过重点，需要返回重读，令不少读者抓狂。</p>
-<p>  回到正题，写这篇文章是想要记录阅读了《脑髓地狱》这部被誉为“变格派的杰作”奇书的感觉。有人说看完脑髓地狱犹如自己下了一趟地狱、被故事弄得头昏脑胀、它的文字就是要让人读起来觉得厌恶等等。所有的读后感都指出阅读脑髓地狱并不是那么愉快的经验，但都同样会叫人把书看完(而不是放下书不要阅读它)，并感叹这是一部奇书。另外就是在阅读之前想要稍为了解一下剧情作心理准备的时候，发现那些读后感并不是没有剧透，只不过是瞎子摸象(这本书不只是象，应该是瞎子摸哥斯拉的程度)，根本没能获得任何心理准备的作用。</p>
-<p>  但是要问《脑髓地狱》值不值得看，我会说是值得(但我短期都不会看第二遍)。有些故事是儿戏写来玩的，有些故事是很认真严肃的，更有些故事看了会感觉到这个人奉献了自己的生命在文字中，令写作到达一个新境界。《脑髓地狱》就令我有这样的感觉。</p>
-<p>  《脑髓地狱》初稿写于1926年，正是精神分析学派的重要人物傅柯的诞生年，出版于1935年，傅柯关于精神病研究的书《疯癫与文明》在25年后才面世。就这方面而言，梦野对于“疯子解放治疗”的理解实在十分超前。 尽管现今从科学看来，他的理论不一定正确(例如胎儿之梦，人类怀胎十月不是因为要发一个比其他物种长的“胎儿之梦”，推翻的例子:长颈鹿怀孕期有16个月)，但他当时能想出来实在是鬼才级的创意。</p>
-<p>  另外，我最喜欢的是吴青秀打算画美女变白骨图来向唐太宗进谏，先不论为什么他认为说服唐太宗需要这么恐怖的图画，但梦野能够想到这样的主意实在很疯狂。能够想到都只是还好，但还要写下来其实需要很大的勇气。这样不顾一切的写作我想就是大家明明都没有愉快地阅读到《脑髓地狱》，却又无奈地只能认同它的原因。</p>
-<p>  梦野写《脑髓地狱》的笔力犹如他笔下为科学疯狂的两位博士，又像疯狂画家吴青秀，是燃烧生命的艺术，为此我们不得不对梦野予以尊敬。</p>
-<p><em>我们人类的精神生活就是，在上述各种心理之中，以最低级、单纯者为中心逐一向外，借由高级复杂的动物心理包裹，最外层再包裹所谓的人皮，用交际、制度、身份家世、面子人格等等蝴蝶结或标签装饰，施加化妆，喷洒香水，然后昂首阔步于马路上。但若是解剖其内容，绝大部分就如前面所述，只是重现潜藏在人体细胞中历代祖先的动物心理记忆。</em></p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
   </entry>
   <entry>
     <title>输入URL到显示页面的全过程</title>
@@ -2618,42 +2654,6 @@
       </categories>
       <tags>
         <tag>浏览器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>邻域均值 202104-2</title>
-    <url>/posts/7ca04377.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
-<span id="more"></span>
-
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)&#x3D;{A_{xy}|0≤x,y&lt;n\ and\ |x−i|≤r\ and\ |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
-<p>如果元素$A_{ij}$邻域中所有元素的平均值小于或等于一个给定的阈值$t$，我们就认为该元素对应位置的像素处于较暗区域。<br>下图给出了两个例子，左侧图像的较暗区域在右侧图像中展示为黑色，其余区域展示为白色。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/202104-2.jpg"></p>
-<p>现给定邻域参数r和阈值t，试统计输入灰度图像中有多少像素处于<strong>较暗区域</strong>。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>输入共$n+1$行。</p>
-<p>输入的第一行包含四个用空格分隔的正整数$n、L、r$和$t$，含义如前文所述。</p>
-<p>第二到第$n+1$行输入矩阵$A$。<br>第$i+2（0≤i&lt;n）$行包含用空格分隔的$n$个整数，依次为$A_{i0},A_{i1},⋯,A_{i(n−1)}$。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>输出一个整数，表示输入灰度图像中处于较暗区域的像素总数。</p>
-<h2 id="样例1输入"><a href="#样例1输入" class="headerlink" title="样例1输入"></a><strong>样例1输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 16 1 6</span><br><span class="line">0 1 2 3</span><br><span class="line">4 5 6 7</span><br><span class="line">8 9 10 11</span><br><span class="line">12 13 14 15</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例1输出"><a href="#样例1输出" class="headerlink" title="样例1输出"></a><strong>样例1输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2输入"><a href="#样例2输入" class="headerlink" title="样例2输入"></a><strong>样例2输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11 8 2 2</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 7</span><br><span class="line">7 0 0 0 7 0 0 0 7 0 7</span><br><span class="line">7 0 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 0 0 0 0 7 0 7 0 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2输出"><a href="#样例2输出" class="headerlink" title="样例2输出"></a><strong>样例2输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">83</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a><strong>数据范围</strong></h2><p>70%的测试数据满足$n≤100、r≤10$。</p>
-<p>全部的测试数据满足$0&lt;n≤600、0&lt;r≤100$且$2≤t&lt;L≤256$。</p>
-<h2 id="解答（Dev-CPP-环境）"><a href="#解答（Dev-CPP-环境）" class="headerlink" title="解答（Dev-CPP 环境）"></a>解答（Dev-CPP 环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">605</span>][<span class="number">605</span>],sum[<span class="number">605</span>][<span class="number">605</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmax</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmin</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> n,L,r,t;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;L&gt;&gt;r&gt;&gt;t;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			cin&gt;&gt;a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//存储像素矩阵</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			sum[i][j]=sum[i<span class="number">-1</span>][j]+sum[i][j<span class="number">-1</span>]-sum[i<span class="number">-1</span>][j<span class="number">-1</span>]+a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//计算像素矩阵前缀和</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> avg,num;</span><br><span class="line">	<span class="type">int</span> x1,x2,y1,y2;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			x1=<span class="built_in">jmax</span>(<span class="number">1</span>,i-r);</span><br><span class="line">			y1=<span class="built_in">jmax</span>(<span class="number">1</span>,j-r);</span><br><span class="line">			x2=<span class="built_in">jmin</span>(n,i+r);</span><br><span class="line">			y2=<span class="built_in">jmin</span>(n,j+r);</span><br><span class="line">			<span class="comment">// 确定邻域边界点</span></span><br><span class="line"></span><br><span class="line">			num=(x2-x1<span class="number">+1</span>)*(y2-y1<span class="number">+1</span>);</span><br><span class="line">			avg=(sum[x2][y2]-sum[x1<span class="number">-1</span>][y2]-sum[x2][y1<span class="number">-1</span>]+sum[x1<span class="number">-1</span>][y1<span class="number">-1</span>])*<span class="number">1.0</span>/num;</span><br><span class="line">			<span class="keyword">if</span>(avg&lt;=t)&#123;</span><br><span class="line">				ans++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
