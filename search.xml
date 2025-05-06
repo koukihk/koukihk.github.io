@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2023年408算法题预测 环形链表</title>
+    <url>/posts/b5fa7dc6.html</url>
+    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/9de5a4fc0567b418621f3.png"></p>
+<p>获取题源请点击<a href="https://leetcode.cn/problems/linked-list-cycle/">https://leetcode.cn/problems/linked-list-cycle/</a></p>
+<span id="more"></span>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>请参见力扣题解区</p>
+<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img data-src="https://telegraph-image.pages.dev/file/d1a85e76b612429e87c3d.jpg"></p>
+<p>其他答案请参见力扣题解区</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2023年408算法题预测 反转链表</title>
     <url>/posts/7297737e.html</url>
     <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/5f67de051bc15cf90a23d.png"></p>
@@ -12,24 +30,6 @@
 <h4 id="C代码"><a href="#C代码" class="headerlink" title="C代码"></a>C代码</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> val;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseLinkedList</span><span class="params">(<span class="keyword">struct</span> ListNode *head)</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">prev</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">curr</span> =</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (curr != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">next</span> =</span> curr-&gt;next;</span><br><span class="line">        curr-&gt;next = prev;</span><br><span class="line">        prev = curr;</span><br><span class="line">        curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">reverseBetween</span><span class="params">(<span class="keyword">struct</span> ListNode *head, <span class="type">int</span> left, <span class="type">int</span> right)</span> &#123;</span><br><span class="line">    <span class="comment">// 第一步：哨兵列队</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p1</span> =</span> head;</span><br><span class="line">    <span class="comment">// 从 head 走 left - 1 步，来到 p1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; left - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p1 走 1 步，来到 p2 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p2</span> =</span> p1-&gt;next;</span><br><span class="line">    <span class="comment">// 从 p2 走 right - left 步，来到 p3</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p3</span> =</span> p2;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; right - left; i++) &#123;</span><br><span class="line">        p3 = p3-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从 p3 走 1 步，来到 p4 </span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">p4</span> =</span> p3-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：切断链接，分成三段链表</span></span><br><span class="line">    p1-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    p3-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：反转中间段链表</span></span><br><span class="line">    reverseLinkedList(p2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：重新拼接三段链表</span></span><br><span class="line">    p1-&gt;next = p3;</span><br><span class="line">    p2-&gt;next = p4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="题目来源"><a href="#题目来源" class="headerlink" title="题目来源"></a>题目来源</h3><p><a href="https://www.zhihu.com/people/suixinyuan1990">千葉原</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2023年408算法题预测 环形链表</title>
-    <url>/posts/b5fa7dc6.html</url>
-    <content><![CDATA[<h3 id="题干"><a href="#题干" class="headerlink" title="题干"></a>题干</h3><p><img data-src="https://telegraph-image.pages.dev/file/9de5a4fc0567b418621f3.png"></p>
-<p>获取题源请点击<a href="https://leetcode.cn/problems/linked-list-cycle/">https://leetcode.cn/problems/linked-list-cycle/</a></p>
-<span id="more"></span>
-
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>请参见力扣题解区</p>
-<h3 id="题目答案"><a href="#题目答案" class="headerlink" title="题目答案"></a>题目答案</h3><h4 id="手写版"><a href="#手写版" class="headerlink" title="手写版"></a>手写版</h4><p><img data-src="https://telegraph-image.pages.dev/file/d1a85e76b612429e87c3d.jpg"></p>
-<p>其他答案请参见力扣题解区</p>
 ]]></content>
       <categories>
         <category>笔记</category>
@@ -61,6 +61,136 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客优化记录</title>
+    <url>/posts/916f4a50.html</url>
+    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
+<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>启用Highlight.js后，代码块高亮效果无效。</p>
+<span id="more"></span>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
+<li>法1：<del>改用prismjs</del></li>
+<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
+</div>
+
+<ul>
+<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
+<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
+</li>
+</ul>
+<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
+<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
+<div class="note warning"><p>以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
+</div>
+
+<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
+</div>
+
+<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
+<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
+<thead>
+<tr>
+<th>运营方</th>
+<th>节点</th>
+<th>地域</th>
+<th>链接及格式</th>
+<th>上游</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>75CDN(360前端)</td>
+<td>360自有节点</td>
+<td>全球</td>
+<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
+<td>cdnjs</td>
+</tr>
+<tr>
+<td>知乎</td>
+<td>阿里云</td>
+<td>全球</td>
+<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+<tr>
+<td>百度</td>
+<td>百度云</td>
+<td>全球</td>
+<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
+<td>内建npm镜像（上游淘宝cmpnjs）</td>
+</tr>
+<tr>
+<td>饿了么</td>
+<td>阿里云</td>
+<td>中国大陆</td>
+<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
+<td>unpkg</td>
+</tr>
+</tbody></table>
+<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
+<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
+
+<div class="note danger"><p>必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
+</div>
+
+<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
+<div class="note info"><p>也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
+</div>
+
+<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
+<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
+<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
+<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
+</ul>
+<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
+<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
+<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
+</ul>
+<p>（非中国大陆地区访客可完美浏览博客）</p>
+<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
+<li>寻找新的CDN服务商进行资源分发。</li>
+<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
+<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -700,201 +830,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
-    <url>/posts/175c8d74.html</url>
-    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
-<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
-
-<p>出现时输入你设置的密码。</p>
-<span id="more"></span>
-
-<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
-<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
-<p>（3）输入命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
-
-<p>出现这个就代表成功啦。</p>
-<p>（4）接下来在命令窗口输入</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
-<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
-<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客优化记录</title>
-    <url>/posts/916f4a50.html</url>
-    <content><![CDATA[<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Hexo 5.4.0，NexT 8.14.1</p>
-<h1 id="Highlight-js高亮问题"><a href="#Highlight-js高亮问题" class="headerlink" title="Highlight.js高亮问题"></a>Highlight.js高亮问题</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  line_number<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  tab_replace<span class="punctuation">:</span> &#x27;  &#x27;</span><br><span class="line">  wrap<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  hljs<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">prismjs<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>启用Highlight.js后，代码块高亮效果无效。</p>
-<span id="more"></span>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
-<li>法1：<del>改用prismjs</del></li>
-<li>法2：改用csr渲染，在模板文件<code>hexo-theme-next\layout\_layout.njk</code>中插入</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>hljs.initHighlightingOnLoad();<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>这种方法在使用了Pjax特性后并不好用，需要手动刷新才能生效，可以考虑在<code>&lt;script&gt;</code>标签中添加<code>data-pjax=&quot;&quot; async=&quot;&quot;</code>属性，但是有时会失效，目前没有找到完美的解决方案。</p>
-</div>
-
-<ul>
-<li><p>法3：Highlight.js自带的语法检测过于辣鸡，且十分耗费资源。故可以选择手动配置Markdown文件。在Markdown文件中，<strong>使用代码语言标记必须加空格</strong>，否则失效。</p>
-<p>首先需要先将Highlight.js自带的语法检测关闭。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">highlight<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  auto_detect<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br></pre></td></tr></table></figure>
-
-<p>然后使用[`&#96;&#96;][空格][语言标记]的格式进行标识。<del>过于愚蠢的匹配规则。</del></p>
-</li>
-</ul>
-<h1 id="夜间模式优化"><a href="#夜间模式优化" class="headerlink" title="夜间模式优化"></a>夜间模式优化</h1><p>夜间模式基于<a href="https://github.com/sandoche/Darkmode.js">Darkmode.js</a>实现，目前已经有专用于NexT的插件<a href="https://github.com/rqh656418510/hexo-next-darkmode">hexo-next-darkmode</a>。其CSS样式文件位于<code>blog\node_modules\hexo-next-darkmode\lib</code></p>
-<p>暗黑模式激活后，<code>hexo-next-darkmode</code> 插件会将 <code>darkmode--activated</code> CSS 类添加到 <code>body</code> 标签，可以利用它覆盖插件默认自带的 CSS 样式，这样就可以实现暗黑模式 CSS 样式的高度自定义。</p>
-<div class="note warning"><p>以下内容在实现前均需要先安装并启用<code>hexo-next-darkmode</code>，或者自行引入<code>Darkmode.js</code>。</p>
-</div>
-
-<h2 id="Prism-js代码块优化"><a href="#Prism-js代码块优化" class="headerlink" title="Prism.js代码块优化"></a>Prism.js代码块优化</h2><h3 id="修改代码文字反白样式"><a href="#修改代码文字反白样式" class="headerlink" title="修改代码文字反白样式"></a>修改代码文字反白样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">code</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: orange;</span><br><span class="line">  <span class="attribute">background</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码块框颜色优化"><a href="#代码块框颜色优化" class="headerlink" title="代码块框颜色优化"></a>代码块框颜色优化</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.darkmode--activated</span> pre &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.75</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<div class="note warning"><p>**注意：**在当前Prism.js主题下，强行改变代码块框颜色会导致代码难以看清。因此选用改变透明度的折中方案，当然也可以选择其他Prism.js主题再进行样式修改。</p>
-</div>
-
-<h2 id="支持Waline的夜间模式"><a href="#支持Waline的夜间模式" class="headerlink" title="支持Waline的夜间模式"></a>支持Waline的夜间模式</h2><p><code>hexo-next-darkmode</code>现已兼容Waline的深色样式，修改NexT配置文件<code>hexo-theme-next\_config.yml</code>即可。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="自定义暗黑样式"><a href="#自定义暗黑样式" class="headerlink" title="自定义暗黑样式"></a>自定义暗黑样式</h3><p>在夜间模式下，Waline 客户端默认会使用以下样式，若希望自定义夜间模式的 CSS 样式，直接覆盖以下 CSS 样式即可。</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 根据用户设置 ↓ */</span></span><br><span class="line">darkmode-selector &#123;</span><br><span class="line">  <span class="comment">/* 常规颜色 */</span></span><br><span class="line">  <span class="attr">--waline-white</span>: <span class="number">#000</span>;</span><br><span class="line">  <span class="attr">--waline-light-grey</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attr">--waline-dark-grey</span>: <span class="number">#999</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 布局颜色 */</span></span><br><span class="line">  <span class="attr">--waline-color</span>: <span class="number">#888</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor</span>: <span class="number">#1e1e1e</span>;</span><br><span class="line">  <span class="attr">--waline-bgcolor-light</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-border-color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attr">--waline-disable-bgcolor</span>: <span class="number">#444</span>;</span><br><span class="line">  <span class="attr">--waline-disable-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 特殊颜色 */</span></span><br><span class="line">  <span class="attr">--waline-bq-color</span>: <span class="number">#272727</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 其他颜色 */</span></span><br><span class="line">  <span class="attr">--waline-info-bgcolor</span>: <span class="number">#272727</span>;</span><br><span class="line">  <span class="attr">--waline-info-color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="更换资源CDN"><a href="#更换资源CDN" class="headerlink" title="更换资源CDN"></a>更换资源CDN</h1><p>在<code>jsDelivr</code>被吊销ICP许可证后，<code>cdn.jsdelivr.net</code>开始遭到污染，非魔法上网已经不能正常加载，其原因不做讨论。</p>
-<h2 id="修改Next主题CDN"><a href="#修改Next主题CDN" class="headerlink" title="修改Next主题CDN"></a>修改Next主题CDN</h2><table>
-<thead>
-<tr>
-<th>运营方</th>
-<th>节点</th>
-<th>地域</th>
-<th>链接及格式</th>
-<th>上游</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>75CDN(360前端)</td>
-<td>360自有节点</td>
-<td>全球</td>
-<td><a href="https://lib.baomitu.com/%7Bcdnjs%E6%A0%BC%E5%BC%8F%7D">https://lib.baomitu.com/{cdnjs格式}</a></td>
-<td>cdnjs</td>
-</tr>
-<tr>
-<td>知乎</td>
-<td>阿里云</td>
-<td>全球</td>
-<td><a href="https://unpkg.zhimg.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://unpkg.zhimg.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-<tr>
-<td>百度</td>
-<td>百度云</td>
-<td>全球</td>
-<td><a href="https://code.bdstatic.com/npm/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://code.bdstatic.com/npm/{unpkg格式}</a></td>
-<td>内建npm镜像（上游淘宝cmpnjs）</td>
-</tr>
-<tr>
-<td>饿了么</td>
-<td>阿里云</td>
-<td>中国大陆</td>
-<td><a href="https://npm.elemecdn.com/%7Bunpkg%E6%A0%BC%E5%BC%8F%7D">https://npm.elemecdn.com/{unpkg格式}</a></td>
-<td>unpkg</td>
-</tr>
-</tbody></table>
-<p>修改主题根目录下<code>_config.next.yml</code>，这里我采用了75CDN(360前端)，它已经维护很长时间，是最适合NexT的CDN。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># It&#x27;s recommended to use the same version as in `_vendors.yml` to avoid potential problems.</span><br><span class="line"># Remember to use the HTTPS protocol of CDN links when you enable HTTPS on your site.</span><br><span class="line">vendors<span class="punctuation">:</span></span><br><span class="line">  # The CDN provider of NexT internal scripts.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Warning<span class="punctuation">:</span> If you are using the latest master branch of NexT<span class="punctuation">,</span> please set `internal<span class="punctuation">:</span> local`</span><br><span class="line">  internal<span class="punctuation">:</span> local</span><br><span class="line">  # The default CDN provider of third-party plugins.</span><br><span class="line">  # Available values<span class="punctuation">:</span> local | jsdelivr | unpkg | cdnjs | custom</span><br><span class="line">  # Dependencies for `plugins<span class="punctuation">:</span> local`<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//github.com/next-theme/plugins</span></span><br><span class="line">  plugins<span class="punctuation">:</span> custom</span><br><span class="line"></span><br><span class="line">  # Custom CDN URL</span><br><span class="line">  # For example<span class="punctuation">:</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;npm_name&#125;@$&#123;version&#125;/$&#123;minified&#125;</span></span><br><span class="line">  # custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line">  # jsdelivr<span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdn.jsdelivr.net/npm/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # unpkg <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//unpkg.com/$&#123;name&#125;@$&#123;version&#125;/$&#123;file&#125;`,</span></span><br><span class="line">  # cdnjs <span class="punctuation">:</span> `https<span class="punctuation">:</span><span class="comment">//cdnjs.cloudflare.com/ajax/libs/$&#123;alias || name&#125;/$&#123;version&#125;/$&#123;file.replace(/^(dist|lib|)\/(browser\/|)/, &#x27;&#x27;)&#125;`</span></span><br><span class="line">  custom_cdn_url<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lib.baomitu.com/$&#123;cdnjs_name&#125;/$&#123;version&#125;/$&#123;cdnjs_file&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="修改谷歌字体库以加速页面加载"><a href="#修改谷歌字体库以加速页面加载" class="headerlink" title="修改谷歌字体库以加速页面加载"></a>修改谷歌字体库以加速页面加载</h2><p>修改主题根目录下<code>_config.next.yml</code>配置项</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">font<span class="punctuation">:</span></span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Uri of fonts host<span class="punctuation">,</span> e.g. https<span class="punctuation">:</span><span class="comment">//fonts.googleapis.com (Default).</span></span><br><span class="line">  host<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//fonts.geekzu.org</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="针对NexT8-11-0以后的特殊问题"><a href="#针对NexT8-11-0以后的特殊问题" class="headerlink" title="针对NexT8.11.0以后的特殊问题"></a>针对NexT8.11.0以后的特殊问题</h2><p>由于NexT自<code>8.11.0</code>以来加入了Pjax自动更新功能，其使用的Pjax版本更新至<code>0.6.0</code>。然而75CDN(360前端)资源库中没有<code>0.6.0</code>的Pjax，只有<code>0.5.0</code>的Pjax，这导致修改CDN后我们无法使用Pjax。</p>
-<p>可通过修改主题根目录下<code>_vendors.yml</code>来强行改变Pjax引入的版本。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">pjax<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> &#x27;@next-theme/pjax&#x27;</span><br><span class="line">  version<span class="punctuation">:</span> <span class="number">0.5</span><span class="number">.0</span></span><br><span class="line">  file<span class="punctuation">:</span> pjax.min.js</span><br><span class="line">  alias<span class="punctuation">:</span> next-theme-pjax</span><br><span class="line">  integrity<span class="punctuation">:</span> sha256<span class="number">-3</span>NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=</span><br></pre></td></tr></table></figure>
-
-<div class="note danger"><p>必须保证<code>version</code>与<code>integrity</code>字段值完全如上所示，任何一个值出错都会导致Pjax无法引入。</p>
-</div>
-
-<h1 id="评论系统优化"><a href="#评论系统优化" class="headerlink" title="评论系统优化"></a>评论系统优化</h1><h2 id="服务端升级"><a href="#服务端升级" class="headerlink" title="服务端升级"></a>服务端升级</h2><p>在<a href="https://waline.js.org/">Waline官网</a>根据流程走即可。新建一个Github仓库，然后部署于Vercel。环境变量可使用旧版Waline的，这样可以无损保留评论数据。绑定域名建议新建，以防止翻车还得重新解析。</p>
-<div class="note info"><p>也可以通过修改仓库中修改 <code>package.json</code> 文件中的 <code>@waline/vercel</code> 版本号为最新版本，再Redeploy。</p>
-</div>
-
-<h2 id="客户端升级"><a href="#客户端升级" class="headerlink" title="客户端升级"></a>客户端升级</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm i @waline/next@latest</span></span><br></pre></td></tr></table></figure>
-
-<p>客户端由<code>1.6.0</code>升级至<code>2.14.7</code></p>
-<h2 id="更新配置文件"><a href="#更新配置文件" class="headerlink" title="更新配置文件"></a>更新配置文件</h2><p>Waline V2更新了配置文件格式，旧版的配置文件不再支持。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># Waline Config File</span><br><span class="line"># For more information<span class="punctuation">:</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org</span></span><br><span class="line"># - https<span class="punctuation">:</span><span class="comment">//waline.js.org/reference/component.html</span></span><br><span class="line">waline<span class="punctuation">:</span></span><br><span class="line">  # New! Whether enable this plugin</span><br><span class="line">  enable<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  dark<span class="punctuation">:</span> &#x27;body.darkmode--activated&#x27;</span><br><span class="line">  # Waline server address url<span class="punctuation">,</span> you should set this to your own link</span><br><span class="line">  serverURL<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//waline.kouki.ltd   </span></span><br><span class="line"></span><br><span class="line">  # Waline library CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  libUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  # Waline CSS styles CDN url<span class="punctuation">,</span> you can set this to your preferred CDN</span><br><span class="line">  cssUrl<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  # If <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> comment count will only be displayed in post page<span class="punctuation">,</span> not in home page</span><br><span class="line">  commentCount<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"></span><br><span class="line">  # Pageviews count<span class="punctuation">,</span> Note<span class="punctuation">:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span><br><span class="line">  pageview<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line"></span><br><span class="line">  # Custom locales</span><br><span class="line">  # locale<span class="punctuation">:</span></span><br><span class="line">  #   placeholder<span class="punctuation">:</span> Welcome to comment # Comment box placeholder</span><br><span class="line"></span><br><span class="line">  # Custom emoji</span><br><span class="line">  emoji<span class="punctuation">:</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">     - https<span class="punctuation">:</span><span class="comment">//unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  # Comment infomation<span class="punctuation">,</span> valid meta are nick<span class="punctuation">,</span> mail and link</span><br><span class="line">  meta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line">     - mail</span><br><span class="line">     - link</span><br><span class="line"></span><br><span class="line">  # Set required meta field<span class="punctuation">,</span> e.g.<span class="punctuation">:</span> <span class="punctuation">[</span>nick<span class="punctuation">]</span> | <span class="punctuation">[</span>nick<span class="punctuation">,</span> mail<span class="punctuation">]</span></span><br><span class="line">  requiredMeta<span class="punctuation">:</span></span><br><span class="line">     - nick</span><br><span class="line"></span><br><span class="line">  # Language<span class="punctuation">,</span> available values<span class="punctuation">:</span> en-US<span class="punctuation">,</span> zh-CN<span class="punctuation">,</span> zh-TW<span class="punctuation">,</span> pt-BR<span class="punctuation">,</span> ru-RU<span class="punctuation">,</span> jp-JP</span><br><span class="line">  lang<span class="punctuation">:</span> zh-CN</span><br><span class="line"></span><br><span class="line">  # Word limit<span class="punctuation">,</span> no limit when setting to <span class="number">0</span></span><br><span class="line">  wordLimit<span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  # Whether enable login<span class="punctuation">,</span> can choose from &#x27;enable&#x27;<span class="punctuation">,</span> &#x27;disable&#x27; and &#x27;force&#x27;</span><br><span class="line">  login<span class="punctuation">:</span> enable</span><br><span class="line"></span><br><span class="line">  # comment per page</span><br><span class="line">  # pageSize<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Waline-V2评价"><a href="#Waline-V2评价" class="headerlink" title="Waline V2评价"></a>Waline V2评价</h2><ul>
-<li>评论管理更加便捷，很多操作不再需要通过管理后台。</li>
-<li>支持点赞，支持删除评论，能够显示更多访客信息，并且修复了博主头像不显示的 bug ，还是很值得更新的。</li>
-</ul>
-<h1 id="现存问题与后续优化计划"><a href="#现存问题与后续优化计划" class="headerlink" title="现存问题与后续优化计划"></a>现存问题与后续优化计划</h1><h2 id="现存问题"><a href="#现存问题" class="headerlink" title="现存问题"></a>现存问题</h2><ul>
-<li>更换CDN后，中国大陆地区访客无法正常加载<code>Darkmode.js</code>与<code>Aplayer.js</code>等资源，因而夜间模式、全局音乐等功能不可用。</li>
-<li>由于DNS污染等原因，中国大陆地区暂时无法使用评论系统。</li>
-</ul>
-<p>（非中国大陆地区访客可完美浏览博客）</p>
-<h2 id="后续优化计划"><a href="#后续优化计划" class="headerlink" title="后续优化计划"></a>后续优化计划</h2><ul>
-<li>寻找新的CDN服务商进行资源分发。</li>
-<li>考虑DNS Server转发或采用其他Severless服务解决无法使用评论系统的问题。</li>
-</ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.techgrow.cn/">Clay</a></p>
-<p><a href="https://blog.csdn.net/tsvico/article/details/124852417">jsdelivr被墙,hexo-next切换为自定义CDN</a></p>
-]]></content>
-      <categories>
-        <category>经验</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISBN号码 201312-2</title>
-    <url>/posts/73bd0af.html</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括$9$位数字、$1$位识别码和$3$位分隔符，其规定格式如“$x-xxx-xxxxx-x$”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如$0-670-82162-4$就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如$0$代表英语；第一个分隔符“$-$”之后的三位数字代表出版社，例如$670$代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以$1$加上次位数字乘以$2$……以此类推，用所得的结果$mod 11$，所得的余数即为识别码，如果余数为$10$，则识别码为大写字母$X$。例如ISBN号码$0-670-82162-4$中的识别码$4$是这样得到的：对$067082162$这$9$个数字，从左至右，分别乘以$1，2，…，9$，再求和，即$0×1+6×2+……+2×9&#x3D;158$，然后取$158 mod 11$的结果$4$作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“$Right$”；如果错误，则输出是正确的ISBN号码。</p>
-<span id="more"></span>
-
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“$Right$”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“$-$”）。</p>
-<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>$0-670-82162-4$</p>
-<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>$Right$</p>
-<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>$0-670-82162-0$</p>
-<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>$0-670-82162-4$</p>
-<h2 id="正确解答（Dev-CPP环境）"><a href="#正确解答（Dev-CPP环境）" class="headerlink" title="正确解答（Dev-CPP环境）"></a>正确解答（Dev-CPP环境）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;cin&gt;&gt;str;</span><br><span class="line">    <span class="type">int</span> s=<span class="number">0</span>;<span class="type">int</span> p=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;str.<span class="built_in">length</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i]!=<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">            <span class="type">int</span> t=str[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            s+=t*p;</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> j=str[str.<span class="built_in">length</span>()<span class="number">-1</span>]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]==<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]!=<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;<span class="string">&#x27;X&#x27;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j==s%<span class="number">11</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;s%<span class="number">11</span>&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不完全正确解答（Dev-CPP环境，仅70分）"><a href="#不完全正确解答（Dev-CPP环境，仅70分）" class="headerlink" title="不完全正确解答（Dev-CPP环境，仅70分）"></a>不完全正确解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="type">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="type">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Chip testing</title>
     <url>/posts/8787df53.html</url>
     <content><![CDATA[<p>Professor Diogenes has <strong>n</strong> supposedly identical integrated-circuit chips that in principle are capable of testing each other. The professor’s test jig accomodates two chips at a time. When the jig is loaded, each chip tests the other and reports whether it is good or bad. A good chip always reports accurately whether the other chip is good or bad, but the professor cannot trust the answer of a bad chip. Thus, the four possible outcomes of a test are as follows:</p>
@@ -951,6 +886,101 @@
       </tags>
   </entry>
   <entry>
+    <title>Clone与Deploy等操作后，出现OpenSSL SSL_read Connection was reset, errno 10054的问题</title>
+    <url>/posts/175c8d74.html</url>
+    <content><![CDATA[<p>首先检查<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a>中是否有SSH Key，若没有则进行以下的操作，若有可以忽略第一、二步。</p>
+<p>（1）新建 SSH key，在git shell(或者git bash等命令窗口)，注意大小写：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>useremail指的是你的Github账户的邮箱地址。如果你的对应的Github项目在创建时没有设置密码，你可以在输入命令后无视提示，一路回车。否则你需要在</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Enter <span class="title">passphrase</span> <span class="params">(empty <span class="keyword">for</span> no passphrase)</span>:</span></span><br><span class="line"><span class="function">Enter same passphrase again:</span></span><br></pre></td></tr></table></figure>
+
+<p>出现时输入你设置的密码。</p>
+<span id="more"></span>
+
+<p>（2）打开id_rsa.pub文件，这个文件即刚刚你新建的 SSH key （一般位于C盘用户文件夹的.ssh文件夹内），用记事本打开它然后全选复制。</p>
+<p>之后在<a href="http://github.com/settings/keys">github.com&#x2F;settings&#x2F;keys</a> 中 New SSH key，title可留空也可任意填写，将刚刚复制的内容粘贴在key文本框内,点击确定。</p>
+<p>（3）输入命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>来检测 SSH key 是否配置成功，期间可能会有提示你输入yes或no的提示，直接输入yes一路回车即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hi username! You&#x27;ve successfully authenticated, but GitHub does not </span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+
+<p>出现这个就代表成功啦。</p>
+<p>（4）接下来在命令窗口输入</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --global user.email  <span class="string">&quot;useremail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username是Github项目对应的用户名，useremail就是对应的邮箱地址。</p>
+<p>（5）至此 SSH key的配置结束，如果还是出现了原来的问题可以在出现错误后输入下面这个命令</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外如果使用了Clash、ShadowsocksR等代理软件，请务必先将这类工具关闭。</p>
+<p>针对网络不畅引起的这个问题，可以安装<a href="https://gitee.com/docmirror/dev-sidecar">DevSidecar</a>使用Git.exe代理。</p>
+]]></content>
+      <categories>
+        <category>经验</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISBN号码 201312-2</title>
+    <url>/posts/73bd0af.html</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>每一本正式出版的图书都有一个ISBN号码与之对应，ISBN码包括$9$位数字、$1$位识别码和$3$位分隔符，其规定格式如“$x-xxx-xxxxx-x$”，其中符号“-”是分隔符（键盘上的减号），最后一位是识别码，例如$0-670-82162-4$就是一个标准的ISBN码。ISBN码的首位数字表示书籍的出版语言，例如$0$代表英语；第一个分隔符“$-$”之后的三位数字代表出版社，例如$670$代表维京出版社；第二个分隔之后的五位数字代表该书在出版社的编号；最后一位为识别码。<br>　　识别码的计算方法如下：<br>　　首位数字乘以$1$加上次位数字乘以$2$……以此类推，用所得的结果$mod 11$，所得的余数即为识别码，如果余数为$10$，则识别码为大写字母$X$。例如ISBN号码$0-670-82162-4$中的识别码$4$是这样得到的：对$067082162$这$9$个数字，从左至右，分别乘以$1，2，…，9$，再求和，即$0×1+6×2+……+2×9&#x3D;158$，然后取$158 mod 11$的结果$4$作为识别码。<br>　　编写程序判断输入的ISBN号码中识别码是否正确，如果正确，则仅输出“$Right$”；如果错误，则输出是正确的ISBN号码。</p>
+<span id="more"></span>
+
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入只有一行，是一个字符序列，表示一本书的ISBN号码（保证输入符合ISBN号码的格式要求）。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一行，假如输入的ISBN号码的识别码正确，那么输出“$Right$”，否则，按照规定的格式，输出正确的ISBN号码（包括分隔符“$-$”）。</p>
+<h2 id="样例输入1"><a href="#样例输入1" class="headerlink" title="样例输入1"></a>样例输入1</h2><p>$0-670-82162-4$</p>
+<h2 id="样例输出1"><a href="#样例输出1" class="headerlink" title="样例输出1"></a>样例输出1</h2><p>$Right$</p>
+<h2 id="样例输入2"><a href="#样例输入2" class="headerlink" title="样例输入2"></a>样例输入2</h2><p>$0-670-82162-0$</p>
+<h2 id="样例输出2"><a href="#样例输出2" class="headerlink" title="样例输出2"></a>样例输出2</h2><p>$0-670-82162-4$</p>
+<h2 id="正确解答（Dev-CPP环境）"><a href="#正确解答（Dev-CPP环境）" class="headerlink" title="正确解答（Dev-CPP环境）"></a>正确解答（Dev-CPP环境）</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string str;cin&gt;&gt;str;</span><br><span class="line">    <span class="type">int</span> s=<span class="number">0</span>;<span class="type">int</span> p=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;str.<span class="built_in">length</span>()<span class="number">-1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i]!=<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">            <span class="type">int</span> t=str[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            s+=t*p;</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> j=str[str.<span class="built_in">length</span>()<span class="number">-1</span>]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]==<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s%<span class="number">11</span>==<span class="number">10</span>&amp;&amp;str[str.<span class="built_in">length</span>()<span class="number">-1</span>]!=<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;<span class="string">&#x27;X&#x27;</span>&lt;&lt;endl;<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j==s%<span class="number">11</span>)&#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;Right&quot;</span>&lt;&lt;endl;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        cout&lt;&lt;str.<span class="built_in">substr</span>(<span class="number">0</span>,<span class="number">12</span>)&lt;&lt;s%<span class="number">11</span>&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不完全正确解答（Dev-CPP环境，仅70分）"><a href="#不完全正确解答（Dev-CPP环境，仅70分）" class="headerlink" title="不完全正确解答（Dev-CPP环境，仅70分）"></a>不完全正确解答（Dev-CPP环境，仅70分）</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">char</span> isbn[<span class="number">15</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span> ic=<span class="number">0</span>,i=<span class="number">0</span>,temp=<span class="number">0</span>,cnt=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	ic=(<span class="type">int</span>)(isbn[<span class="number">0</span>]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=<span class="number">10</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(isbn[i]==<span class="string">&#x27;-&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			cnt++;</span><br><span class="line">			temp=(<span class="type">int</span>)(isbn[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		ic=ic+temp*cnt;</span><br><span class="line">	&#125;</span><br><span class="line">	ic=ic%<span class="number">11</span>;</span><br><span class="line">	<span class="keyword">if</span>(isbn[<span class="number">12</span>]==<span class="string">&#x27;X&#x27;</span>&amp;&amp;ic==<span class="number">10</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>)==isbn[<span class="number">12</span>])&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Right&quot;</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		isbn[<span class="number">12</span>]=(<span class="type">char</span>)(ic+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="comment">//printf(&quot;%c\n&quot;,isbn[12]);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,isbn);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript中未声明的变量</title>
+    <url>/posts/87b92057.html</url>
+    <content><![CDATA[<p>JavaScript通常有<strong>3种</strong>声明变量的方式</p>
+<ol>
+<li>var和let -&gt; 只存在作用域的区别</li>
+<li>const -&gt; 只读</li>
+<li>直接赋值，不声明</li>
+</ol>
+<span id="more"></span>
+
+<p>其中第3种是最容易忽略的，这样会产生一个<strong>全局变量</strong>，算是<strong>未声明全局变量</strong>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">//  Uncaught ReferenceError: x is not defined</span></span><br><span class="line"><span class="comment">//这里只声明了foo但是没有运行foo，所以报错</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">// 显示为666</span></span><br><span class="line"><span class="comment">//可以看出，这里跳出了foo函数还能够打印出x的数值，所以为全局变量</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>比如下面这样直接给x赋值，前面不加任何关键字。这样做的结果是在js能被执行通过，但是会被警告。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">x = <span class="number">666</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jotai：原子化状态管理在现代 React App中的实践</title>
     <url>/posts/2279e119.html</url>
     <content><![CDATA[<p>在构建复杂的 React 应用时，状态管理是一个不可避免的核心问题。从组件的本地 state 到跨组件共享的全局状态，选择一个合适的库来优雅地处理这些数据流至关重要。在我们最近的某个项目中，就选择了 <a href="https://jotai.org/">Jotai</a> 作为状态管理解决方案。</p>
@@ -994,36 +1024,6 @@
       <tags>
         <tag>React</tag>
         <tag>Jotai</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript中未声明的变量</title>
-    <url>/posts/87b92057.html</url>
-    <content><![CDATA[<p>JavaScript通常有<strong>3种</strong>声明变量的方式</p>
-<ol>
-<li>var和let -&gt; 只存在作用域的区别</li>
-<li>const -&gt; 只读</li>
-<li>直接赋值，不声明</li>
-</ol>
-<span id="more"></span>
-
-<p>其中第3种是最容易忽略的，这样会产生一个<strong>全局变量</strong>，算是<strong>未声明全局变量</strong>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">//  Uncaught ReferenceError: x is not defined</span></span><br><span class="line"><span class="comment">//这里只声明了foo但是没有运行foo，所以报错</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">   x = <span class="number">666</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br><span class="line"><span class="title function_">alert</span>(x) <span class="comment">// 显示为666</span></span><br><span class="line"><span class="comment">//可以看出，这里跳出了foo函数还能够打印出x的数值，所以为全局变量</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>比如下面这样直接给x赋值，前面不加任何关键字。这样做的结果是在js能被执行通过，但是会被警告。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">x = <span class="number">666</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1236,32 +1236,6 @@
       <tags>
         <tag>Vue</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>dummy节点</title>
-    <url>/posts/556c2443.html</url>
-    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
-<span id="more"></span>
-
-<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
-<ul>
-<li>作为新链表的头部<ul>
-<li>（可参考leetcode第2题、第21题）</li>
-</ul>
-</li>
-<li>解决链表的头部引起的极端问题<ul>
-<li>（可参考leetcode第19题、第24题）</li>
-</ul>
-</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
   </entry>
   <entry>
     <title>Vue进阶学习笔记</title>
@@ -1716,65 +1690,29 @@
       </tags>
   </entry>
   <entry>
-    <title>《灌篮高手》，坐在电影院里就足够了</title>
-    <url>/posts/d4a3be1c.html</url>
-    <content><![CDATA[<p>电影院里很久没有出现这样的景象了。</p>
-<p>零点首映时，中年人们拖着疲惫的身躯，从城市的各个角落中钻出来，趁着夜色摸到电影院。</p>
-<p>在排队进场之前，他们有的还在回复工作内容，有的还在叮嘱父母哄睡孩子，更多的人则打开搜索引擎，搜索当年戛然而止的记忆。</p>
-<p>只有那些穿在外套里面，皱皱巴巴、微微变色的球衣，证明着他们不曾忘记的青春。虽然有些衣服明显不再合身，有些号码都已经斑驳、脱落，但是他们还是穿着来了。</p>
-<p>200斤的“樱木花道”就站在40岁的“流川枫”身前，后面排队的是发际线堪忧的“仙道彰”……</p>
-<p>当手绘的湘北五虎线稿跃然于大银幕上时，电影院中鸦雀无声，五个少年迎面“走起来”时，电影院中窸窸窣窣抽纸巾的声音提醒着观众：</p>
-<p>“那个回忆，他们回来了。”</p>
+    <title>dummy节点</title>
+    <url>/posts/556c2443.html</url>
+    <content><![CDATA[<p>做leetcode链表题的时候，需要额外考虑链表头部的特殊情况。但是，往往考虑不够周全，导致最后通过不断试错，修改代码。代码变得臃肿，可读性差。<br>其实，引入一个dummy节点就可以解决大部分需要考虑头节点的链表题。</p>
 <span id="more"></span>
 
-<p>和此前的漫画以及TV版动画不同，电影版《灌篮高手》的主角，从樱木花道换成了宫城良田。</p>
-<p>那是一个身高只有168cm的16岁少年。在大部分关于《灌篮高手》的回忆中，宫城良田只是湘北五虎里面那个跑得飞快，很会传球的小个子。</p>
-<p>颜值不如流川枫、搞笑没有樱木花道尽力、精神属性不敌赤木刚宪、戏剧冲突更比不上三井寿，在湘北的比赛中，更是鲜有看到宫城良田以一己之力战胜对手的战例。</p>
-<p>宫城良田在观众中的人气甚至不如仙道彰、花形透、藤真健司……有观众曾经表示，漫画中水户洋平的戏份都要比宫城良田多。</p>
-<p>电影上映前，井上雄彦曾表示，当初创作《灌篮高手》的时候，自己仅仅23岁，而如今27年过去，人生视角和价值观发生了巨大的变化。</p>
-<p>“毕竟大家都生活在痛苦中，不是所有人都拥有无限的可能性。”井上雄彦说。</p>
-<p>和不少打着怀旧牌的创作者一样，《灌篮高手》同样面临着究竟是迎合老粉丝，还是照顾新观众的问题，无论偏向哪一边，都很容易翻车。</p>
-<p>其实，电影中宫城良田的一部分故事，在当年《灌篮高手》完结后，井上雄彦曾经创作过一部叫做《耳环》的短篇作品，讲述了在哥哥去世后，宫城良田和一个女孩子的故事，在那部作品中，海边的洞穴、捕鱼去世的哥哥都曾经出现过。</p>
-<p>但这部作品的影响力并不高，很多当年喜爱《灌篮高手》的年轻人，也并不都看过《耳环》。</p>
-<p>对于新观众而言，由于比赛只有一场，需要一个完整的故事线索来承接比赛的内容，一个较为丰满，具有冲突的故事，却是可以降低新观众观影的门槛。</p>
-<p>电影中的宫城良田的剧情线很简单，自幼丧父，12岁时哥哥也去世，就剩下母亲一人拉扯自己和妹妹，受到去世的哥哥影响，宫城良田小学起就喜欢篮球，并且以击败山王工业为目标，篮球对于宫城良田来说既像一个爱好，也像是某种缅怀仪式。</p>
-<p>带着击败山王的梦想，一家人从冲绳来到神奈川，宫城也进入湘北高中，从而结识了赤木刚宪、樱木花道等人，最终在全国大赛中战胜山王工业。</p>
-<p>宫城良田的故事和湘北VS山王工业的比赛，穿插呈现，基本就是全片的内容。对于老观众来说，那场比赛的结果甚至是过程，都已经无须赘述。赤木的受限、三井的爆发、流川的觉醒以及樱木的绝杀，这些都不是新鲜事。</p>
-<p>电影版《灌篮高手》采用了3D建模渲染成2D画风的“三渲二”的技术，在上映前遭到了不少老粉的吐槽，认为这样的处理缺少了曾经那样要扎破纸张的线条表现力，人物的面部和肢体线条平整光滑后，也不那么能让人接受。</p>
-<p>从观感上看，球员们的篮球技术动作确实比20多年前更真实，但是面部表情也的确呈现出了一种“医美过度”的感觉。尤其是这个版本的“流川枫”，不知道是活在什么群体的“审美点”上。</p>
-<p>由于加入了大量宫城良田家庭戏份回忆，让湘北VS山王的比赛变得稍显破碎，而宫城良田的家庭戏，也并没有真正做到前后呼应，山王的比赛和宫城良田的故事仍然会让观众感受到脱节。</p>
-<p>而在原作中，湘北和山王的比赛中有大量细节被取消，仍然令观众感到遗憾。山王的强大只在宫城良田的回忆中进行了铺垫，而鱼住纯骂醒赤木刚宪，樱木表白晴子说“我很喜欢，这次是真心的”的告白都没有出现，脱力后三井寿说的那句“我是三井寿，一个永不放弃的人……”也没有出现。</p>
-<p>这些细节的缺失，让这个回忆杀显得遗憾大于满足。</p>
-<p>在井上雄彦的《灌篮高手》中，篮球虽然是主角，但从来不是全部，一群不完美的人，因为篮球凑在一起，互相之间的摩擦和变化以及成长，才是《灌篮高手》真正吸引人的地方。</p>
-<p>主角们幼稚、不成熟却拼搏不认输，而一众配角们的存在都只为阐述“友爱”二字，拿水户洋平来说，为了樱木专心打球，水户洋平替樱木扛下了打架斗殴的责任，并用攒下的打工钱买摄像机、录影带，协助拍摄，以纠正樱木的错误动作，让读者看到了到底什么是真朋友。</p>
-<p>大量出色的细节和配角，让这些年轻人的青春不那样平凡，在电影中，或是因为体量的原因，这些东西均无法呈现，令人非常遗憾。</p>
-<p>在当年，不少年轻人在初看《灌篮高手》时，甚至没有看过一场正式的篮球比赛转播，很多人的篮球初恋，便是来自《灌篮高手》。</p>
-<p>曾经漫画和动画中写实的篮球技战术，如今也随着电视转播技术的先进、大型赛事的影响力增大而消解，没有年轻人再选择《灌篮高手》作为自己的篮球启蒙。</p>
-<p>所以无论井上雄彦怎样讨巧，怎么妥协，《灌篮高手》注定不是一部能承载“拉新”能力的电影作品，它仍然只是一部用于收割情怀的作品。</p>
-<p>但对于大部分购票观影的中年人来说，能买上一张票，坐在电影院里，已经足够了。</p>
-<hr>
+<h3 id="什么是dummy节点？"><a href="#什么是dummy节点？" class="headerlink" title="什么是dummy节点？"></a>什么是dummy节点？</h3><p>dummy（假的）节点是一个虚拟创建的节点，放在链表的最前面，指向头节点</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">let dummy = <span class="keyword">new</span> <span class="built_in">ListNode</span>(); <span class="comment">//创建新节点</span></span><br><span class="line">dummy.next = head;  <span class="comment">//让dummy指向头节点</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">return</span> dummy.next;  <span class="comment">//程序结束后返回链表，返回的是dummy.next，而非dummy</span></span><br></pre></td></tr></table></figure>
 
-<p>井上雄彦在谈到宫城良田的时候，说他就像自己。</p>
-<p>宫城良田和井上雄彦一样，是家中三个孩子的老二，夹在中间；在湘北，赤木刚宪、木暮公延、三井寿是三年级生，流川枫、樱木花道则是一年级生，宫城良田仍然是夹在中间。</p>
-<p>所以他决定在26年后重启，把这个“夹在中间”的人推到台前来，让人们看到他的成长经历、过往的苦难和最终鼓起的勇气和决心。</p>
-<p>这其实是《灌篮高手》和其他贩卖情怀的作品最大的不同之处，虽然俗套，但井上雄彦依然希望和读者一起成长，而非停在当年，收割余利。</p>
-<p>巧合的是，当年那些看着湘北披荆斩棘的孩子，如今也正是被“夹在中间”的人。</p>
-<p>小孩子可以熊，老年人可以犟，唯独夹在中间的人必须循规蹈矩，必须墨守成规，必须活得无比正确且正常。</p>
-<p>在电影版的灌篮高手里，井上没有过多地着墨于“梦想”“友情”“热血”，反而花了很大的笔墨在城市乡村的反差、单身母亲的艰难生活上，就连原著中的青春懵懂的爱情，也几乎没有任何描述。电影中，赤木晴子就坐在看台上高宫望的身边，毫无任何光环可言。</p>
-<p>每个被夹在中间的中年人，都像是面对着一个“山王工业”的宫城良田，但又远没有宫城良田幸运。宫城良田速度很快，但身高不够，对抗有限，还缺乏投篮能力。但他身边有精神力拉满的赤木刚宪、有技术全面的流川枫、有外线投射出众的三井寿，甚至还有天赋爆棚的樱木花道。</p>
-<p>在山王工业头牌泽北荣治的一次次杀入篮下得分后，这帮体力透支、能力明显不如对手的年轻人，甚至还能打出此前没有的变化和应对，最终靠流川枫和樱木花道连线，压哨绝杀比赛。</p>
-<p>而那个镜片闪光，肚腩肥硕的老头，更是不可多得的人生导师，他熟悉每个人的特点，尊重个体，并且放大他们的优点，甚至可以允许他们在场上“任性”。</p>
-<p>这一切，在“夹在中间”的人看来，简直就是奢望。生活哪有那么多以弱克强，哪有那么多压哨逆转，更多只是遗憾退场。</p>
-<p>电影中，输掉比赛后的泽北荣治，在球员通道中无助地跪下哭泣，那才是“夹在中间”的人们的常态。</p>
-<p>安西教练说“自己放弃，比赛就结束了”，中年们哭了；樱木花道说“这就是我最光荣的时刻”，中年们也哭了；樱木花道绝杀后和流川枫的世纪击掌，中年们又哭了……</p>
-<p>但在电影院中哭泣的中年人，仅仅是哭青春回来了么？还有很大的一部分在哭，青春回不来了。在那些消逝的青春汗水中，我们到底失去了什么，又得到了什么？</p>
-<p>不知道有多少观众注意到电影中，湘北和山王工业比赛中，湘北替补席上的那个叫做石井健太郎的球员，全场比赛他都没有获得一分钟上场机会，在比赛临近尾声的时候，石井健太郎高举双臂，眼泪肆意流淌，却没有一句对白。</p>
-<p>等到影片结束，彩蛋播完，那两首经典的音乐《好想大声说爱你》和《直到世界的尽头》都没有响起，取而代之的则是两首节奏性更强、唱腔接近嘶吼的作品。</p>
-<p>伴随着嘶吼，灯光亮起，那些被“夹在中间”的观众们，默默擦干眼泪，站起身把球衣塞进裤子，系紧。</p>
-<p>然后，一头扎进黑暗的夜色里。</p>
+<h3 id="使用dummy的场景有哪些？"><a href="#使用dummy的场景有哪些？" class="headerlink" title="使用dummy的场景有哪些？"></a>使用dummy的场景有哪些？</h3><p>前面提到，使用dummy可以避免很多由于头节点特殊性产生的坑，让代码更优雅。<br>那么dummy的应用场景主要有以下两类：</p>
+<ul>
+<li>作为新链表的头部<ul>
+<li>（可参考leetcode第2题、第21题）</li>
+</ul>
+</li>
+<li>解决链表的头部引起的极端问题<ul>
+<li>（可参考leetcode第19题、第24题）</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用dummy最主要的原因是消除头节点的特殊性，使用一个虚拟节点冒充头节点，而真正的头节点就和其他普通节点一样。<br>当我们处理完链表之后，只需要返回dummy.next，由于单向链表只能从头往后遍历的性质，就可以舍弃掉dummy，返回的就是我们需要的链表。</p>
 ]]></content>
       <categories>
-        <category>随笔</category>
+        <category>笔记</category>
       </categories>
   </entry>
   <entry>
@@ -1941,6 +1879,143 @@
       </tags>
   </entry>
   <entry>
+    <title>《灌篮高手》，坐在电影院里就足够了</title>
+    <url>/posts/d4a3be1c.html</url>
+    <content><![CDATA[<p>电影院里很久没有出现这样的景象了。</p>
+<p>零点首映时，中年人们拖着疲惫的身躯，从城市的各个角落中钻出来，趁着夜色摸到电影院。</p>
+<p>在排队进场之前，他们有的还在回复工作内容，有的还在叮嘱父母哄睡孩子，更多的人则打开搜索引擎，搜索当年戛然而止的记忆。</p>
+<p>只有那些穿在外套里面，皱皱巴巴、微微变色的球衣，证明着他们不曾忘记的青春。虽然有些衣服明显不再合身，有些号码都已经斑驳、脱落，但是他们还是穿着来了。</p>
+<p>200斤的“樱木花道”就站在40岁的“流川枫”身前，后面排队的是发际线堪忧的“仙道彰”……</p>
+<p>当手绘的湘北五虎线稿跃然于大银幕上时，电影院中鸦雀无声，五个少年迎面“走起来”时，电影院中窸窸窣窣抽纸巾的声音提醒着观众：</p>
+<p>“那个回忆，他们回来了。”</p>
+<span id="more"></span>
+
+<p>和此前的漫画以及TV版动画不同，电影版《灌篮高手》的主角，从樱木花道换成了宫城良田。</p>
+<p>那是一个身高只有168cm的16岁少年。在大部分关于《灌篮高手》的回忆中，宫城良田只是湘北五虎里面那个跑得飞快，很会传球的小个子。</p>
+<p>颜值不如流川枫、搞笑没有樱木花道尽力、精神属性不敌赤木刚宪、戏剧冲突更比不上三井寿，在湘北的比赛中，更是鲜有看到宫城良田以一己之力战胜对手的战例。</p>
+<p>宫城良田在观众中的人气甚至不如仙道彰、花形透、藤真健司……有观众曾经表示，漫画中水户洋平的戏份都要比宫城良田多。</p>
+<p>电影上映前，井上雄彦曾表示，当初创作《灌篮高手》的时候，自己仅仅23岁，而如今27年过去，人生视角和价值观发生了巨大的变化。</p>
+<p>“毕竟大家都生活在痛苦中，不是所有人都拥有无限的可能性。”井上雄彦说。</p>
+<p>和不少打着怀旧牌的创作者一样，《灌篮高手》同样面临着究竟是迎合老粉丝，还是照顾新观众的问题，无论偏向哪一边，都很容易翻车。</p>
+<p>其实，电影中宫城良田的一部分故事，在当年《灌篮高手》完结后，井上雄彦曾经创作过一部叫做《耳环》的短篇作品，讲述了在哥哥去世后，宫城良田和一个女孩子的故事，在那部作品中，海边的洞穴、捕鱼去世的哥哥都曾经出现过。</p>
+<p>但这部作品的影响力并不高，很多当年喜爱《灌篮高手》的年轻人，也并不都看过《耳环》。</p>
+<p>对于新观众而言，由于比赛只有一场，需要一个完整的故事线索来承接比赛的内容，一个较为丰满，具有冲突的故事，却是可以降低新观众观影的门槛。</p>
+<p>电影中的宫城良田的剧情线很简单，自幼丧父，12岁时哥哥也去世，就剩下母亲一人拉扯自己和妹妹，受到去世的哥哥影响，宫城良田小学起就喜欢篮球，并且以击败山王工业为目标，篮球对于宫城良田来说既像一个爱好，也像是某种缅怀仪式。</p>
+<p>带着击败山王的梦想，一家人从冲绳来到神奈川，宫城也进入湘北高中，从而结识了赤木刚宪、樱木花道等人，最终在全国大赛中战胜山王工业。</p>
+<p>宫城良田的故事和湘北VS山王工业的比赛，穿插呈现，基本就是全片的内容。对于老观众来说，那场比赛的结果甚至是过程，都已经无须赘述。赤木的受限、三井的爆发、流川的觉醒以及樱木的绝杀，这些都不是新鲜事。</p>
+<p>电影版《灌篮高手》采用了3D建模渲染成2D画风的“三渲二”的技术，在上映前遭到了不少老粉的吐槽，认为这样的处理缺少了曾经那样要扎破纸张的线条表现力，人物的面部和肢体线条平整光滑后，也不那么能让人接受。</p>
+<p>从观感上看，球员们的篮球技术动作确实比20多年前更真实，但是面部表情也的确呈现出了一种“医美过度”的感觉。尤其是这个版本的“流川枫”，不知道是活在什么群体的“审美点”上。</p>
+<p>由于加入了大量宫城良田家庭戏份回忆，让湘北VS山王的比赛变得稍显破碎，而宫城良田的家庭戏，也并没有真正做到前后呼应，山王的比赛和宫城良田的故事仍然会让观众感受到脱节。</p>
+<p>而在原作中，湘北和山王的比赛中有大量细节被取消，仍然令观众感到遗憾。山王的强大只在宫城良田的回忆中进行了铺垫，而鱼住纯骂醒赤木刚宪，樱木表白晴子说“我很喜欢，这次是真心的”的告白都没有出现，脱力后三井寿说的那句“我是三井寿，一个永不放弃的人……”也没有出现。</p>
+<p>这些细节的缺失，让这个回忆杀显得遗憾大于满足。</p>
+<p>在井上雄彦的《灌篮高手》中，篮球虽然是主角，但从来不是全部，一群不完美的人，因为篮球凑在一起，互相之间的摩擦和变化以及成长，才是《灌篮高手》真正吸引人的地方。</p>
+<p>主角们幼稚、不成熟却拼搏不认输，而一众配角们的存在都只为阐述“友爱”二字，拿水户洋平来说，为了樱木专心打球，水户洋平替樱木扛下了打架斗殴的责任，并用攒下的打工钱买摄像机、录影带，协助拍摄，以纠正樱木的错误动作，让读者看到了到底什么是真朋友。</p>
+<p>大量出色的细节和配角，让这些年轻人的青春不那样平凡，在电影中，或是因为体量的原因，这些东西均无法呈现，令人非常遗憾。</p>
+<p>在当年，不少年轻人在初看《灌篮高手》时，甚至没有看过一场正式的篮球比赛转播，很多人的篮球初恋，便是来自《灌篮高手》。</p>
+<p>曾经漫画和动画中写实的篮球技战术，如今也随着电视转播技术的先进、大型赛事的影响力增大而消解，没有年轻人再选择《灌篮高手》作为自己的篮球启蒙。</p>
+<p>所以无论井上雄彦怎样讨巧，怎么妥协，《灌篮高手》注定不是一部能承载“拉新”能力的电影作品，它仍然只是一部用于收割情怀的作品。</p>
+<p>但对于大部分购票观影的中年人来说，能买上一张票，坐在电影院里，已经足够了。</p>
+<hr>
+
+<p>井上雄彦在谈到宫城良田的时候，说他就像自己。</p>
+<p>宫城良田和井上雄彦一样，是家中三个孩子的老二，夹在中间；在湘北，赤木刚宪、木暮公延、三井寿是三年级生，流川枫、樱木花道则是一年级生，宫城良田仍然是夹在中间。</p>
+<p>所以他决定在26年后重启，把这个“夹在中间”的人推到台前来，让人们看到他的成长经历、过往的苦难和最终鼓起的勇气和决心。</p>
+<p>这其实是《灌篮高手》和其他贩卖情怀的作品最大的不同之处，虽然俗套，但井上雄彦依然希望和读者一起成长，而非停在当年，收割余利。</p>
+<p>巧合的是，当年那些看着湘北披荆斩棘的孩子，如今也正是被“夹在中间”的人。</p>
+<p>小孩子可以熊，老年人可以犟，唯独夹在中间的人必须循规蹈矩，必须墨守成规，必须活得无比正确且正常。</p>
+<p>在电影版的灌篮高手里，井上没有过多地着墨于“梦想”“友情”“热血”，反而花了很大的笔墨在城市乡村的反差、单身母亲的艰难生活上，就连原著中的青春懵懂的爱情，也几乎没有任何描述。电影中，赤木晴子就坐在看台上高宫望的身边，毫无任何光环可言。</p>
+<p>每个被夹在中间的中年人，都像是面对着一个“山王工业”的宫城良田，但又远没有宫城良田幸运。宫城良田速度很快，但身高不够，对抗有限，还缺乏投篮能力。但他身边有精神力拉满的赤木刚宪、有技术全面的流川枫、有外线投射出众的三井寿，甚至还有天赋爆棚的樱木花道。</p>
+<p>在山王工业头牌泽北荣治的一次次杀入篮下得分后，这帮体力透支、能力明显不如对手的年轻人，甚至还能打出此前没有的变化和应对，最终靠流川枫和樱木花道连线，压哨绝杀比赛。</p>
+<p>而那个镜片闪光，肚腩肥硕的老头，更是不可多得的人生导师，他熟悉每个人的特点，尊重个体，并且放大他们的优点，甚至可以允许他们在场上“任性”。</p>
+<p>这一切，在“夹在中间”的人看来，简直就是奢望。生活哪有那么多以弱克强，哪有那么多压哨逆转，更多只是遗憾退场。</p>
+<p>电影中，输掉比赛后的泽北荣治，在球员通道中无助地跪下哭泣，那才是“夹在中间”的人们的常态。</p>
+<p>安西教练说“自己放弃，比赛就结束了”，中年们哭了；樱木花道说“这就是我最光荣的时刻”，中年们也哭了；樱木花道绝杀后和流川枫的世纪击掌，中年们又哭了……</p>
+<p>但在电影院中哭泣的中年人，仅仅是哭青春回来了么？还有很大的一部分在哭，青春回不来了。在那些消逝的青春汗水中，我们到底失去了什么，又得到了什么？</p>
+<p>不知道有多少观众注意到电影中，湘北和山王工业比赛中，湘北替补席上的那个叫做石井健太郎的球员，全场比赛他都没有获得一分钟上场机会，在比赛临近尾声的时候，石井健太郎高举双臂，眼泪肆意流淌，却没有一句对白。</p>
+<p>等到影片结束，彩蛋播完，那两首经典的音乐《好想大声说爱你》和《直到世界的尽头》都没有响起，取而代之的则是两首节奏性更强、唱腔接近嘶吼的作品。</p>
+<p>伴随着嘶吼，灯光亮起，那些被“夹在中间”的观众们，默默擦干眼泪，站起身把球衣塞进裤子，系紧。</p>
+<p>然后，一头扎进黑暗的夜色里。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二叉树的遍历方法及其Java代码实现</title>
+    <url>/posts/34812bb0.html</url>
+    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
+<ul>
+<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
+</ul>
+<span id="more"></span>
+
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
+<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
+<p>首先要声明结点TreeNode类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来创建一棵二叉树：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
+<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
+<p>还是一样，先看非递归前序遍历</p>
+<ol>
+<li>首先申请一个新的栈，记为stack；</li>
+<li>声明一个结点treeNode，让其指向node结点；</li>
+<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
+<li>重复步骤3，直到treenode为空；</li>
+<li>然后出栈，让treeNode指向treeNode的右孩子</li>
+<li>重复步骤3，直到stack为空.</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
+<p>具体过程：</p>
+<ol>
+<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
+<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
+<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
+<li>当stack为空并且cur为空时结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后再给大家介绍一下层序遍历</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>首先申请一个新的队列，记为queue；</li>
+<li>将头结点head压入queue中；</li>
+<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
+<li>重复步骤3，直到queue为空。</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>利用新Repository给Github Pages配置多个域名</title>
     <url>/posts/9b69c506.html</url>
     <content><![CDATA[<h4 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h4><p>一个Github Pages只能绑定一个自定义域名，但在已经绑定了一个域名的情况下，想使用多个域名访问到托管到Github Pages的页面时该怎么办呢？</p>
@@ -2037,6 +2112,110 @@
       </categories>
       <tags>
         <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>期末预测之最佳阈值 202012-2</title>
+    <url>/posts/e7a7ed06.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
+<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
+<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
+<span id="more"></span>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
+<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
+<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
+<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
+<p>$θ^* &#x3D; \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j&#x3D;1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) &#x3D;&#x3D; result_j ) }<br>$</p>
+<p>该公式亦可等价地表述为如下规则：</p>
+<ol>
+<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
+<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
+<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
+</ol>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
+<p>输入的第一行包含一个正整数$m$ 。</p>
+<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
+<p>输出一个整数，表示最佳阈值$θ^*$。</p>
+<p>样例1输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
+
+<p>样例1输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>样例1解释</p>
+<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
+<p>θ&#x3D;0 时，预测正确次数为 4；</p>
+<p>θ&#x3D;1 时，预测正确次数为 5；</p>
+<p>θ&#x3D;3 时，预测正确次数为 5；</p>
+<p>θ&#x3D;5 时，预测正确次数为 4；</p>
+<p>θ&#x3D;7 时，预测正确次数为 3。</p>
+<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
+<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
+<p>依规则三，$θ^*&#x3D;max1,3&#x3D;3$。</p>
+<p>样例2输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
+
+<p>样例2输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
+
+<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
+<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
+<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<a href="https://blog.csdn.net/qq_43464088/article/details/112080044">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="type">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="type">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr<span class="number">+1</span>,pr+n<span class="number">+1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="type">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>王道数据结构P191关于二叉树的算法归纳</title>
+    <url>/posts/1537acf2.html</url>
+    <content><![CDATA[<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount1</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
+<p>也可以用非递归方法，使用队列层次遍历。</p>
+<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount2</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount0</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Height</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="type">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">LevelWidth</span><span class="params">(BiTree T, <span class="type">int</span> a[], <span class="type">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span><br><span class="line">&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">Width</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="type">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Del_0</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先叶子是指左右孩子都没有的结点。</p>
+<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
+<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="type">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="type">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Get_Max</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="type">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="type">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Exc</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">PreAndLevel</span><span class="params">(BiTree T, <span class="type">int</span> i)</span>	</span><br><span class="line">&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <a href="https://blog.csdn.net/qq_36645322?type=blog"> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -2164,81 +2343,6 @@
       </tags>
   </entry>
   <entry>
-    <title>二叉树的遍历方法及其Java代码实现</title>
-    <url>/posts/34812bb0.html</url>
-    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>二叉树的四种遍历方式：</p>
-<ul>
-<li>二叉树的遍历（traversing binary tree）是指从根结点出发，按照某种次序依次访问二叉树中所有的结点，使得每个结点被访问依次且仅被访问一次。<br>四种遍历方式分别为：先序遍历、中序遍历、后序遍历、层序遍历。</li>
-</ul>
-<span id="more"></span>
-
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/1542838-20190722222821663-1408544995.png"></p>
-<p>遍历之前，我们首先介绍一下，如何创建一个二叉树，在这里用的是先建左树在建右树的方法，</p>
-<p>首先要声明结点TreeNode类，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeNode</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> data;</span><br><span class="line">    <span class="keyword">public</span> TreeNode leftChild;</span><br><span class="line">    <span class="keyword">public</span> TreeNode rightChild;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TreeNode</span><span class="params">(<span class="type">int</span> data)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>再来创建一棵二叉树：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建二叉树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list   输入序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> TreeNode <span class="title function_">createBinaryTree</span><span class="params">(LinkedList&lt;Integer&gt; list)</span>&#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(list == <span class="literal">null</span> || list.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">data</span> <span class="operator">=</span> list.removeFirst();</span><br><span class="line">        <span class="keyword">if</span>(data!=<span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(data);</span><br><span class="line">            node.leftChild = createBinaryTree(list);</span><br><span class="line">            node.rightChild = createBinaryTree(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>接下来按照上面列的顺序一一讲解，</p>
-<h5 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h5><p>首先来看前序遍历，所谓的前序遍历就是先访问根节点，再访问左节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树前序遍历   根-&gt; 左-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        preOrderTraveral(node.leftChild);</span><br><span class="line">        preOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h5><p>再者就是中序遍历，所谓的中序遍历就是先访问左节点，再访问根节点，最后访问右节点，</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树中序遍历   左-&gt; 根-&gt; 右</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node   二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderTraveral(node.leftChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        inOrderTraveral(node.rightChild);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h5><p>最后就是后序遍历，所谓的后序遍历就是先访问左节点，再访问右节点，最后访问根节点。</p>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二叉树后序遍历   左-&gt; 右-&gt; 根</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> node    二叉树节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveral</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrderTraveral(node.leftChild);</span><br><span class="line">        postOrderTraveral(node.rightChild);</span><br><span class="line">        System.out.print(node.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="非递归方案"><a href="#非递归方案" class="headerlink" title="非递归方案"></a>非递归方案</h5><p>讲完上面三种递归的方法，下面再给大家讲讲非递归是如何实现前中后序遍历的</p>
-<p>还是一样，先看非递归前序遍历</p>
-<ol>
-<li>首先申请一个新的栈，记为stack；</li>
-<li>声明一个结点treeNode，让其指向node结点；</li>
-<li>如果treeNode的不为空，将treeNode的值打印，并将treeNode入栈，然后让treeNode指向treeNode的右结点，</li>
-<li>重复步骤3，直到treenode为空；</li>
-<li>然后出栈，让treeNode指向treeNode的右孩子</li>
-<li>重复步骤3，直到stack为空.</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">preOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//迭代访问节点的左孩子，并入栈</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果节点没有左孩子，则弹出栈顶节点，访问节点右孩子</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>中序遍历非递归，在此不过多叙述具体步骤了，</p>
-<p>具体过程：</p>
-<ol>
-<li>申请一个新栈，记为stack，申请一个变量cur，初始时令treeNode为头节点；</li>
-<li>先把treeNode节点压入栈中，对以treeNode节点为头的整棵子树来说，依次把整棵树的左子树压入栈中，即不断令treeNode&#x3D;treeNode.leftChild，然后重复步骤2；</li>
-<li>不断重复步骤2，直到发现cur为空，此时从stack中弹出一个节点记为treeNode，打印node的值，并让treeNode&#x3D; treeNode.right，然后继续重复步骤2；</li>
-<li>当stack为空并且cur为空时结束。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">inOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(treeNode != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                System.out.print(treeNode.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">                treeNode = treeNode.rightChild;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>后序遍历非递归实现，后序遍历这里较前两者实现复杂一点，我们需要一个标记位来记忆我们此时节点上一个节点，具体看代码注释</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">postOrderTraveralWithStack</span><span class="params">(TreeNode node)</span>&#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;TreeNode&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">treeNode</span> <span class="operator">=</span> node;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">lastVisit</span> <span class="operator">=</span> <span class="literal">null</span>;   <span class="comment">//标记每次遍历最后一次访问的节点</span></span><br><span class="line">        <span class="keyword">while</span>(treeNode!=<span class="literal">null</span> || !stack.isEmpty())&#123;<span class="comment">//节点不为空，结点入栈，并且指向下一个左孩子</span></span><br><span class="line">            <span class="keyword">while</span>(treeNode!=<span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(treeNode);</span><br><span class="line">                treeNode = treeNode.leftChild;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//栈不为空</span></span><br><span class="line">            <span class="keyword">if</span>(!stack.isEmpty())&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                treeNode = stack.pop();</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * 这块就是判断treeNode是否有右孩子，</span></span><br><span class="line"><span class="comment">                 * 如果没有输出treeNode.data，让lastVisit指向treeNode，并让treeNode为空</span></span><br><span class="line"><span class="comment">                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">if</span>(treeNode.rightChild == <span class="literal">null</span> || treeNode.rightChild == lastVisit) &#123;</span><br><span class="line">                    System.out.print(treeNode.data + <span class="string">&quot; &quot;</span>);</span><br><span class="line">                    lastVisit = treeNode;</span><br><span class="line">                    treeNode  = <span class="literal">null</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    stack.push(treeNode);</span><br><span class="line">                    treeNode = treeNode.rightChild;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后再给大家介绍一下层序遍历</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>首先申请一个新的队列，记为queue；</li>
-<li>将头结点head压入queue中；</li>
-<li>每次从queue中出队，记为node，然后打印node值，如果node左孩子不为空，则将左孩子入队；如果node的右孩子不为空，则将右孩子入队；</li>
-<li>重复步骤3，直到queue为空。</li>
-</ol>
-<p>实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">levelOrder</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        LinkedList&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            root = queue.pop();</span><br><span class="line">            System.out.print(root.data+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            <span class="keyword">if</span>(root.leftChild!=<span class="literal">null</span>) queue.add(root.leftChild);</span><br><span class="line">            <span class="keyword">if</span>(root.rightChild!=<span class="literal">null</span>) queue.add(root.rightChild);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>未初始化警告 202203-1</title>
     <url>/posts/45202b01.html</url>
     <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>一个未经初始化的变量，里面存储的值可能是任意的。因此直接使用未初始化的变量，比如将其赋值给另一个变量，并不符合一般的编程逻辑。代码中出现这种情况，往往是因为遗漏了初始化语句、或是打错了变量名。对代码中使用了未初始化变量的语句进行检查，可以方便地排查出代码中的一些隐秘 Bug。</p>
@@ -2266,110 +2370,6 @@
       </categories>
       <tags>
         <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>期末预测之最佳阈值 202012-2</title>
-    <url>/posts/e7a7ed06.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h2><p>考虑到安全指数是一个较大范围内的整数、小菜很可能搞不清楚自己是否真的安全，顿顿决定设置一个阈值 $θ$，以便将安全指数 $y$  转化为一个具体的预测结果——“会挂科”或“不会挂科”。</p>
-<p>因为安全指数越高表明小菜同学挂科的可能性越低，所以当$y≥θ$  时，顿顿会预测小菜这学期很安全、不会挂科；反之若 $y&lt;θ$ ，顿顿就会劝诫小菜：“你期末要挂科了，勿谓言之不预也。”</p>
-<p>那么这个阈值该如何设定呢？顿顿准备从过往中寻找答案。</p>
-<span id="more"></span>
-
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>具体来说，顿顿评估了 $m$ 位同学上学期的安全指数，其中第$  i$ （$1≤i≤m$ ）位同学的安全指数为$y_i$，是一个 ([$0,10^8$]) 范围内的整数；同时，该同学上学期的挂科情况记作 ($ result_i$ ∈0,1)，其中 0 表示挂科、1 表示未挂科。</p>
-<p>相应地，顿顿用$ predict_θ(y)$ 表示根据阈值 θ 将安全指数 y 转化为的具体预测结果。</p>
-<p>如果 $predict_θ(y_j) $与$ result_j$相同，则说明阈值为 θ 时顿顿对第 j 位同学是否挂科预测正确；不同则说明预测错误。</p>
-<p>最后，顿顿设计了如下公式来计算最佳阈值 θ∗：</p>
-<p>$θ^* &#x3D; \max { \mathop{\mathrm{argmax} }\limits_{\theta \in { y_i } } \sum\limits_{j&#x3D;1}^{m} ( \mathrm{predict}_{\theta} ( y_j ) &#x3D;&#x3D; result_j ) }<br>$</p>
-<p>该公式亦可等价地表述为如下规则：</p>
-<ol>
-<li>最佳阈值仅在$y_i$中选取，即与某位同学的安全指数相同；</li>
-<li>按照该阈值对这 $ m $ 位同学上学期的挂科情况进行预测，预测正确的次数最多（即准确率最高）；</li>
-<li>多个阈值均可以达到最高准确率时，选取其中最大的。</li>
-</ol>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>从标准输入读入数据。</p>
-<p>输入的第一行包含一个正整数$m$ 。</p>
-<p>接下来输入$m$ 行，其中第$i$ （$1≤i≤m$ ）行包括用空格分隔的两个整数$y_i$和$ result_i$，含义如上文所述。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出到标准输出。</p>
-<p>输出一个整数，表示最佳阈值$θ^*$。</p>
-<p>样例1输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">0 0</span><br><span class="line">1 0</span><br><span class="line">1 1</span><br><span class="line">3 1</span><br><span class="line">5 1</span><br><span class="line">7 1</span><br></pre></td></tr></table></figure>
-
-<p>样例1输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<p>样例1解释</p>
-<p>按照规则一，最佳阈值的选取范围为 0,1,3,5,7。</p>
-<p>θ&#x3D;0 时，预测正确次数为 4；</p>
-<p>θ&#x3D;1 时，预测正确次数为 5；</p>
-<p>θ&#x3D;3 时，预测正确次数为 5；</p>
-<p>θ&#x3D;5 时，预测正确次数为 4；</p>
-<p>θ&#x3D;7 时，预测正确次数为 3。</p>
-<p>阈值选取为 1 或 3 时，预测准确率最高；</p>
-<p>所以按照规则二，最佳阈值的选取范围缩小为 1,3。</p>
-<p>依规则三，$θ^*&#x3D;max1,3&#x3D;3$。</p>
-<p>样例2输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">8</span><br><span class="line">5 1</span><br><span class="line">5 0</span><br><span class="line">5 0</span><br><span class="line">2 1</span><br><span class="line">3 0</span><br><span class="line">4 0</span><br><span class="line">100000000 1</span><br><span class="line">1 0</span><br></pre></td></tr></table></figure>
-
-<p>样例2输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">100000000</span><br></pre></td></tr></table></figure>
-
-<h2 id="子任务"><a href="#子任务" class="headerlink" title="子任务"></a>子任务</h2><p>70% 的测试数据保证 ($m≤200$)；</p>
-<p>全部的测试数据保证 ($2≤m≤10^5$)。</p>
-<h2 id="解答（Dev-CPP环境）"><a href="#解答（Dev-CPP环境）" class="headerlink" title="解答（Dev-CPP环境）"></a>解答（Dev-CPP环境）</h2><p>答案源自<a href="https://blog.csdn.net/qq_43464088/article/details/112080044">CCF-CSP 202012-2 期末预测之最佳阈值（前缀和、set去重、代码极简）_AngleCavalier的博客-CSDN博客_期末预测之最佳阈值前缀和</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span><span class="number">+5</span>;</span><br><span class="line"><span class="type">int</span> n,Max=<span class="number">0</span>,res;</span><br><span class="line"><span class="type">int</span> sum[N]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">set&lt;<span class="type">int</span>&gt;st;</span><br><span class="line">pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;pr[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a,b;</span><br><span class="line">		cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">		pr[i]=<span class="built_in">make_pair</span>(a,b);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(pr<span class="number">+1</span>,pr+n<span class="number">+1</span>);<span class="comment">//1.先排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		sum[i] =sum[i<span class="number">-1</span>]+ pr[i].second;<span class="comment">//2.求挂科情况前缀和 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a=pr[i].first;<span class="comment">//选取阈值 </span></span><br><span class="line">		<span class="keyword">if</span>(st.<span class="built_in">count</span>(a)) <span class="keyword">continue</span>;<span class="comment">//set去重 </span></span><br><span class="line">		st.<span class="built_in">insert</span>(a);</span><br><span class="line">		<span class="type">int</span> yuce1 = sum[n]-sum[i<span class="number">-1</span>];<span class="comment">//大于等于阈值时，应统计预测结果中为1的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce0 = i<span class="number">-1</span>-sum[i<span class="number">-1</span>];<span class="comment">//小与阈值时，应统计预测结果中为0的个数 </span></span><br><span class="line">		<span class="type">int</span> yuce = yuce1+ yuce0;<span class="comment">//合计预测正确次数 </span></span><br><span class="line">		<span class="keyword">if</span>(yuce &gt;= Max) &#123;</span><br><span class="line">			Max=yuce;</span><br><span class="line">			res=a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;res;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="常规错误答案"><a href="#常规错误答案" class="headerlink" title="常规错误答案"></a>常规错误答案</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> m,max,maxi=<span class="number">-1</span>,theta=<span class="number">0</span>,i,p=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> pre[<span class="number">100001</span>],res[<span class="number">100001</span>];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">	<span class="keyword">while</span>(p&lt;m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;pre[p],&amp;res[p]);</span><br><span class="line">		p++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(p=<span class="number">0</span>;p&lt;m;p++)&#123;</span><br><span class="line">		max=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(pre[i]&gt;=pre[p]&amp;&amp;res[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre[i]&lt;pre[p]&amp;&amp;res[i]==<span class="number">0</span>)&#123;</span><br><span class="line">				max++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(max&gt;maxi)&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(max==maxi&amp;&amp;theta&lt;pre[p])&#123;</span><br><span class="line">			theta=pre[p];</span><br><span class="line">		&#125;</span><br><span class="line">		maxi=max;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,theta);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>王道数据结构P191关于二叉树的算法归纳</title>
-    <url>/posts/1537acf2.html</url>
-    <content><![CDATA[<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><p>本文是王道数据结构P191的10个算法例题归纳，二叉树的存储结构为二叉链表。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,*<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BiTNode,*BiTree;</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="统计二叉树中度为1的结点个数"><a href="#统计二叉树中度为1的结点个数" class="headerlink" title="统计二叉树中度为1的结点个数"></a>统计二叉树中度为1的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount1</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>+NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount1(T-&gt;lchild)+NodeCount1(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>给定一个二叉树，当根仅具有一个孩子时，代表根度为1，统计一次并递归寻找子树度为1的根；当根有两个孩子，不统计递归寻找子树度为1的根。</p>
-<p>也可以用非递归方法，使用队列层次遍历。</p>
-<h2 id="统计二叉树中度为2的结点个数"><a href="#统计二叉树中度为2的结点个数" class="headerlink" title="统计二叉树中度为2的结点个数"></a>统计二叉树中度为2的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount2</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild!=<span class="literal">NULL</span>||T-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;lchild!=<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>+NodeCount2(T-&gt;lchild)+NodeCount2(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树中度为0的结点个数"><a href="#统计二叉树中度为0的结点个数" class="headerlink" title="统计二叉树中度为0的结点个数"></a>统计二叉树中度为0的结点个数</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">NodeCount0</span><span class="params">( BiTree T)</span>&#123;</span><br><span class="line"><span class="keyword">if</span>(T==<span class="literal">NULL</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(T-&gt;lchild==<span class="literal">NULL</span>&amp;&amp;T-&gt;rchild==<span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> NodeCount0(T-&gt;lchild)+NodeCount0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的高度"><a href="#统计二叉树的高度" class="headerlink" title="统计二叉树的高度"></a>统计二叉树的高度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Height</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> ldep = Height(T-&gt;lchild);	<span class="comment">//结点左子树高度</span></span><br><span class="line">	<span class="type">int</span> rdep = Height(T-&gt;rchild);	<span class="comment">//结点右子树高度</span></span><br><span class="line">	<span class="keyword">if</span> (ldep &gt; rdep)	<span class="comment">//取二者中更大的+1即树的高度，+1是因为根结点算一层</span></span><br><span class="line">		<span class="keyword">return</span> ldep + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> rdep + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计二叉树的宽度"><a href="#统计二叉树的宽度" class="headerlink" title="统计二叉树的宽度"></a>统计二叉树的宽度</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">LevelWidth</span><span class="params">(BiTree T, <span class="type">int</span> a[], <span class="type">int</span> h)</span>	<span class="comment">//求每一层的宽度</span></span><br><span class="line">&#123;	<span class="comment">//第一次调用为LevelWidth(T,a,1);</span></span><br><span class="line">	<span class="keyword">if</span>(T!=<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		a[h] += <span class="number">1</span>;</span><br><span class="line">		LevelWidth(T-&gt;lchild, a, h + <span class="number">1</span>);</span><br><span class="line">		LevelWidth(T-&gt;rchild, a, h + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">Width</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> a[MaxSize + <span class="number">1</span>], h = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= MaxSize; i++)</span><br><span class="line">		a[i] = <span class="number">0</span>;</span><br><span class="line">	LevelWidth(T, a, h);	<span class="comment">//调用求每一层宽度的函数，把宽度保存在数组a[]里</span></span><br><span class="line">	<span class="type">int</span> wid = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= MaxSize; i++)	<span class="comment">//遍历数组a[i]求最大值，即树的宽度</span></span><br><span class="line">		<span class="keyword">if</span> (a[i] &gt; wid) </span><br><span class="line">			wid = a[i];</span><br><span class="line">	<span class="keyword">return</span> wid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="从二叉树中删去所有的叶结点"><a href="#从二叉树中删去所有的叶结点" class="headerlink" title="从二叉树中删去所有的叶结点"></a>从二叉树中删去所有的叶结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Del_0</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	BiTNode *p = T;</span><br><span class="line">	<span class="keyword">if</span>((p-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild ==<span class="literal">NULL</span>)|| p ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;lchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;lchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;lchild);</span><br><span class="line">  		p-&gt;lchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点左孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;rchild-&gt;lchild ==<span class="literal">NULL</span>&amp;&amp; p-&gt;rchild-&gt;rchlid ==<span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(p-&gt;rchild);</span><br><span class="line">    	p-&gt;rchild =<span class="literal">NULL</span>;<span class="comment">//⽗节点右孩⼦指针置空</span></span><br><span class="line">	&#125;</span><br><span class="line">	Del_0(T-&gt;lchild);</span><br><span class="line">	Del_0(T-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先叶子是指左右孩子都没有的结点。</p>
-<p>注意此代码为递归，只会向内层深⼊，所以删除完叶⼦结点，使原分⽀结点变为叶⼦结点，但不会再继续删除。</p>
-<h2 id="计算指定结点-p所在的层次"><a href="#计算指定结点-p所在的层次" class="headerlink" title="计算指定结点*p所在的层次"></a>计算指定结点*p所在的层次</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">GetLevel</span><span class="params">(BiTree T, BiTNode *p)</span>		<span class="comment">//计算指定结点*p所在的层次</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (T == p)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;	<span class="comment">//找到所在层,第一层</span></span><br><span class="line">	<span class="type">int</span> depl = GetLevel(T-&gt;lchild, p);</span><br><span class="line">	<span class="type">int</span> depr = GetLevel(T-&gt;rchild, p);</span><br><span class="line">	<span class="keyword">if</span> (depl || depr)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (depl &gt; depr)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depl;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span> + depr;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="计算二叉树中各结点中最大元素的值"><a href="#计算二叉树中各结点中最大元素的值" class="headerlink" title="计算二叉树中各结点中最大元素的值"></a>计算二叉树中各结点中最大元素的值</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Get_Max</span><span class="params">(BiTree T)</span>	</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> maxl = Get_Max(T-&gt;lchild);</span><br><span class="line">	<span class="type">int</span> maxr = Get_Max(T-&gt;rchild);</span><br><span class="line">	<span class="type">int</span> max = maxl &gt; maxr ? maxl : maxr;	<span class="comment">//max为maxl和maxr中更大的一个</span></span><br><span class="line">	<span class="keyword">return</span> max &gt; T-&gt;data ? max : T-&gt;data;	<span class="comment">//返回值为max和T-&gt;data中更大的一个</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="交换二叉树中每个结点的两个子女"><a href="#交换二叉树中每个结点的两个子女" class="headerlink" title="交换二叉树中每个结点的两个子女"></a>交换二叉树中每个结点的两个子女</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Exc</span><span class="params">(BiTree T)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;lchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;lchild);</span><br><span class="line">	<span class="keyword">if</span> (T-&gt;rchild != <span class="literal">NULL</span>)</span><br><span class="line">		Exc(T-&gt;rchild);</span><br><span class="line">	BiTNode *p;</span><br><span class="line">	p = T-&gt;lchild;</span><br><span class="line">	T-&gt;lchild = T-&gt;rchild;</span><br><span class="line">	T-&gt;rchild = p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="以先序次序输出一颗二叉树中所有结点"><a href="#以先序次序输出一颗二叉树中所有结点" class="headerlink" title="以先序次序输出一颗二叉树中所有结点"></a>以先序次序输出一颗二叉树中所有结点</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">PreAndLevel</span><span class="params">(BiTree T, <span class="type">int</span> i)</span>	</span><br><span class="line">&#123;		<span class="comment">//第一次调用为PreAndLevel(T, 1);</span></span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;data=%d，level=%d&quot;</span>, T-&gt;data, i);</span><br><span class="line">		PreAndLevel(T-&gt;lchild, i + <span class="number">1</span>);</span><br><span class="line">		PreAndLevel(T-&gt;rchild, i + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>部分题解答源自 <a href="https://blog.csdn.net/qq_36645322?type=blog"> 霸道总裁爱上网的博客_CSDN博客-c++,算法,安卓领域博主</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -2416,42 +2416,6 @@
       <categories>
         <category>随笔</category>
       </categories>
-  </entry>
-  <entry>
-    <title>邻域均值 202104-2</title>
-    <url>/posts/7ca04377.html</url>
-    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
-<span id="more"></span>
-
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)&#x3D;{A_{xy}|0≤x,y&lt;n\ and\ |x−i|≤r\ and\ |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
-<p>如果元素$A_{ij}$邻域中所有元素的平均值小于或等于一个给定的阈值$t$，我们就认为该元素对应位置的像素处于较暗区域。<br>下图给出了两个例子，左侧图像的较暗区域在右侧图像中展示为黑色，其余区域展示为白色。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/202104-2.jpg"></p>
-<p>现给定邻域参数r和阈值t，试统计输入灰度图像中有多少像素处于<strong>较暗区域</strong>。</p>
-<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>输入共$n+1$行。</p>
-<p>输入的第一行包含四个用空格分隔的正整数$n、L、r$和$t$，含义如前文所述。</p>
-<p>第二到第$n+1$行输入矩阵$A$。<br>第$i+2（0≤i&lt;n）$行包含用空格分隔的$n$个整数，依次为$A_{i0},A_{i1},⋯,A_{i(n−1)}$。</p>
-<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>输出一个整数，表示输入灰度图像中处于较暗区域的像素总数。</p>
-<h2 id="样例1输入"><a href="#样例1输入" class="headerlink" title="样例1输入"></a><strong>样例1输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 16 1 6</span><br><span class="line">0 1 2 3</span><br><span class="line">4 5 6 7</span><br><span class="line">8 9 10 11</span><br><span class="line">12 13 14 15</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例1输出"><a href="#样例1输出" class="headerlink" title="样例1输出"></a><strong>样例1输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2输入"><a href="#样例2输入" class="headerlink" title="样例2输入"></a><strong>样例2输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11 8 2 2</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 7</span><br><span class="line">7 0 0 0 7 0 0 0 7 0 7</span><br><span class="line">7 0 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 0 0 0 0 7 0 7 0 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br></pre></td></tr></table></figure>
-
-<h2 id="样例2输出"><a href="#样例2输出" class="headerlink" title="样例2输出"></a><strong>样例2输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">83</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a><strong>数据范围</strong></h2><p>70%的测试数据满足$n≤100、r≤10$。</p>
-<p>全部的测试数据满足$0&lt;n≤600、0&lt;r≤100$且$2≤t&lt;L≤256$。</p>
-<h2 id="解答（Dev-CPP-环境）"><a href="#解答（Dev-CPP-环境）" class="headerlink" title="解答（Dev-CPP 环境）"></a>解答（Dev-CPP 环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">605</span>][<span class="number">605</span>],sum[<span class="number">605</span>][<span class="number">605</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmax</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmin</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> n,L,r,t;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;L&gt;&gt;r&gt;&gt;t;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			cin&gt;&gt;a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//存储像素矩阵</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			sum[i][j]=sum[i<span class="number">-1</span>][j]+sum[i][j<span class="number">-1</span>]-sum[i<span class="number">-1</span>][j<span class="number">-1</span>]+a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//计算像素矩阵前缀和</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> avg,num;</span><br><span class="line">	<span class="type">int</span> x1,x2,y1,y2;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			x1=<span class="built_in">jmax</span>(<span class="number">1</span>,i-r);</span><br><span class="line">			y1=<span class="built_in">jmax</span>(<span class="number">1</span>,j-r);</span><br><span class="line">			x2=<span class="built_in">jmin</span>(n,i+r);</span><br><span class="line">			y2=<span class="built_in">jmin</span>(n,j+r);</span><br><span class="line">			<span class="comment">// 确定邻域边界点</span></span><br><span class="line"></span><br><span class="line">			num=(x2-x1<span class="number">+1</span>)*(y2-y1<span class="number">+1</span>);</span><br><span class="line">			avg=(sum[x2][y2]-sum[x1<span class="number">-1</span>][y2]-sum[x2][y1<span class="number">-1</span>]+sum[x1<span class="number">-1</span>][y1<span class="number">-1</span>])*<span class="number">1.0</span>/num;</span><br><span class="line">			<span class="keyword">if</span>(avg&lt;=t)&#123;</span><br><span class="line">				ans++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>试题</category>
-      </categories>
-      <tags>
-        <tag>csp</tag>
-      </tags>
   </entry>
   <entry>
     <title>调整最小不平衡子树</title>
@@ -2654,6 +2618,42 @@
       </categories>
       <tags>
         <tag>浏览器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>邻域均值 202104-2</title>
+    <url>/posts/7ca04377.html</url>
+    <content><![CDATA[<h2 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a><strong>题目背景</strong></h2><p>顿顿在学习了数字图像处理后，想要对手上的一副灰度图像进行降噪处理。不过该图像仅在较暗区域有很多噪点，如果贸然对全图进行降噪，会在抹去噪点的同时也模糊了原有图像。因此顿顿打算先使用邻域均值来判断一个像素是否处于较暗区域，然后仅对处于较暗区域的像素进行降噪处理。</p>
+<span id="more"></span>
+
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h2><p>待处理的灰度图像长宽皆为$n$个像素，可以表示为一个$n×n$大小的矩阵A，其中每个元素是一个$[0,L)$范围内的整数，表示对应位置像素的灰度值。<br>对于矩阵中任意一个元素$A_{ij}（0≤i,j&lt;n）$，其邻域定义为附近若干元素的集和：<br>$$<br>Neighbor(i,j,r)&#x3D;{A_{xy}|0≤x,y&lt;n\ and\ |x−i|≤r\ and\ |y−j|≤r}<br>$$<br>这里使用了一个额外的参数$r$来指明$A_{ij}$附近元素的具体范围。根据定义，易知$Neighbor(i,j,r)$最多有$(2r+1)^2$个元素。</p>
+<p>如果元素$A_{ij}$邻域中所有元素的平均值小于或等于一个给定的阈值$t$，我们就认为该元素对应位置的像素处于较暗区域。<br>下图给出了两个例子，左侧图像的较暗区域在右侧图像中展示为黑色，其余区域展示为白色。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/koukihk/FileHosting/PIC/202104-2.jpg"></p>
+<p>现给定邻域参数r和阈值t，试统计输入灰度图像中有多少像素处于<strong>较暗区域</strong>。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a><strong>输入格式</strong></h2><p>输入共$n+1$行。</p>
+<p>输入的第一行包含四个用空格分隔的正整数$n、L、r$和$t$，含义如前文所述。</p>
+<p>第二到第$n+1$行输入矩阵$A$。<br>第$i+2（0≤i&lt;n）$行包含用空格分隔的$n$个整数，依次为$A_{i0},A_{i1},⋯,A_{i(n−1)}$。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a><strong>输出格式</strong></h2><p>输出一个整数，表示输入灰度图像中处于较暗区域的像素总数。</p>
+<h2 id="样例1输入"><a href="#样例1输入" class="headerlink" title="样例1输入"></a><strong>样例1输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 16 1 6</span><br><span class="line">0 1 2 3</span><br><span class="line">4 5 6 7</span><br><span class="line">8 9 10 11</span><br><span class="line">12 13 14 15</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例1输出"><a href="#样例1输出" class="headerlink" title="样例1输出"></a><strong>样例1输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2输入"><a href="#样例2输入" class="headerlink" title="样例2输入"></a><strong>样例2输入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11 8 2 2</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 7</span><br><span class="line">7 0 0 0 7 0 0 0 7 0 7</span><br><span class="line">7 0 0 0 0 7 0 0 7 7 0</span><br><span class="line">7 0 0 0 0 0 7 0 7 0 0</span><br><span class="line">7 0 7 0 7 0 7 0 7 0 0</span><br><span class="line">0 7 0 0 0 7 0 0 7 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br><span class="line">0 0 0 0 0 0 0 0 0 0 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="样例2输出"><a href="#样例2输出" class="headerlink" title="样例2输出"></a><strong>样例2输出</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">83</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a><strong>数据范围</strong></h2><p>70%的测试数据满足$n≤100、r≤10$。</p>
+<p>全部的测试数据满足$0&lt;n≤600、0&lt;r≤100$且$2≤t&lt;L≤256$。</p>
+<h2 id="解答（Dev-CPP-环境）"><a href="#解答（Dev-CPP-环境）" class="headerlink" title="解答（Dev-CPP 环境）"></a>解答（Dev-CPP 环境）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">605</span>][<span class="number">605</span>],sum[<span class="number">605</span>][<span class="number">605</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmax</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">jmin</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x&lt;y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> n,L,r,t;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;L&gt;&gt;r&gt;&gt;t;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			cin&gt;&gt;a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//存储像素矩阵</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			sum[i][j]=sum[i<span class="number">-1</span>][j]+sum[i][j<span class="number">-1</span>]-sum[i<span class="number">-1</span>][j<span class="number">-1</span>]+a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="comment">//计算像素矩阵前缀和</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> avg,num;</span><br><span class="line">	<span class="type">int</span> x1,x2,y1,y2;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			x1=<span class="built_in">jmax</span>(<span class="number">1</span>,i-r);</span><br><span class="line">			y1=<span class="built_in">jmax</span>(<span class="number">1</span>,j-r);</span><br><span class="line">			x2=<span class="built_in">jmin</span>(n,i+r);</span><br><span class="line">			y2=<span class="built_in">jmin</span>(n,j+r);</span><br><span class="line">			<span class="comment">// 确定邻域边界点</span></span><br><span class="line"></span><br><span class="line">			num=(x2-x1<span class="number">+1</span>)*(y2-y1<span class="number">+1</span>);</span><br><span class="line">			avg=(sum[x2][y2]-sum[x1<span class="number">-1</span>][y2]-sum[x2][y1<span class="number">-1</span>]+sum[x1<span class="number">-1</span>][y1<span class="number">-1</span>])*<span class="number">1.0</span>/num;</span><br><span class="line">			<span class="keyword">if</span>(avg&lt;=t)&#123;</span><br><span class="line">				ans++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;ans;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>试题</category>
+      </categories>
+      <tags>
+        <tag>csp</tag>
       </tags>
   </entry>
   <entry>
